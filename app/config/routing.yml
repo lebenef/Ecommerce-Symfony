@@ -1,3 +1,7 @@
+ff_fast:
+    resource: "@FFFastBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
