@@ -1,0 +1,3 @@
+ff_fast_homepage:
+    path:     /
+    defaults: { _controller: FFFastBundle:Default:index }

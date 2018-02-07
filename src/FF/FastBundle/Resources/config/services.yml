@@ -1,0 +1,4 @@
+services:
+#    ff_fast.example:
+#        class: FF\FastBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
