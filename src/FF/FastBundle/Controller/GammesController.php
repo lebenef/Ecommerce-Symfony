@@ -18,14 +18,14 @@ class GammesController extends Controller
 
 
 	$gamme = "pizza";
-        return $this->render('FFFastBundle:Gammes:index.html.twig', array('gammes' => $gamme) );
+        return $this->render('FFFastBundle:Gammes:index.html.twig', array('gammes' => $gammes) );
     }
 
     public function addAction()
     {
     	$gammes = new Gammes();
 
-    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,Gamme);
+    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,Gammes);
 
     	$formBuilder
 	      ->add('date',      DateType::class)
