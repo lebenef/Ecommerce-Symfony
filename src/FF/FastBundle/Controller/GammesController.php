@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class GammesProduitsController extends Controller
+class GammesController extends Controller
 {
     public function indexAction()
     {
@@ -25,7 +25,7 @@ class GammesProduitsController extends Controller
     {
     	$gammes = new Gammes();
 
-    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,GammeProduit);
+    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,Gamme);
 
     	$formBuilder
 	      ->add('date',      DateType::class)
