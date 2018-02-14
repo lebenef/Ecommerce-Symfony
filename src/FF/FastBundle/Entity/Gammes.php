@@ -74,7 +74,7 @@ class Gammes
      */
     public function getDate()
     {
-        return $this->date;
+        return $this->date = new \Datetime();
     }
 
     /**

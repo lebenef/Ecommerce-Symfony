@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="fr">
 
-  <body>
-	<h1> ajouter une gamme </h1>
+
+{% extends "FFFastBundle::layout.html.twig" %}
+ {% block title %}{{ parent() }} - Index{% endblock %}
+ {% block body %}
+     <h2> Ajouter une Gamme </h2>
 
 	<div class="well">
-  {{ form(form) }}
-</div>
+
+  			{{ form(form) }}
+	</div>
 
 
-  </body>
-
-</html>
+{% endblock %}
