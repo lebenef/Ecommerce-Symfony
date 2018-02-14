@@ -2,10 +2,7 @@
 
 namespace FF\FastBundle\Controller;
 
-use FF\FastBundle\Entity\GammeProduit;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use OC\PlatformBundle\Entity\Advert;
+use FF\FastBundle\Entity\Gamme;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
