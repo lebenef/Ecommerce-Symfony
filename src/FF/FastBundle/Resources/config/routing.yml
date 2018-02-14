@@ -1,3 +1,11 @@
 ff_fast_homepage:
     path:     /
     defaults: { _controller: FFFastBundle:Default:index }
+
+ff_gammes_index:
+    path:     /Gammes
+    defaults: { _controller: FFFastBundle:GammesProduits:index }
+
+ff_gammes_add:
+    path:     /Gammes/add
+    defaults: { _controller: FFFastBundle:GammesProduits:add }
