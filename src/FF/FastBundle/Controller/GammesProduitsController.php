@@ -26,9 +26,9 @@ class GammesProduitsController extends Controller
 
     public function addAction()
     {
-    	$gammeproduit = new GammeProduit():
+    	$gammeproduit = new GammeProduit();
 
-    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,GammeProduit):
+    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,GammeProduit);
 
     	$formBuilder
 	      ->add('date',      DateType::class)
