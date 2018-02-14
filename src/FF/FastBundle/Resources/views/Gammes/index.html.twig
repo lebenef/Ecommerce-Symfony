@@ -4,7 +4,8 @@
  {% block body %}
      <h2> mes Gammes </h2>
 	<ul>
-	    <li>{{ gammes }}</li>
+	    <li>{{ gammes }}      <a href="{{ path('ff_gammes_edit') }}" class="btn btn-default">       <i class="glyphicon glyphicon-chevron-left"></i>      Editer   </a>
+</li
 	</ul>
      Notre plateforme est un peu vide pour le moment, mais cela viendra !
      <a href="{{ path('ff_gammes_add') }}" class="btn btn-default">       <i class="glyphicon glyphicon-chevron-left"></i>      Ajouter une Gamme    </a>

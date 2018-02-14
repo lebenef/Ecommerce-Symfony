@@ -41,4 +41,25 @@ class GammesController extends Controller
         	'form' => $form->createView(),
         	));
     }
-}
+
+
+    public function editAction()
+    {
+        $gammes = new Gammes();
+
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class,$gammes);
+
+        $formBuilder
+          ->add('date',      DateType::class)
+          ->add('name',     TextType::class)
+          ->add('description',   TextareaType::class)
+          ->add('save',      SubmitType::class)
+          ;
+
+
+          $form = $formBuilder->getForm();
+
+        return $this->render('FFFastBundle:Gammes:edit.html.twig', array(
+            'form' => $form->createView(),
+            ));
+    }

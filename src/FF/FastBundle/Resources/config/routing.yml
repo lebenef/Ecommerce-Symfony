@@ -9,3 +9,7 @@ ff_gammes_index:
 ff_gammes_add:
     path:     /Gammes/add
     defaults: { _controller: FFFastBundle:Gammes:add }
+
+ff_gammes_edit:
+    path:     /Gammes/edit
+    defaults: { _controller: FFFastBundle:Gammes:edit }
