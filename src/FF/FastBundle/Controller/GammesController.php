@@ -25,7 +25,7 @@ class GammesController extends Controller
     {
     	$gammes = new Gammes();
 
-    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,Gammes);
+    	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,$gammes);
 
     	$formBuilder
 	      ->add('date',      DateType::class)
