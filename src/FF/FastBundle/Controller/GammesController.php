@@ -18,7 +18,7 @@ class GammesController extends Controller
 
 
 	$gamme = "pizza";
-        return $this->render('FFFastBundle:Gammes:index.html.twig', array('gammes' => $gammes) );
+        return $this->render('FFFastBundle:Gammes:index.html.twig', array('gammes' => $gamme) );
     }
 
     public function addAction()
