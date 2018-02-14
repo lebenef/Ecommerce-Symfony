@@ -2,7 +2,7 @@
 
 namespace FF\FastBundle\Controller;
 
-use FF\FastBundle\Entity\Gamme;
+use FF\FastBundle\Entity\Gammes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -23,7 +23,7 @@ class GammesProduitsController extends Controller
 
     public function addAction()
     {
-    	$gammeproduit = new GammeProduit();
+    	$gammes = new Gammes();
 
     	$formBuilder = $this->get('form.factory')->createBuilder(FormType::class,GammeProduit);
 
