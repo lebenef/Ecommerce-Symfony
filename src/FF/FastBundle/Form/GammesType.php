@@ -19,7 +19,6 @@ class GammesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     $builder
-	      ->add('date',      DateType::class)
 	      ->add('name',     TextType::class)
 	      ->add('description',   TextareaType::class)
 	      ->add('save',      SubmitType::class);
