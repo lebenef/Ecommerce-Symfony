@@ -1,0 +1,32 @@
+ff_fast_homepage:
+    path:     /
+    defaults: { _controller: FFFastBundle:Default:index }
+
+
+ff_fast_home:
+    path:     /gamme
+    defaults: { _controller: FFFastBundle:Gammes:index }
+
+ff_fast_view:
+    path:      /gamme/{id}
+    defaults:
+       _controller: FFFastBundle:Gammes:view
+    requirements:
+       id: \d+
+
+ff_fast_add:
+    path:     /gammes/add
+    defaults:
+       _controller: FFFastBundle:Gammes:add
+
+ff_fast_edit:
+    path:     /gammes/edit/{id}
+    defaults:
+        _controller: FFFastBundle:Gammes:edit
+    requirements:
+       id: \d+
+
+ff_fast_delete:
+    path:      /gammes/delete/{id}
+    defaults:
+        _controller: FFFastBundle:Gammes:delete
