@@ -1,0 +1,31 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'une Gamme - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+  <h2>{{ gammes.name}}</h2>
+  <i>le {{ gammes.date|date('d/m/Y') }}</i>
+
+  <div class="well">
+    {{ games.descroption }}
+  </div>
+
+  <p>
+    <a href="{{ path('ff_fast_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    <a href="{{ path('ff_fast_edit', {'id': advert.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la gamme
+    </a>
+    <a href="{{ path('ffçfast_delete', {'id': advert.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la gamme
+    </a>
+  </p>
+
+{% endblock %}

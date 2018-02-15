@@ -16,9 +16,25 @@ class GammesController extends Controller
     public function indexAction()
     {
 
+    $listGammes   = array(
+      array(
+        'name'   => 'Pizza',
+        'id'      => 1,
+        'description'  => 'ronde',
+        'date'    => new \Datetime()),
+      array(
+        'name'   => 'Agoulou',
+        'id'      => 2,
+        'description'  => 'rond',
+        'date'    => new \Datetime()),
+      array(
+        'name'   => 'Bokit',
+        'id'      => 3,
+        'description'  => 'rond',
+        'date'    => new \Datetime())
+    );
 
-	$gamme = "pizza";
-        return $this->render('FFFastBundle:Gammes:index.html.twig', array('gammes' => $gamme) );
+        return $this->render('FFFastBundle:Gammes:index.html.twig', array('listGammes' => $listGammes) );
     }
 
     public function addAction()
@@ -41,6 +57,20 @@ class GammesController extends Controller
         	'form' => $form->createView(),
         	));
     }
+
+    public function viewAction($id)
+      {
+        $gammes = array(
+          'name'   => 'Pizza',
+          'id'      => $id,
+          'description'  => 'ronde',
+          'date'    => new \Datetime()
+        );
+
+        return $this->render('FFFastBundle:Gammes:view.html.twig', array(
+          'gamme' => $gamme
+        ));
+      }
 
 
     public function editAction()
