@@ -30,5 +30,3 @@ ff_fast_delete:
     path:      /gammes/delete/
     defaults:
         _controller: FFFastBundle:Gammes:delete
-    requirements:
-    id: \d+
