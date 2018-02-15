@@ -1,13 +1,17 @@
-{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
-<!DOCTYPE HTML>
-<html>
-   <head>
-       <meta charset="utf-8">
-	<title>{% block title %}Fast Food{% endblock %}</title>  
-   </head>
-   <body>
-     <h1> Mon restaurant  </h1>
-     {% block body %}
-     {% endblock %}    
-   </body> 
-</html>
+
+{% block title %}
+  Annonces - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+  <h1>Mon Restaurant </h1>
+
+  <hr>
+
+  {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+  {% block ocplatform_body %}
+  {% endblock %}
+
+{% endblock %}
