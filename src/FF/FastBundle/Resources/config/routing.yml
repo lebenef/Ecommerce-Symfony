@@ -10,7 +10,7 @@ ff_gammes_home:
 ff_fast_view:
     path:      /gamme/{id}
     defaults:
-        _controller: FFFastBundle:Games:view
+        _controller: FFFastBundle:Gammes:view
     requirements:
         id: \d+
 
@@ -21,7 +21,7 @@ ff_fast_add:
 ff_fast_edit:
     path:     /gammes/edit/{id}
     defaults:
-    	 _controller: FFFastBundle:Gammes:edit 
+         _controller: FFFastBundle:Gammes:edit
 	requirements:
 		id: \d+
 
