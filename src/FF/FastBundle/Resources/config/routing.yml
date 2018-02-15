@@ -3,7 +3,7 @@ ff_fast_homepage:
     defaults: { _controller: FFFastBundle:Default:index }
 
 
-ff_gammes_home:
+ff_fast_home:
     path:     /gamme
     defaults: { _controller: FFFastBundle:Gammes:index }
 
@@ -27,6 +27,6 @@ ff_fast_edit:
        id: \d+
 
 ff_fast_delete:
-    path:      /gammes/delete/
+    path:      /gammes/delete/{id}
     defaults:
         _controller: FFFastBundle:Gammes:delete

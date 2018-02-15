@@ -1,7 +1,7 @@
 
 
 {% extends "FFFastBundle::layout.html.twig" %}
- {% block title %}{{ parent() }} - Index{% endblock %}
+ {% block title %}Modification d'une gamme - {{ parent() }} {% endblock %}
  {% block body %}
 
   <h2>Editer une Gamme de Produit </h2>
@@ -10,9 +10,9 @@
 
 
   <p>
-    <a href="{{ path('ff_fast_view', {'id': gammes.id}) }}" class="btn btn-default">
+    <a href="{{ path('ff_fast_view', {'id': gammes['id']}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à l'annonce
+      Retour
     </a>
   </p>
 

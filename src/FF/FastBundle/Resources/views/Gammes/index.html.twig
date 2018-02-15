@@ -10,16 +10,20 @@
   <h2>Mes Gammes</h2>
 
   <ul>
-    {% for gamme in listGammes%}
+    {% for gammes in listGammes%}
       <li>
         <a href="{{ path('ff_fast_view', {'id': gammes.id}) }}">
           {{ gammes.name }}
         </a>
-        le {{ games.date|date('d/m/Y') }}
+        le {{ gammes.date|date('d/m/Y') }}
       </li>
     {% else %}
-      <li>Pas (encore !) d'annonces</li>
+      <li>Il n'y a pas encore de gammes !</li>
     {% endfor %}
   </ul>
-
+  <p>
+    <a href="{{ path('ff_fast_add')}}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+Ajouter une gamme    </a>
+  </p>
 {% endblock %}

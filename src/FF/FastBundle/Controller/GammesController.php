@@ -68,14 +68,20 @@ class GammesController extends Controller
         );
 
         return $this->render('FFFastBundle:Gammes:view.html.twig', array(
-          'gamme' => $gamme
+          'gammes' => $gammes
         ));
       }
 
 
-    public function editAction()
+    public function editAction($id)
     {
         $gammes = new Gammes();
+			   $gammes = array(
+          'name'   => 'Pizza',
+          'id'      => $id,
+          'description'  => 'ronde',
+          'date'    => new \Datetime()
+        );
 
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class,$gammes);
 
@@ -91,6 +97,7 @@ class GammesController extends Controller
 
         return $this->render('FFFastBundle:Gammes:edit.html.twig', array(
             'form' => $form->createView(),
+					"gammes" => $gammes
             ));
     }
 
