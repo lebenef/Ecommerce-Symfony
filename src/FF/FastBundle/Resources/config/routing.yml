@@ -1,12 +1,11 @@
 ff_fast_homepage:
     path:     /
-    defaults: 
-    	_controller: FFFastBundle:Default:index 
+    defaults: { _controller: FFFastBundle:Default:index }
+
 
 ff_gammes_home:
     path:     /gamme
-    defaults: 
-    	_controller: FFFastBundle:Gammes:index 
+    defaults: { _controller: FFFastBundle:Gammes:index }
 
 ff_fast_view:
     path:      /gamme/{id}

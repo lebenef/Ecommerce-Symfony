@@ -1,17 +1,3 @@
-{# src/OC/PlatformBundle/Resources/views/Gammes/index.html.twig #}
-{% extends "FFFastBundle::layout.html.twig" %}
- {% block title %}{{ parent() }} - Index{% endblock %}
- {% block body %}
-     <h2> mes Gammes </h2>
-	<ul>
-	    <li>{{ gammes }}      <a href="{{ path('ff_gammes_edit') }}" class="btn btn-default">       <i class="glyphicon glyphicon-chevron-left"></i>      Editer   </a>
-</li
-	</ul>
-     Notre plateforme est un peu vide pour le moment, mais cela viendra !
-     <a href="{{ path('ff_gammes_add') }}" class="btn btn-default">       <i class="glyphicon glyphicon-chevron-left"></i>      Ajouter une Gamme    </a>
-{% endblock %}
-
-
 
 {% extends "FFFastBundle::layout.html.twig" %}
 
@@ -24,7 +10,7 @@
   <h2>Mes Gammes</h2>
 
   <ul>
-    {% for gamme in listAdverts %}
+    {% for gamme in listGammes%}
       <li>
         <a href="{{ path('ff_fast_view', {'id': gammes.id}) }}">
           {{ gammes.name }}
