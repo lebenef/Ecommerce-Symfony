@@ -10,9 +10,9 @@ ff_gammes_home:
 ff_fast_view:
     path:      /gamme/{id}
     defaults:
-        _controller: FFFastBundle:Gammes:view
+       _controller: FFFastBundle:Gammes:view
     requirements:
-        id: \d+
+       id: \d+
 
 ff_fast_add:
     path:     /gammes/add/{id}
@@ -21,13 +21,13 @@ ff_fast_add:
 ff_fast_edit:
     path:     /gammes/edit/{id}
     defaults:
-         _controller: FFFastBundle:Gammes:edit
-	requirements:
-		id: \d+
+        _controller: FFFastBundle:Gammes:edit
+    requirements:
+       id: \d+
 
 ff_fast_delete:
     path:      /gammes/delete/{id}
     defaults:
         _controller: FFFastBundle:Gammes:delete
     requirements:
-        id: \d+
+    id: \d+
