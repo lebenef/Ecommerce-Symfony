@@ -5,12 +5,12 @@
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ocplatform_body %}
+{% block ffgammes_body %}
 
   <h2>Mes Gammes</h2>
 
   <ul>
-    {% for gammes in listGammes%}
+    {% for gammes in listGammes %}
       <li>
         <a href="{{ path('ff_fast_view', {'id': gammes.id}) }}">
           {{ gammes.name }}
