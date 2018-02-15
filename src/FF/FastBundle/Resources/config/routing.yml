@@ -15,7 +15,7 @@ ff_fast_view:
        id: \d+
 
 ff_fast_add:
-    path:     /gammes/add/{id}
+    path:     /gammes/add
     defaults:
        _controller: FFFastBundle:Gammes:add
 
