@@ -1,0 +1,30 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'une Gamme - {{ parent() }}
+{% endblock %}
+
+{% block ffgammes_body %}
+
+  <h2>{{ gammes.name}}</h2>
+
+  <div class="well">
+    {{ gammes.description }}
+  </div>
+
+  <p>
+    <a href="{{ path('ff_fast_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    <a href="{{ path('ff_fast_edit', {'id': gammes.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la gamme
+    </a>
+    <a href="{{ path('ff_fast_delete', {'id': gammes.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la gamme
+    </a>
+  </p>
+
+{% endblock %}
