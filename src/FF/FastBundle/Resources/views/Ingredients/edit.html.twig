@@ -4,13 +4,13 @@
  {% block title %}Modification d'une gamme - {{ parent() }} {% endblock %}
  {% block body %}
 
-  <h2>Editer une Gamme de Produit </h2>
+  <h2>Editer une Gamme d' ingredient </h2>
 
-  {{ include("FFFastBundle:Gammes:form.html.twig") }}
+  {{ include("FFFastBundle:Ingredient:form.html.twig") }}
 
 
   <p>
-    <a href="{{ path('ff_fast_view', {'id': gammes.id}) }}" class="btn btn-default">
+    <a href="{{ path('ff_fast_viewi', {'id': ingredients.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour
     </a>

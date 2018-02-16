@@ -1,15 +1,15 @@
 
 
 {% extends "FFFastBundle::layout.html.twig" %}
- {% block title %} Ajouter une gamme - {{ parent() }}{% endblock %}
+ {% block title %} Ajouter une ingédient - {{ parent() }}{% endblock %}
  {% block body %}
 
-  <h2>Ajouter une Gamme de Produit </h2>
+  <h2>Ajouter un ingredient </h2>
 
-  {{ include("FFFastBundle:Gammes:form.html.twig") }}
+  {{ include("FFFastBundle:Ingredients:form.html.twig") }}
 
   <p>
-    <a href="{{ path('ff_fast_home') }}" class="btn btn-default">
+    <a href="{{ path('ff_fast_homei') }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour
     </a>

@@ -6,24 +6,24 @@
 
 {% block ffgammes_body %}
 
-  <h2>{{ gammes.name}}</h2>
+  <h2>{{ ingredients.name}}</h2>
 
   <div class="well">
-    {{ gammes.description }}
+    {{ ingredients.description }}
   </div>
 
   <p>
-    <a href="{{ path('ff_fast_home') }}" class="btn btn-default">
+    <a href="{{ path('ff_fast_homei') }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour à la liste
     </a>
-    <a href="{{ path('ff_fast_edit', {'id': gammes.id}) }}" class="btn btn-default">
+    <a href="{{ path('ff_fast_editi', {'id': ingredients.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
-      Modifier la gamme
+      Modifier l'ingrédient
     </a>
-    <a href="{{ path('ff_fast_delete', {'id': gammes.id}) }}" class="btn btn-danger">
+    <a href="{{ path('ff_fast_deletei', {'id': ingredients.id}) }}" class="btn btn-danger">
       <i class="glyphicon glyphicon-trash"></i>
-      Supprimer la gamme
+      Supprimer l"ingrédient
     </a>
   </p>
 
