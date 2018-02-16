@@ -5,10 +5,10 @@ namespace FF\FastBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Gammes
+ * Ingredients
  *
- * @ORM\Table(name="gammes")
- * @ORM\Entity(repositoryClass="FF\FastBundle\Repository\GammesRepository")
+ * @ORM\Table(name="ingredients")
+ * @ORM\Entity(repositoryClass="FF\FastBundle\Repository\IngredientsRepository")
  */
 class Ingredients
 {
@@ -58,7 +58,7 @@ class Ingredients
      *
      * @param \DateTime $date
      *
-     * @return Gammes
+     * @return Ingredients
      */
     public function setDate($date)
     {
@@ -74,7 +74,7 @@ class Ingredients
      */
     public function getDate()
     {
-        return $this->date = new \Datetime();
+        return $this->date;
     }
 
     /**
@@ -82,7 +82,7 @@ class Ingredients
      *
      * @param string $name
      *
-     * @return Gammes
+     * @return Ingredients
      */
     public function setName($name)
     {
@@ -106,7 +106,7 @@ class Ingredients
      *
      * @param string $description
      *
-     * @return Gammes
+     * @return Ingredients
      */
     public function setDescription($description)
     {

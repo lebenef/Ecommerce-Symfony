@@ -73,7 +73,7 @@ class IngredientsController extends Controller
 				throw new NotFoundHttpException("L'Ingredient d'id ".$id." n'existe pas.");
 			}
 
-   		$form = $this->get('form.factory')->create(IngredientssType::class, $ingredients);
+   		$form = $this->get('form.factory')->create(IngredientsType::class, $ingredients);
 
 				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
 									$em = $this->getDoctrine()->getManager();
@@ -103,7 +103,7 @@ class IngredientsController extends Controller
   {
     $em = $this->getDoctrine()->getManager();
 
-    $ingredients = $em->getRepository('FFFastBundle:Ingredientss')->find($id);
+    $ingredients = $em->getRepository('FFFastBundle:Ingredients')->find($id);
 
     if (null === $ingredients) {
       throw new NotFoundHttpException("La Ingredients d'id ".$id." n'existe pas.");
