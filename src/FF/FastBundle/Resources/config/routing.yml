@@ -30,3 +30,31 @@ ff_fast_delete:
     path:      /gammes/delete/{id}
     defaults:
         _controller: FFFastBundle:Gammes:delete
+
+ff_fast_homei:
+    path:     /ingredient
+    defaults: { _controller: FFFastBundle:Ingredients:index }
+
+ff_fast_viewi:
+    path:      /ingredient/{id}
+    defaults:
+       _controller: FFFastBundle:Ingredients:view
+    requirements:
+       id: \d+
+
+ff_fast_addi:
+    path:     /ingredient/add
+    defaults:
+       _controller: FFFastBundle:Ingredients:add
+
+ff_fast_editi:
+    path:     /ingredient/edit/{id}
+    defaults:
+        _controller: FFFastBundle:Ingredients:edit
+    requirements:
+       id: \d+
+
+ff_fast_deletei:
+    path:      /ingredient/delete/{id}
+    defaults:
+        _controller: FFFastBundle:Ingredients:delete
