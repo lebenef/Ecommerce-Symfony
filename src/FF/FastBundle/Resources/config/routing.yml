@@ -55,7 +55,7 @@ ff_fast_editi:
        id: \d+
 
 ff_fast_deletei:
-    path:      /produit/delete/{id}
+    path:      /ingredient/delete/{id}
     defaults:
         _controller: FFFastBundle:Ingredients:delete
 
