@@ -1,0 +1,17 @@
+
+
+{% extends "FFFastBundle::layout.html.twig" %}
+ {% block title %} Ajouter une ingédient - {{ parent() }}{% endblock %}
+ {% block body %}
+
+  <h2>Ajouter un ingredient </h2>
+
+  {{ include("FFFastBundle:Ingredients:form.html.twig") }}
+
+  <p>
+    <a href="{{ path('ff_fast_homei') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+  </p>
+{% endblock %}

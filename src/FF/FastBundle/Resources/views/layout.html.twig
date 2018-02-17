@@ -3,9 +3,29 @@
   FastFood
 {% endblock %}
 
+{% block stylesheets %}
+ 
+  {# On charge le CSS de bootstrap depuis le site directement #}
+ 
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+ 
+{% endblock %}
+
 {% block body %}
   <h1>Mon Restaurant</h1>
   <hr>
+    <p>
+    <a href="{{ path('ff_fast_home') }}" class="btn btn-info">
+     
+      Gammes
+    </a>
+    
+      
+    <a href="{{ path('ff_fast_homei') }}" class="btn btn-info">
+      Ingrédients
+    </a>
+  
+  </p>
 {% endblock %}
 
   {% block ffgammes_body %}

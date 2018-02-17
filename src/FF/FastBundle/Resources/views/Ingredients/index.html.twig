@@ -7,13 +7,13 @@
 
 {% block ffgammes_body %}
 
-  <h2>Mes Gammes</h2>
+  <h2>Mes Ingredients</h2>
 
   <ul>
-    {% for gammes in listGammes %}
+    {% for ingredients in listIngredients %}
       <li>
-        <a href="{{ path('ff_fast_view', {'id': gammes.id}) }}">
-          {{ gammes.name }}
+        <a href="{{ path('ff_fast_viewi', {'id': ingredients.id}) }}">
+          {{ ingredients.name }}
         </a>
       </li>
     {% else %}
@@ -21,7 +21,7 @@
     {% endfor %}
   </ul>
   <p>
-    <a href="{{ path('ff_fast_add')}}" class="btn btn-success">
-Ajouter une gamme    </a>
+    <a href="{{ path('ff_fast_addi')}}" class="btn btn-success">
+Ajouter un ingredient    </a>
   </p>
 {% endblock %}
