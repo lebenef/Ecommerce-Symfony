@@ -1,0 +1,25 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer un produit - {{ parent() }}
+{% endblock %}
+
+{% block  ffgammes_body %}
+
+  <h2>Supprimer un produit </h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer le produit "{{ produit.name }}" ?
+  </p>
+
+  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+  <form action="{{ path('ff_fast_deletep', {'id': produits.id}) }}" method="post">
+    <a href="{{ path('ff_fast_viewp', {'id': produits.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour au produit
+    </a>
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}

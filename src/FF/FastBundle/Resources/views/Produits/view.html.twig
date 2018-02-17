@@ -1,15 +1,15 @@
 {% extends "FFFastBundle::layout.html.twig" %}
 
 {% block title %}
-  Lecture d'un ingredient - {{ parent() }}
+  Lecture d'une Produit - {{ parent() }}
 {% endblock %}
 
 {% block ffgammes_body %}
 
-  <h2>{{ ingredients.name}}</h2>
+  <h2>{{ Produits.name}}</h2>
 
   <div class="well">
-    {{ ingredients.description }}
+    {{ Produits.description }}
   </div>
 
   <p>
@@ -17,11 +17,11 @@
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour à la liste
     </a>
-    <a href="{{ path('ff_fast_editi', {'id': ingredients.id}) }}" class="btn btn-warning">
+    <a href="{{ path('ff_fast_editi', {'id': Produits.id}) }}" class="btn btn-warning">
       <i class="glyphicon glyphicon-edit"></i>
       Modifier
     </a>
-    <a href="{{ path('ff_fast_deletei', {'id': ingredients.id}) }}" class="btn btn-danger">
+    <a href="{{ path('ff_fast_deletei', {'id': Produits.id}) }}" class="btn btn-danger">
       <i class="glyphicon glyphicon-trash"></i>
       Supprimer
     </a>

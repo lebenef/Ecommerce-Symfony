@@ -55,6 +55,34 @@ ff_fast_editi:
        id: \d+
 
 ff_fast_deletei:
-    path:      /ingredient/delete/{id}
+    path:      /produit/delete/{id}
     defaults:
         _controller: FFFastBundle:Ingredients:delete
+
+ff_fast_homep:
+    path:     /produit
+    defaults: { _controller: FFFastBundle:Produits:index }
+
+ff_fast_viewp:
+    path:      /produit/{id}
+    defaults:
+       _controller: FFFastBundle:Produits:view
+    requirements:
+       id: \d+
+
+ff_fast_addp:
+    path:     /produit/add
+    defaults:
+       _controller: FFFastBundle:Produits:add
+
+ff_fast_editp:
+    path:     /produit/edit/{id}
+    defaults:
+        _controller: FFFastBundle:Produits:edit
+    requirements:
+       id: \d+
+
+ff_fast_deletep:
+    path:      /produit/delete/{id}
+    defaults:
+        _controller: FFFastBundle:Produits:delete
