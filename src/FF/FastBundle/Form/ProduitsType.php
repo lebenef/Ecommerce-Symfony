@@ -27,6 +27,11 @@ class ProduitsType extends AbstractType
             'choice_label' => 'name',
             'multiple'     => false,
           ))
+					->add('ingredients',     EntityType::class , array(
+            'class'        => 'FFFastBundle:Ingredients',
+            'choice_label' => 'name',
+            'multiple'     => true,
+          ))
 		  		->add('images',     ImagesType::class, array('required' => false)) 
           ->add('save',      SubmitType::class);  
     }/**
