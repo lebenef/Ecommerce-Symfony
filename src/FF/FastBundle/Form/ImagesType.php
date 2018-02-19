@@ -5,13 +5,10 @@ namespace FF\FastBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class GammesType extends AbstractType
+class ImagesType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,17 +16,16 @@ class GammesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-	      ->add('name',     TextType::class)
-	      ->add('description',   TextareaType::class)
-				->add('images',     ImagesType::class, array('required' => false)) 
-	      ->add('save',      SubmitType::class);
+      //->add('file' , FileType::class);
+      ->add('url', TextType::class)
+      ->add('alt', TextType::class);         
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FF\FastBundle\Entity\Gammes'
+            'data_class' => 'FF\FastBundle\Entity\Images'
         ));
     }
 
@@ -38,7 +34,7 @@ class GammesType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'ff_fastbundle_gammes';
+        return 'ff_fastbundle_images';
     }
 
 

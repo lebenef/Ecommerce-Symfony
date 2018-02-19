@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Produits
 {
+    /**
+    * @ORM\OneToOne(targetEntity="FF\FastBundle\Entity\Images", cascade={"persist"})
+    */
+   private $images;
    /**
    * @ORM\ManyToOne(targetEntity="FF\FastBundle\Entity\Gammes")
    * @ORM\JoinColumn(nullable=false)
@@ -129,5 +133,52 @@ class Produits
     {
         return $this->description;
     }
-}
 
+    /**
+     * Set gammes
+     *
+     * @param \FF\FastBundle\Entity\Gammes $gammes
+     *
+     * @return Produits
+     */
+    public function setGammes(\FF\FastBundle\Entity\Gammes $gammes)
+    {
+        $this->gammes = $gammes;
+
+        return $this;
+    }
+
+    /**
+     * Get gammes
+     *
+     * @return \FF\FastBundle\Entity\Gammes
+     */
+    public function getGammes()
+    {
+        return $this->gammes;
+    }
+
+    /**
+     * Set images
+     *
+     * @param \FF\FastBundle\Entity\Images $images
+     *
+     * @return Produits
+     */
+    public function setImages(\FF\FastBundle\Entity\Images $images = null)
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    /**
+     * Get images
+     *
+     * @return \FF\FastBundle\Entity\Images
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+}

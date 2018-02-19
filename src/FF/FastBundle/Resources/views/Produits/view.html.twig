@@ -12,6 +12,16 @@
   <div class="well">
     {{ produits.description }}
   </div>
+  
+      {% if produits.images != null %}
+
+    <img
+  {# src="{{ asset(produits.images.webPath) }}"#}
+  src="{{ produits.images.url}}"
+  alt="{{ produits.images.alt }}"
+  height="100"
+/>
+{% endif %}
 
   <p>
     <a href="{{ path('ff_fast_homep') }}" class="btn btn-default">
