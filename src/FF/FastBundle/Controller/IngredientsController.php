@@ -10,17 +10,34 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IngredientsController extends Controller
 {
-    public function indexAction()
+    public function indexAction($page)
     {
-					$repository = $this->getDoctrine()
+			  {
+    if ($page < 1) {
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+    }	
+					
+					$nbPerPage = 1;
+					
+			$repository = $this->getDoctrine()
 						->getManager()
 						->getRepository('FFFastBundle:Ingredients')
+			      ->getIngredients($page, $nbPerPage)
 						;
-					$listIngredients = $repository->findAll();
+					$listIngredients = $repository;
 			
-
-        return $this->render('FFFastBundle:Ingredients:index.html.twig', array('listIngredients' => $listIngredients) );
+         $nbPages = ceil(count($listIngredients) / $nbPerPage);
+  if ($page > $nbPages) {
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+		
+	}
+        return $this->render('FFFastBundle:Ingredients:index.html.twig', array(
+					'listIngredients' => $listIngredients,
+					'nbPages'         => $nbPages,
+					'page'            => $page,
+				) );
     }
+		}
 
     public function addAction(Request $request)
     {

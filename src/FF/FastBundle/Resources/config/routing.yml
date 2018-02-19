@@ -4,9 +4,10 @@ ff_fast_homepage:
 
 
 ff_fast_home:
-    path:     /gamme
-    defaults: { _controller: FFFastBundle:Gammes:index }
-
+    path:     /gamme/home/{page}
+    defaults: { _controller: FFFastBundle:Gammes:index, page :1 }
+    requirements:
+       id: \d+
 ff_fast_view:
     path:      /gamme/{id}
     defaults:
@@ -32,11 +33,13 @@ ff_fast_delete:
         _controller: FFFastBundle:Gammes:delete
 
 ff_fast_homei:
-    path:     /ingredient
-    defaults: { _controller: FFFastBundle:Ingredients:index }
-
+    path:     /ingredient/home/{page}
+    defaults: { _controller: FFFastBundle:Ingredients:index, page :1 }
+    requirements:
+        id: \d+
+       
 ff_fast_viewi:
-    path:      /ingredient/{id}
+    path:      /ingredient/view/{id}
     defaults:
        _controller: FFFastBundle:Ingredients:view
     requirements:
@@ -60,8 +63,8 @@ ff_fast_deletei:
         _controller: FFFastBundle:Ingredients:delete
 
 ff_fast_homep:
-    path:     /produit
-    defaults: { _controller: FFFastBundle:Produits:index }
+    path:     /produit/home/{page}
+    defaults: { _controller: FFFastBundle:Produits:index, page:1 }
 
 ff_fast_viewp:
     path:      /produit/{id}

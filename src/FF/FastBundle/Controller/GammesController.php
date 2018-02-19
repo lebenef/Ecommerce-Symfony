@@ -10,17 +10,36 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GammesController extends Controller
 {
-    public function indexAction()
+    public function indexAction($page)
     {
-					$repository = $this->getDoctrine()
+					
+		 {
+    	if ($page < 1) {
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+    }		
+			$nbPerPage = 1;
+					
+			$repository = $this->getDoctrine()
 						->getManager()
 						->getRepository('FFFastBundle:Gammes')
+						->getGammes($page, $nbPerPage)
+
 						;
-					$listGammes = $repository->findAll();
+					$listGammes = $repository;
+			 
+			   $nbPages = ceil(count($listGammes) / $nbPerPage);
+ 			 if ($page > $nbPages)
+			 {
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+				}
 			
 
-        return $this->render('FFFastBundle:Gammes:index.html.twig', array('listGammes' => $listGammes) );
+        return $this->render('FFFastBundle:Gammes:index.html.twig', array(
+					'listGammes' => $listGammes,
+					'nbPages'         => $nbPages,
+					'page'            => $page,				));
     }
+	}
 
     public function addAction(Request $request)
     {
