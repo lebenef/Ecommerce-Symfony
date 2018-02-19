@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-
 class ProduitsType extends AbstractType
 {
     /**
@@ -28,6 +27,7 @@ class ProduitsType extends AbstractType
             'choice_label' => 'name',
             'multiple'     => false,
           ))
+		  		->add('images',     ImagesType::class, array('required' => false)) 
           ->add('save',      SubmitType::class);  
     }/**
      * {@inheritdoc}

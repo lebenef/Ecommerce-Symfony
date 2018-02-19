@@ -30,6 +30,7 @@ class GammesController extends Controller
 				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
 									$em = $this->getDoctrine()->getManager();
 									$em->persist($gammes);
+					dump($gammes);
 									$em->flush();
 
 				
