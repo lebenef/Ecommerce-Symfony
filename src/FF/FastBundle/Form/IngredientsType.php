@@ -21,6 +21,7 @@ class IngredientsType extends AbstractType
         $builder
           ->add('name',     TextType::class)
           ->add('description',   TextareaType::class)
+		  		->add('images',     ImagesType::class, array('required' => false)) 
           ->add('save',      SubmitType::class);
     }/**
      * {@inheritdoc}

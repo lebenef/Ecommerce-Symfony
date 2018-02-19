@@ -5,18 +5,22 @@ namespace FF\FastBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Gammes
+ * Produits
  *
- * @ORM\Table(name="gammes")
- * @ORM\Entity(repositoryClass="FF\FastBundle\Repository\GammesRepository")
+ * @ORM\Table(name="produits")
+ * @ORM\Entity(repositoryClass="FF\FastBundle\Repository\ProduitsRepository")
  */
-class Gammes
+class Produits
 {
-     /**
-     * @ORM\OneToOne(targetEntity="FF\FastBundle\Entity\Images", cascade={"persist"})
-     */
-    private $images;
-
+    /**
+    * @ORM\OneToOne(targetEntity="FF\FastBundle\Entity\Images", cascade={"persist"})
+    */
+   private $images;
+   /**
+   * @ORM\ManyToOne(targetEntity="FF\FastBundle\Entity\Gammes")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $gammes;
     /**
      * @var int
      *
@@ -63,7 +67,7 @@ class Gammes
      *
      * @param \DateTime $date
      *
-     * @return Gammes
+     * @return Produits
      */
     public function setDate($date)
     {
@@ -79,7 +83,7 @@ class Gammes
      */
     public function getDate()
     {
-        return $this->date = new \Datetime();
+        return $this->date;
     }
 
     /**
@@ -87,7 +91,7 @@ class Gammes
      *
      * @param string $name
      *
-     * @return Gammes
+     * @return Produits
      */
     public function setName($name)
     {
@@ -111,7 +115,7 @@ class Gammes
      *
      * @param string $description
      *
-     * @return Gammes
+     * @return Produits
      */
     public function setDescription($description)
     {
@@ -131,11 +135,35 @@ class Gammes
     }
 
     /**
+     * Set gammes
+     *
+     * @param \FF\FastBundle\Entity\Gammes $gammes
+     *
+     * @return Produits
+     */
+    public function setGammes(\FF\FastBundle\Entity\Gammes $gammes)
+    {
+        $this->gammes = $gammes;
+
+        return $this;
+    }
+
+    /**
+     * Get gammes
+     *
+     * @return \FF\FastBundle\Entity\Gammes
+     */
+    public function getGammes()
+    {
+        return $this->gammes;
+    }
+
+    /**
      * Set images
      *
      * @param \FF\FastBundle\Entity\Images $images
      *
-     * @return Gammes
+     * @return Produits
      */
     public function setImages(\FF\FastBundle\Entity\Images $images = null)
     {

@@ -1,0 +1,41 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'un Produit - {{ parent() }}
+{% endblock %}
+
+{% block ffgammes_body %}
+
+  <h2>{{ produits.gammes.name}}</h2>
+  <h3>{{ produits.name}}</h3>
+
+  <div class="well">
+    {{ produits.description }}
+  </div>
+  
+      {% if produits.images != null %}
+
+    <img
+  {# src="{{ asset(produits.images.webPath) }}"#}
+  src="{{ produits.images.url}}"
+  alt="{{ produits.images.alt }}"
+  height="100"
+/>
+{% endif %}
+
+  <p>
+    <a href="{{ path('ff_fast_homep') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    <a href="{{ path('ff_fast_editp', {'id': produits.id}) }}" class="btn btn-warning">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier
+    </a>
+    <a href="{{ path('ff_fast_deletep', {'id': produits.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer
+    </a>
+  </p>
+
+{% endblock %}

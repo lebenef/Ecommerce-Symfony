@@ -1,7 +1,7 @@
 {% extends "FFFastBundle::layout.html.twig" %}
 
 {% block title %}
-  Lecture d'une Gamme - {{ parent() }}
+  Lecture d'un ingredient - {{ parent() }}
 {% endblock %}
 
 {% block ffgammes_body %}
@@ -11,6 +11,14 @@
   <div class="well">
     {{ ingredients.description }}
   </div>
+  {% if ingredients.images != null %}
+    <img
+  {# src="{{ asset(ingredients.images.webPath) }}"#}
+  src="{{ ingredients.images.url}}"
+  alt="{{ ingredients.images.alt }}"
+  height="100"
+/>
+{% endif %}
 
   <p>
     <a href="{{ path('ff_fast_homei') }}" class="btn btn-default">
@@ -21,7 +29,7 @@
       <i class="glyphicon glyphicon-edit"></i>
       Modifier
     </a>
-    <a href="{{ path('ff_fast_deletei', {'id': ingredients.id}) }}" class="btn btn-danger">
+    <a href="{{ path('ff_fast_deletep', {'id': ingredients.id}) }}" class="btn btn-danger">
       <i class="glyphicon glyphicon-trash"></i>
       Supprimer
     </a>

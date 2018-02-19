@@ -1,0 +1,19 @@
+
+
+{% extends "FFFastBundle::layout.html.twig" %}
+ {% block title %}Modification d'un produit - {{ parent() }} {% endblock %}
+ {% block body %}
+
+  <h2>Editer un produit </h2>
+
+  {{ include("FFFastBundle:Produits:form.html.twig") }}
+
+
+  <p>
+    <a href="{{ path('ff_fast_viewp', {'id': produits.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+  </p>
+
+{% endblock %}
