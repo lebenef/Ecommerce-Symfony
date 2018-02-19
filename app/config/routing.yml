@@ -1,3 +1,7 @@
+ff_core:
+    resource: "@FFCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ff_user:
     resource: "@FFUserBundle/Resources/config/routing.yml"
     prefix:   /
