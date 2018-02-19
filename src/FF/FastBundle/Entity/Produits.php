@@ -21,6 +21,11 @@ class Produits
    * @ORM\JoinColumn(nullable=false)
    */
   private $gammes;
+  
+   /**
+   * @ORM\ManyToMany(targetEntity="FF\FastBundle\Entity\Ingredients")
+   */
+  private $ingredients;
     /**
      * @var int
      *
@@ -157,6 +162,32 @@ class Produits
     {
         return $this->gammes;
     }
+  
+    /**
+     * Set ingredients
+     *
+     * @param \FF\FastBundle\Entity\Ingredients $ingredients
+     *
+     * @return Ingredients
+     */
+  
+      public function setIngredients(\FF\FastBundle\Entity\Gammes $ingredients)
+    {
+        $this->ingredient = $ingredients;
+
+        return $this;
+    }
+
+    /**
+     * Get ingredients
+     *
+     * @return \FF\FastBundle\Entity\Ingredients
+     */
+    public function getIngredients()
+    {
+        return $this->ingredients;
+    }
+
 
     /**
      * Set images
@@ -180,5 +211,36 @@ class Produits
     public function getImages()
     {
         return $this->images;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ingredient
+     *
+     * @param \FF\FastBundle\Entity\Ingredients $ingredient
+     *
+     * @return Produits
+     */
+    public function addIngredient(\FF\FastBundle\Entity\Ingredients $ingredient)
+    {
+        $this->ingredients[] = $ingredient;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingredient
+     *
+     * @param \FF\FastBundle\Entity\Ingredients $ingredient
+     */
+    public function removeIngredient(\FF\FastBundle\Entity\Ingredients $ingredient)
+    {
+        $this->ingredients->removeElement($ingredient);
     }
 }

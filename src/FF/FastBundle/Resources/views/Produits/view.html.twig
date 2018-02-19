@@ -8,6 +8,11 @@
 
   <h2>{{ produits.gammes.name}}</h2>
   <h3>{{ produits.name}}</h3>
+  <h4>
+  {% for ingredients in produits.ingredients %}
+  {{ingredients.name}}
+      {% endfor %}
+</h4>
 
   <div class="well">
     {{ produits.description }}

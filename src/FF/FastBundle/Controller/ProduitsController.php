@@ -10,18 +10,36 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProduitsController extends Controller
 {
-    public function indexAction()
+    public function indexAction($page)
     {
+								
+		 {
+    	if ($page < 1) {
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+    }		
+			 			$nbPerPage = 1;
+
 					$repository = $this->getDoctrine()
 						->getManager()
 						->getRepository('FFFastBundle:Produits')
+						->getProduits($page, $nbPerPage)
+
 						;
-					$listProduits = $repository->findAll();
+					$listProduits = $repository;
 			
-
-        return $this->render('FFFastBundle:Produits:index.html.twig', array('listProduits' => $listProduits) );
+			   $nbPages = ceil(count($listProduits) / $nbPerPage);
+ 			 if ($page > $nbPages)
+			 {
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+				}
+			 
+        return $this->render('FFFastBundle:Produits:index.html.twig', array(
+					'listProduits' => $listProduits,
+					'nbPages'         => $nbPages,
+					'page'            => $page,				));
+				
     }
-
+		}
     public function addAction(Request $request)
     {
    	 	$produits = new Produits();					
