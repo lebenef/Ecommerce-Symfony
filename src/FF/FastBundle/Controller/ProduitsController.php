@@ -6,10 +6,13 @@ use FF\FastBundle\Entity\Produits;
 use FF\FastBundle\Form\ProduitsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProduitsController extends Controller
 {
+
     public function indexAction($page)
     {
 								
@@ -17,7 +20,7 @@ class ProduitsController extends Controller
     	if ($page < 1) {
       throw $this->createNotFoundException("La page ".$page." n'existe pas.");
     }		
-			 			$nbPerPage = 1;
+			 			$nbPerPage = 10;
 
 					$repository = $this->getDoctrine()
 						->getManager()
@@ -42,7 +45,8 @@ class ProduitsController extends Controller
 		}
     public function addAction(Request $request)
     {
-   	 	$produits = new Produits();					
+
+	    $produits = new Produits();					
    		$form = $this->get('form.factory')->create(ProduitsType::class, $produits);
 						dump($form);
 
@@ -85,6 +89,7 @@ class ProduitsController extends Controller
 
     public function editAction($id,Request $request )
     {
+
     $em = $this->getDoctrine()->getManager();		
     $produits = $em->getRepository('FFFastBundle:Produits')->find($id);
 			
@@ -120,6 +125,7 @@ class ProduitsController extends Controller
 	
 	public function deleteAction(Request $request, $id)
   {
+
     $em = $this->getDoctrine()->getManager();
 
     $produits = $em->getRepository('FFFastBundle:Produits')->find($id);

@@ -6,6 +6,8 @@ use FF\FastBundle\Entity\Ingredients;
 use FF\FastBundle\Form\IngredientsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class IngredientsController extends Controller
@@ -17,7 +19,7 @@ class IngredientsController extends Controller
       throw $this->createNotFoundException("La page ".$page." n'existe pas.");
     }	
 					
-					$nbPerPage = 1;
+					$nbPerPage = 10;
 					
 			$repository = $this->getDoctrine()
 						->getManager()
@@ -41,6 +43,7 @@ class IngredientsController extends Controller
 
     public function addAction(Request $request)
     {
+
    	 	$ingredients = new Ingredients();					
    		$form = $this->get('form.factory')->create(IngredientsType::class, $ingredients);
 
@@ -82,6 +85,8 @@ class IngredientsController extends Controller
 
     public function editAction($id,Request $request )
     {
+
+			
     $em = $this->getDoctrine()->getManager();		
     $ingredients = $em->getRepository('FFFastBundle:Ingredients')->find($id);
 			
@@ -118,6 +123,7 @@ class IngredientsController extends Controller
 	
 	public function deleteAction(Request $request, $id)
   {
+
     $em = $this->getDoctrine()->getManager();
 
     $ingredients = $em->getRepository('FFFastBundle:Ingredients')->find($id);
