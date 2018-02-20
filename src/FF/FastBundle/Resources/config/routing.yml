@@ -1,5 +1,5 @@
 ff_fast_homepage:
-    path:     /
+    path:     /home
     defaults: { _controller: FFFastBundle:Default:index }
 
 

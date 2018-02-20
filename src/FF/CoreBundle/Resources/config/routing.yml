@@ -1,3 +1,3 @@
-oc_core_home:
-    path:      /home
+ff_core_home:
+    path:      /
     defaults:  { _controller: FFCoreBundle:Core:index }

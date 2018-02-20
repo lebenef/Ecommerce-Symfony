@@ -6,18 +6,20 @@ use FF\FastBundle\Entity\Gammes;
 use FF\FastBundle\Form\GammesType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class GammesController extends Controller
 {
     public function indexAction($page)
     {
-					
+	
 		 {
     	if ($page < 1) {
       throw $this->createNotFoundException("La page ".$page." n'existe pas.");
     }		
-			$nbPerPage = 1;
+			$nbPerPage = 10;
 					
 			$repository = $this->getDoctrine()
 						->getManager()
@@ -43,6 +45,7 @@ class GammesController extends Controller
 
     public function addAction(Request $request)
     {
+
    	 	$gammes = new Gammes();					
    		$form = $this->get('form.factory')->create(GammesType::class, $gammes);
 
@@ -85,6 +88,7 @@ class GammesController extends Controller
 
     public function editAction($id,Request $request )
     {
+
     $em = $this->getDoctrine()->getManager();		
     $gammes = $em->getRepository('FFFastBundle:Gammes')->find($id);
 			
@@ -121,6 +125,7 @@ class GammesController extends Controller
 	
 	public function deleteAction(Request $request, $id)
   {
+
     $em = $this->getDoctrine()->getManager();
 
     $gammes = $em->getRepository('FFFastBundle:Gammes')->find($id);
