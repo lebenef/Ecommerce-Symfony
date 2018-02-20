@@ -8,12 +8,13 @@
 
   <h2>{{ produits.gammes.name}}</h2>
   <h3>{{ produits.name}}</h3>
-  <h4>
+  <h5>Ingredients : 
   {% for ingredients in produits.ingredients %}
   {{ingredients.name}}
       {% endfor %}
-</h4>
-
+</h5>
+<h5>Prix : {{produits.price}} €</h5>
+<br>
   <div class="well">
     {{ produits.description }}
   </div>

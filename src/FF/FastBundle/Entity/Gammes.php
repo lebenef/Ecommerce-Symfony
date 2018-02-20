@@ -29,9 +29,9 @@ class Gammes
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
-    private $date;
+    private $date = null;
 
     /**
      * @var string
@@ -43,9 +43,9 @@ class Gammes
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
+    private $description = null;
 
 
     /**

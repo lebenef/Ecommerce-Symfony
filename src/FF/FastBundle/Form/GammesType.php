@@ -20,7 +20,7 @@ class GammesType extends AbstractType
     {
         $builder
 	      ->add('name',     TextType::class)
-	      ->add('description',   TextareaType::class)
+	      ->add('description',   TextareaType::class, array('required' => false))
 				->add('images',     ImagesType::class, array('required' => false)) 
 	      ->add('save',      SubmitType::class);
     }/**
