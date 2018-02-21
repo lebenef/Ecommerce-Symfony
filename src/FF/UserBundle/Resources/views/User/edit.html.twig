@@ -1,0 +1,17 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+ {% block title %}Modification du role - {{ parent() }} {% endblock %}
+ {% block body %}
+
+  <h2>Changer le role </h2>
+
+  {{ include("FFUserBundle:User:form.html.twig") }}
+
+
+  <p>
+    <a href="{{ path('ff_user_view', {'id': user.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+  </p>
+
+{% endblock %}

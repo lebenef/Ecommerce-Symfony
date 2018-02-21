@@ -38,24 +38,30 @@ class Produits
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
-    private $date;
+    private $date = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255,)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
-
+    private $description = null;
+  
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", scale=2, type="float")
+     */
+    private $price;
 
     /**
      * Get id
@@ -137,6 +143,33 @@ class Produits
     public function getDescription()
     {
         return $this->description;
+    }
+
+  
+  
+  
+      /**
+     * Set price
+     *
+     * @param float $price
+     *
+     * @return Produits
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 
     /**

@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class ProduitsType extends AbstractType
 {
@@ -21,7 +22,7 @@ class ProduitsType extends AbstractType
     {
         $builder
           ->add('name',     TextType::class)
-          ->add('description',   TextareaType::class)
+          ->add('description',   TextareaType::class, array('required' => false))
           ->add('gammes',     EntityType::class , array(
             'class'        => 'FFFastBundle:Gammes',
             'choice_label' => 'name',
@@ -31,8 +32,12 @@ class ProduitsType extends AbstractType
             'class'        => 'FFFastBundle:Ingredients',
             'choice_label' => 'name',
             'multiple'     => true,
+						'expanded'     => true,
           ))
+					->add('price',      MoneyType::class) 
+
 		  		->add('images',     ImagesType::class, array('required' => false)) 
+					
           ->add('save',      SubmitType::class);  
     }/**
      * {@inheritdoc}
