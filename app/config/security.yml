@@ -4,7 +4,9 @@ security:
     FF\UserBundle\Entity\User: sha512
 
   role_hierarchy:
-       ROLE_ADMIN:       [ROLE_CUISINIER]
+       ROLE_USER:       [ROLE_USER]
+
+       ROLE_ADMIN:       [ROLE_USER, ROLE_CUISINIER]
         # On garde ce rôle superadmin, il nous resservira par la suite
        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 

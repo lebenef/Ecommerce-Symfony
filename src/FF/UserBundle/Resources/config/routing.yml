@@ -1,3 +1,27 @@
 ff_user_homepage:
     path:     /hello
     defaults: { _controller: FFUserBundle:Default:index }
+    
+ff_user_home:
+    path:     /user/home/{page}
+    defaults: { _controller: FFUserBundle:User:index, page :1 }
+    requirements:
+       id: \d+
+ff_user_view:
+    path:      /user/{id}
+    defaults:
+       _controller: FFUserBundle:User:view
+    requirements:
+       id: \d+
+
+ff_user_edit:
+    path:     /user/edit/{id}
+    defaults:
+        _controller: FFUserBundle:User:edit
+    requirements:
+       id: \d+
+
+ff_user_delete:
+    path:      /user/delete/{id}
+    defaults:
+        _controller: FFUserBundle:User:delete

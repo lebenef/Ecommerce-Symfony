@@ -32,6 +32,7 @@ class ProduitsType extends AbstractType
             'class'        => 'FFFastBundle:Ingredients',
             'choice_label' => 'name',
             'multiple'     => true,
+						'expanded'     => true,
           ))
 					->add('price',      MoneyType::class) 
 

@@ -1,0 +1,42 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Utilisateur - {{ parent() }}
+{% endblock %}
+
+{% block ffgammes_body %}
+
+  <h4>Nom : {{ user.username}}</h4>
+  <br>
+  <h4>Email: {{ user.email}}</h4>
+  <br>
+  <h4>Roles:
+  {% for role in user.roles %}
+       {% if role == 'ROLE_ADMIN' %}
+     Administrateur
+     {% endif %}
+      {% if role == 'ROLE_USER' %}
+     Utilisateur
+     {% endif %}
+            {% if role == 'ROLE_CUISINIER' %}
+     Cuisinier
+     {% endif %}
+{% endfor %}
+</h4>
+
+  <p>
+    <a href="{{ path('ff_user_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    <a href="{{ path('ff_user_edit', {'id': user.id}) }}" class="btn btn-warning">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier
+    </a>
+    <a href="{{ path('ff_user_delete', {'id': user.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer
+    </a>
+  </p>
+
+{% endblock %}
