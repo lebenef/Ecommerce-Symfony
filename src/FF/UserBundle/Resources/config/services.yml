@@ -1,9 +1,4 @@
-services:
-    ff_user.registration:
-        class: FF\UserBundle\Form\RegistrationType
-        arguments: ["%fos_user.model.user.class%"]
-        tags:
-            - { name: form.type , alias: ff_user_registration}
+
 #    ff_user.example:
 #        class: FF\UserBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
