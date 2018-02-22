@@ -1,0 +1,4 @@
+services:
+#    ff_shop.example:
+#        class: FF\ShopBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

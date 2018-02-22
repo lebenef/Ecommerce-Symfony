@@ -148,29 +148,7 @@ class Produits
   
   
   
-      /**
-     * Set price
-     *
-     * @param float $price
-     *
-     * @return Produits
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
 
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
 
     /**
      * Set gammes
@@ -275,5 +253,29 @@ class Produits
     public function removeIngredient(\FF\FastBundle\Entity\Ingredients $ingredient)
     {
         $this->ingredients->removeElement($ingredient);
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     *
+     * @return Produits
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

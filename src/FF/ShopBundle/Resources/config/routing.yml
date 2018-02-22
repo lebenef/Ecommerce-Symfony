@@ -1,0 +1,13 @@
+ff_shop_homepage:
+    path:     /shop
+    defaults: { _controller: FFShopBundle::index }
+    
+ff_shop_home:
+    path:     /shop/home/{page}
+    defaults: { _controller: FFShopBundle:Shop:index, page :1 }
+    requirements:
+       id: \d+
+       
+ff_shop_view:
+    path:     /shop/view/{id}
+    defaults: { _controller: FFShopBundle:Shop:view }

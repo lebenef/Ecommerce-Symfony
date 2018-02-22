@@ -28,7 +28,8 @@ class GammesController extends Controller
 
 						;
 					$listGammes = $repository;
-			 
+			 			dump($listGammes);
+
 			   $nbPages = ceil(count($listGammes) / $nbPerPage);
  			 if ($page > $nbPages)
 			 {

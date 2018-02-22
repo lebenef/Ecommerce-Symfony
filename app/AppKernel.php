@@ -21,7 +21,7 @@ class AppKernel extends Kernel
             new FF\UserBundle\FFUserBundle(),
             new FF\CoreBundle\FFCoreBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-
+            new FF\ShopBundle\FFShopBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
