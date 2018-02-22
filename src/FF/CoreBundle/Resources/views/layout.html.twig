@@ -22,7 +22,7 @@
     Connecté en tant que {{ app.user.username }}
     -
     <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
-    <a href="{{ path('fos_user_profile_show') }}">Profile</a>
+    <a href="{{ path('fos_user_profile_edit') }}">Profile</a>
 
     {% else %}
     <a href="{{ path('fos_user_security_login') }}">Connexion</a>
@@ -42,6 +42,9 @@
 ​
           <li><a href="{{ path('ff_fast_homep') }}">Produits</a></li>
           <li><a href="{{ path('ff_fast_addp') }}">Ajouter un Produit</a></li>
+          
+          <li><a href="{{ path('ff_user_home') }}">Liste Utilisateurs</a></li>
+
         </ul>
       </div>
       

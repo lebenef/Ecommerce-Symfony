@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 
-class RegistrationType extends AbstractType
+class ProfileType extends AbstractType
 {
   
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,14 +31,14 @@ class RegistrationType extends AbstractType
       public function getParent()
       {
         
-        return 'FOS\UserBundle\Form\Type\RegistrationFormType';  
+        return 'FOS\UserBundle\Form\Type\ProfileFormType';  
       }
   
       public function getName()
     {
     
 
-      return 'ff_user_registration';
+      return 'ff_user_profile';
     }
 
 }
