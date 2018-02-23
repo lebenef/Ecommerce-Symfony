@@ -1,7 +1,3 @@
-ff_shop:
-    resource: "@FFShopBundle/Resources/config/routing.yml"
-    prefix:   /
-
 ff_core:
     resource: "@FFCoreBundle/Resources/config/routing.yml"
     prefix:   /

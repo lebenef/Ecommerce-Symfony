@@ -89,3 +89,27 @@ ff_fast_deletep:
     path:      /produit/delete/{id}
     defaults:
         _controller: FFFastBundle:Produits:delete
+        
+        
+        
+ff_fast_homepages:
+    path:     /shop
+    defaults: { _controller: FFFastBundle::index }
+    
+ff_fast_homes:
+    path:     /shop/home/{page}
+    defaults: { _controller: FFFastBundle:Shop:index, page :1 }
+    requirements:
+       id: \d+
+       
+ff_fast_gammes:
+    path:     /shop/home/gamme/{gamme}/{page}
+    defaults: { _controller: FFFastBundle:Shop:gamme, page :1 }
+    requirements:
+       gamme: \d+
+      
+       
+ff_fast_views:
+    path:     /shop/view/{id}
+    defaults: { _controller: FFFastBundle:Shop:view }
+

@@ -1,0 +1,26 @@
+{% extends "FFCoreBundle::layout.html.twig" %}
+
+{% block menu %}
+         <div class="row">
+          
+
+        <div class="col-lg-3">
+
+          <h1 class="my-4">Back Office</h1>
+          
+          <div class="list-group">
+          
+          <a href="{{ path('ff_fast_homei') }}" class="list-group-item">Ingredients</a>
+          <a href="{{ path('ff_fast_addi') }}" class="list-group-item">Ajouter un Ingredient</a>
+          <a href="{{ path('ff_fast_home') }}" class="list-group-item">Gammes</a>
+          <a href="{{ path('ff_fast_add') }}" class="list-group-item">Ajouter une Gamme </a>
+          <a href="{{ path('ff_fast_homep') }}" class="list-group-item">Produits</a>
+          <a href="{{ path('ff_fast_addp') }}" class="list-group-item">Ajouter un Produit</a>
+          <a href="{{ path('ff_user_home') }}" class="list-group-item">Liste Utilisateurs</a>
+          
+          </div>
+
+        </div>
+
+
+{% endblock %}
