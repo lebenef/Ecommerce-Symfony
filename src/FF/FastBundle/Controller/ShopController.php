@@ -9,6 +9,8 @@ use FF\FastBundle\Form\GammesType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ShopController extends Controller
 {
@@ -83,8 +85,32 @@ class ShopController extends Controller
   
   
 	
-    public function viewAction($id)
+    public function viewAction(Request $request, $id)
       {			
+		$nb = array('nb' => 'nb');
+    // On ajoute les champs de l'entité que l'on veut à notre formulaire
+    $form = $this->createFormBuilder($nb)
+            ->setAction($this->generateUrl('ff_fast_addc'))
+            ->setMethod('POST')
+         	 ->add('nb',     ChoiceType::class , array(
+            'choices' => array(
+            '1'     => 1,
+            '2'     => 2,
+            '3'     => 3,
+            '4'     => 4,
+            '5'     => 5,
+            '6'     => 6,
+            '7'     => 7,
+            '8'     => 8,
+            '9'     => 9,
+           '10'     => 10,
+
+          ), 
+						))
+				 ->add('save',      SubmitType::class)
+         ->getForm();
+		     $form->handleRequest($request);
+
 					$repository = $this->getDoctrine()
 						->getManager()
 						->getRepository('FFFastBundle:Produits')
@@ -100,11 +126,15 @@ class ShopController extends Controller
       throw new NotFoundHttpException("Le Produit d'id ".$id." n'existe pas.");
 					}
 						dump($produits);
-      return $this->render('FFFast:Shop:view.html.twig', array(
+      return $this->render('FFFastBundle:Shop:view.html.twig', array(
           'produits' => $produits,
 				  'listGammes' => $listGammes,
+				  'form' => $form->createView(),
+
         ));
     }
+	
+	
 }
 		
 

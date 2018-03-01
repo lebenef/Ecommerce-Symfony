@@ -9,11 +9,10 @@
           
           <div class="list-group">
           
-        <a href="{{ path('ff_fast_homes')}}" class="list-group-item"> Accueil </a>
+        <a href="{{ path('ff_fast_show')}}" class="list-group-item"> Panier </a>
+        <a href="{{ path('ff_fast_homes')}}" class="list-group-item"> Adresse </a>
+        <a href="{{ path('ff_fast_homes')}}" class="list-group-item"> Paiement </a>
 
-          {% for gammes in listGammes %}
-            <a href="{{ path('ff_fast_gammes', {'gamme': gammes.id})}}" class="list-group-item"> {{gammes.name}} </a>
-          {% endfor %}
           
           </div>
 

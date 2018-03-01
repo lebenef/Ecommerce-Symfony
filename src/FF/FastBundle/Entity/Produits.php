@@ -278,4 +278,31 @@ class Produits
     {
         return $this->price;
     }
+  
+  
+  
+    /**
+     * Set view
+     *
+     * @param FormView $view
+     *
+     * @return Produits
+     */
+  
+      public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Get view
+     *
+     * @return FormView
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
 }

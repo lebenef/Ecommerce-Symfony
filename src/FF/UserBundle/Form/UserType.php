@@ -30,6 +30,8 @@ class UserType extends AbstractType
                     (
                             'ROLE_ADMIN' => 'ROLE_ADMIN',
                             'ROLE_CUISINIER' => 'ROLE_CUISINIER',
+                            'ROLE_LIVREUR' => 'ROLE_LIVREUR',
+
                     ) ,
                 'multiple' => true,
                 'required' => true,

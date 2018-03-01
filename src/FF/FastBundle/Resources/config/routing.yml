@@ -112,4 +112,68 @@ ff_fast_gammes:
 ff_fast_views:
     path:     /shop/view/{id}
     defaults: { _controller: FFFastBundle:Shop:view }
+    requirements:
+       id: \d+    
+    
+ff_fast_show:
+    path:     /cart/show
+    defaults: { _controller: FFFastBundle:Cart:show }
+    
+ff_fast_addc:
+    path:     /cart/add/{productId}
+    defaults: { _controller: FFFastBundle:Cart:add ,productId :1}
+    requirements:
+       id: \d+   
+       
+ff_fast_deletec:
+    path:     /cart/delete/{idProduits}/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:delete }
+    requirements:
+       id: \d+  
+       
+ff_fast_editc:
+    path:     /cart/edit/{idProduits}/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:edit ,idProduits :1, idCart :1 }
+    requirements:
+       id: \d+  
 
+ff_fast_clearc:
+    path:     /cart/clear/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:clear}
+    requirements:
+       id: \d+ 
+       
+ff_fast_viewc:
+    path:     /cart/view/
+    defaults: { _controller: FFFastBundle:Cart:view}
+    requirements:
+       id: \d+ 
+       
+ff_fast_commandec:
+    path:     /cart/commande/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:commande}
+    requirements:
+       id: \d+ 
+       
+       
+ff_fast_homeco:
+    path:     /commande/home/{page}
+    defaults: { _controller: FFFastBundle:Commande:index, page :1}
+    requirements:
+       id: \d+ 
+       
+ff_fast_viewco:
+    path:     /commande/view/{id}
+    defaults: { _controller: FFFastBundle:Commande:view}
+    requirements:
+       id: \d+ 
+       
+ff_fast_editco:
+    path:     /commande/edit/{idCommande}
+    defaults: { _controller: FFFastBundle:Commande:edit, idCommande:1 }
+    requirements:
+       id: \d+  
+       
+ff_fast_list:
+    path:     /cart/list/{page}
+    defaults: { _controller: FFFastBundle:Cart:list, page :1}

@@ -1,0 +1,45 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'une Commande  - {{ parent() }}
+{% endblock %}
+
+{% block ffgammes_body %}
+
+  <h2>Commande</h2>
+
+  <div class="well">
+  
+     {% if commande.etat == '0' %}
+     Validée
+     {% endif %}
+      {% if commande.etat == '1' %}
+     En cours de Préparation
+     {% endif %}
+     {% if commande.etat == '2' %}
+     Préparé
+     {% endif %}
+     
+  {% if commande.etat == '3' %}
+     En cours de Livraison
+     {% endif %}
+     
+  {% if commande.etat == '4' %}
+      Livré
+     {% endif %}
+
+  </div>
+
+
+  <p>
+    <a href="{{ path('ff_fast_homeco') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    <a href="{{ path('ff_fast_editco', {'idCommande': commande.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Modifier
+    </a>
+  </p>
+
+{% endblock %}

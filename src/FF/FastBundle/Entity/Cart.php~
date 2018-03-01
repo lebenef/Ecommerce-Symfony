@@ -107,28 +107,4 @@ class Cart
     {
         return $this->cartProducts;
     }
-
-    /**
-     * Set user
-     *
-     * @param string $user
-     *
-     * @return Cart
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }

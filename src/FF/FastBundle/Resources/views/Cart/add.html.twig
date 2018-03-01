@@ -1,0 +1,23 @@
+
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ffgammes_body %}
+
+  <h2>Mes Ingredients</h2>
+
+  <ul>
+  
+    {% for product in products %}
+      <li>
+          {{ product.name }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  
+
+{% endblock %}

@@ -1,0 +1,59 @@
+
+{% extends "FFFastBundle:Cart:menu.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Panier</h2>
+      {% if vide == true %}
+
+          <p> Panier vide </p>
+      
+      {% else %}
+
+<di>
+  <ul>
+          
+
+      <a href="{{ path('ff_fast_clearc', {'idCart': products[0].cart.id}) }}," class="btn btn-outline-warning">
+
+      <i class="glyphicon glyphicon-chevron-left"></i>
+Vider le panier
+</a>
+    {% for product in products %}
+      <li>
+      <br>
+      <div class="row">
+         <p> Produit : {{ product.produits.name }}  </p>   &nbsp;    Quantité : </p>
+         
+              {{ form_start(product.view, {'action': path('ff_fast_editc', {'idProduits': product.produits.id, 'idCart': product.cart.id }), 'method': 'POST'}) }}
+{{ form_widget(product.view.nb, {value : product.quantity }) }}
+
+
+{{ form_widget(product.view.Modifier, {'attr': { 'class': 'btn btn-outline-success' } } ) }}
+
+
+      <a href="{{ path('ff_fast_deletec', {'idProduits': product.produits.id, 'idCart': product.cart.id}) }}," class="btn btn-outline-danger">
+      Supprimer 
+    </a>
+        {{ form_end(product.view) }}
+    </div>
+      </li>
+      <br>
+    {% endfor %}
+  </ul>
+  
+  Prix total : {{ products[0].cart.totalprice }}
+  
+     <a href="{{ path('ff_fast_viewc') }}" class= "btn btn-success">
+      Commander 
+    </a>
+    
+  </div>
+     {% endif  %}
+
+
+{% endblock %}

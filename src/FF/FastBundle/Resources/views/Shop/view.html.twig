@@ -1,11 +1,12 @@
-{% extends "FFShopBundle::menu.html.twig" %}
+{% extends "FFFastBundle:Shop:menu.html.twig" %}
 
     {% block body %}
-
+<br>
 <div class="col-lg-9">
+<br>
 
-          <div class="card mt-4">
-            <img class="card-img-top img-fluid"   src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="100">
+          <div class="col-lg-9">
+            <img class= "img-responsive"   src="{{ produits.images.url}}"alt="{{ produits.images.alt }} "height="200">
             <div class="card-body">
               <h3 class="card-title">{{ produits.name}}</h3>
               <h4>Prix : {{produits.price}} €</h4>
@@ -14,9 +15,21 @@
                            {{ingredients.name}}
                         {% endfor %}
                   <br>
+                    <div class="col-2">
+      {{ form_start(form, {'action': path('ff_fast_addc', {'productId': produits.id}), 'method': 'POST'}) }}
+
+
+        {{ form_end(form) }}
+
+                   </div>
+            
                         {{produits.description}}
 </p>
-                                <a href="" class="btn btn-success">
+                     <a href="{{ path('ff_fast_addc', {'productId': produits.id})}}" class="btn btn-success">
+                     
+                     
+                     
+                     
 
       <i class="glyphicon glyphicon-edit"></i>
       Ajouter au Panier
