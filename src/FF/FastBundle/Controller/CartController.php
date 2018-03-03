@@ -312,6 +312,7 @@ class CartController extends Controller
         $commande->addCommandeproduit($commandeproduit);
           $commandeproduit->setCommande($commande);
         $commandeproduit->setProduits($produit);
+				$commandeproduit->setEtat('0');
                 dump($commandeproduit);
             }
         }
@@ -335,7 +336,7 @@ class CartController extends Controller
       $em->remove($one_cart);
       $em->flush();
 		
-              return $this->redirect($this->generateUrl(''));
+              return $this->redirect($this->generateUrl('ff_fast_list'));
  
        
     }
@@ -406,6 +407,34 @@ class CartController extends Controller
 				
     }
   
+	
+	    public function viewcommandeAction(Request $request, $id)
+      {			
+				dump($id);
+
+					$repository = $this->getDoctrine()
+						->getManager()
+						->getRepository('FFFastBundle:Commande')
+						;
+					$commande = $repository->find($id);
+			
+						$repository2 = $this->getDoctrine()
+						->getManager()
+						->getRepository('FFFastBundle:CommandeProduit')
+						;
+					$commandeproduit = $repository2->findByCommande($id);
+
+				if (null === $commande) {
+      throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
+					}
+						dump($commandeproduit);
+      return $this->render('FFFastBundle:Cart:viewcommande.html.twig', array(
+          'commande' => $commande,
+				   'commandeproduit' => $commandeproduit,
+				
+
+        ));
+    }
 
 	}
 

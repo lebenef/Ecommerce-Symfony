@@ -1,0 +1,42 @@
+{% extends "FFFastBundle:Livreur:menu.html.twig" %}
+
+
+    {% block body %}
+
+  <h2>Liste des Commmandes</h2>
+
+  <ul>
+    {% for commande in listCommandes %}
+      <li>
+          N° {{ commande.id}}            {{ commande.date |date('d-m-Y')}} {{ commande.user.username }} 
+         <a href="{{ path('ff_fast_viewcu', {'id': commande.id}) }}">
+voir
+
+        </a>
+      </li>
+    {% endfor %}
+
+  </ul>
+
+           
+
+        </div>
+        <!-- /.col-lg-9 -->
+<nav aria-label="Page navigation example">
+
+    <ul class="pagination">
+  {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+  {% for p in range(1, nbPages) %}
+    <li class="page-item" {% if p == page %} class="page-item active" {% endif %}>
+      <a class="page-link" href="{{ path('ff_fast_homecu',{'etat': 'etat'}, {'page': p}) }}">{{ p }}</a>
+    </li>
+  {% endfor %}
+</ul>
+</nav>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

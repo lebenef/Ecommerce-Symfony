@@ -1,0 +1,26 @@
+
+
+{% extends "FFFastBundle:Cuisnier:menu.html.twig" %}
+ {% block title %}Modification d'une commande  - {{ parent() }} {% endblock %}
+ {% block body %}
+
+  <h2>Editer une Commande </h2>
+
+
+
+
+      {{ form_start(form, {'action': path('ff_fast_editco', {'idCommande': commande.id}), 'method': 'POST'}) }}
+
+{{ form_widget(form.etat, {value : commande.etat }) }}
+
+
+        {{ form_end(form) }}
+
+  <p>
+    <a href="{{ path('ff_fast_viewco', {'id': commande.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+  </p>
+
+{% endblock %}

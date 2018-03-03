@@ -20,8 +20,7 @@ class Commande
    */
    private $user;
    /**
-   * @ORM\OneToMany(targetEntity="FF\FastBundle\Entity\CommandeProduit", mappedBy="commandeproduit", cascade={"all"})
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\OneToMany(targetEntity="FF\FastBundle\Entity\CommandeProduit", mappedBy="commande", cascade={"all"})
    */
   private $commandeproduit;
  
@@ -136,7 +135,7 @@ class Commande
      *
      * @return Commande
      */
-    public function setEtat()
+    public function setEtat($etat)
     {
         $this->etat = $etat;
 

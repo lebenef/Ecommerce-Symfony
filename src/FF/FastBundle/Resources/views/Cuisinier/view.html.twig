@@ -1,10 +1,10 @@
-{% extends "FFFastBundle::layout.html.twig" %}
+{% extends "FFFastBundle:Cuisinier:menu.html.twig" %}
 
 {% block title %}
   Lecture d'une Commande  - {{ parent() }}
 {% endblock %}
 
-{% block ffgammes_body %}
+{% block body %}
 
   <h2>Commande {{commande.id}}</h2>
 
@@ -32,11 +32,11 @@
 
 
   <p>
-    <a href="{{ path('ff_fast_homeco') }}" class="btn btn-default">
+    <a href="{{ path('ff_fast_homecu') }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour à la liste
     </a>
-    <a href="{{ path('ff_fast_editco', {'idCommande': commande.id}) }}" class="btn btn-default">
+    <a href="{{ path('ff_fast_editcu', {'idCommande': commande.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Modifier
     </a>

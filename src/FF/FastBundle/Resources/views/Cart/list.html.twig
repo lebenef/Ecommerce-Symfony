@@ -11,9 +11,9 @@
   <ul>
     {% for commande in listCommandes %}
       <li>
-         Commande numéro {{ commande.id }}
+         Commande numéro : {{ commande.id }} Le : 
           {{ commande.date |date('d-m-Y')}}
-       
+       Etat : 
      {% if commande.etat == '0' %}
      Validée
      {% endif %}
@@ -32,7 +32,9 @@
       Livré
      {% endif %}
 
-        </a>
+    <a href="{{ path('ff_fast_viewcommande', {'id' : commande.id} ) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+Voir    </a>        
       </li>
     {% endfor %}
 

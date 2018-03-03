@@ -39,6 +39,12 @@
               <a class="nav-link" href="{{ path('ff_core_home')}}">Admin</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{{ path('ff_fast_homecu')}}">Cuisinier</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('ff_fast_homel')}}">Livreur</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{ path('ff_fast_show')}}">Panier</a>
             </li>
             <li class="nav-item">
@@ -48,7 +54,7 @@
         </div>
       </div>
     </nav>
-        <!-- /.container -->
+        <!-- /.container -->  
 
     
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}

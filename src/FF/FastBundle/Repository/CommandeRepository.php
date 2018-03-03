@@ -52,4 +52,27 @@ class CommandeRepository extends \Doctrine\ORM\EntityRepository
     // (n'oubliez pas le use correspondant en début de fichier)
     return new Paginator($query, true);
   }
+  
+  
+        public function getCommandeEtat($page, $nbPerPage, $etat)
+  {
+      
+       $query = $this->createQueryBuilder('a')
+      ->orderBy('a.date')
+      ->where('a.etat = :etat')
+      ->setParameter('etat', $etat)
+      ->getQuery()
+    ;
+
+    $query
+      // On définit l'annonce à partir de laquelle commencer la liste
+      ->setFirstResult(($page-1) * $nbPerPage)
+      // Ainsi que le nombre d'annonce à afficher sur une page
+      ->setMaxResults($nbPerPage)
+    ;
+
+    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+    // (n'oubliez pas le use correspondant en début de fichier)
+    return new Paginator($query, true);
+  }
 }

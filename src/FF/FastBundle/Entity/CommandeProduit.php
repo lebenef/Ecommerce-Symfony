@@ -15,7 +15,7 @@ use FF\FastBundle\Entity\Commande;
 class CommandeProduit
 {
    /**
-   * @ORM\ManyToOne(targetEntity="FF\FastBundle\Entity\Commande" ,inversedBy="commande")
+   * @ORM\ManyToOne(targetEntity="FF\FastBundle\Entity\Commande" ,inversedBy="commandeproduit")
    */
    private $commande;
    /**
@@ -45,6 +45,7 @@ class CommandeProduit
      */
     public function __construct()
     {
+        $this->date = new \Datetime();
         $this->etat = 0;  
           
     }
@@ -114,7 +115,7 @@ class CommandeProduit
      *
      * @return CommandeProduit
      */
-    public function setEtat($etat = 0)
+    public function setEtat($etat)
     {
         $this->etat = $etat;
 
@@ -129,5 +130,22 @@ class CommandeProduit
     public function getEtat()
     {
         return $this->etat;
+    }
+  
+        public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Get view
+     *
+     * @return FormView
+     */
+    public function getView()
+    {
+        return $this->view;
     }
 }

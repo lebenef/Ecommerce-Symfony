@@ -1,0 +1,102 @@
+
+{% extends "FFFastBundle:Cart:menu.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<h1>Récapitulatif</1>
+
+  <h2>Commande N° {{commande.id}}</h2>
+
+  <div class="well">
+  
+     {% if commande.etat == '0' %}
+     Validée
+     {% endif %}
+      {% if commande.etat == '1' %}
+     En cours de Préparation
+     {% endif %}
+     {% if commande.etat == '2' %}
+     Préparé
+     {% endif %}
+     
+  {% if commande.etat == '3' %}
+     En cours de Livraison
+     {% endif %}
+     
+  {% if commande.etat == '4' %}
+      Livré
+     {% endif %}
+
+  </div>
+<br>
+<div>
+<p>
+{{commande.user.nom}}
+{{commande.user.prenom}}
+{{commande.user.adresse}}
+{{commande.user.codepostal}}
+{{commande.user.ville}}
+{{commande.user.pays}}
+{{commande.user.telephone}}
+
+</p>
+
+</div>
+
+  <ul>
+          
+    {% for comprod in commandeproduit %}
+
+      <br>
+      <div class="row">
+         <p> Produit : {{comprod.produits.name}}
+         
+             
+                    Etat : 
+     {% if comprod.etat == '0' %}
+     Validée
+     {% endif %}
+      {% if comprod.etat == '1' %}
+     En cours de Préparation
+     {% endif %}
+     {% if comprod.etat == '2' %}
+     Préparé
+     {% endif %}
+     
+  {% if comprod.etat == '3' %}
+     En cours de Livraison
+     {% endif %}
+     
+  {% if comprod.etat == '4' %}
+      Livré
+     {% endif %}
+         </p>  
+         
+
+
+
+    </div>
+      <br>
+        {% endfor %}
+
+  </ul>
+  
+  Prix total :
+  
+    <a href="{{ path('ff_fast_show') }}, " class="btn btn-outline-danger">
+      Retour 
+    </a>
+    
+
+  
+
+
+{% endblock %}
+
+
+
+

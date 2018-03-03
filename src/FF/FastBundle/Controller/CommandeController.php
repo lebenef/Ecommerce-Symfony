@@ -95,12 +95,13 @@ dump($idCommande);
 						))
 				 ->add('save',      SubmitType::class)
          ->getForm();
-						     $form->handleRequest($request);
+				
 
   dump($form);
   dump($commande);
 
 				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
+dump($request);
 									$em = $this->getDoctrine()->getManager();
 									$em->flush();
 

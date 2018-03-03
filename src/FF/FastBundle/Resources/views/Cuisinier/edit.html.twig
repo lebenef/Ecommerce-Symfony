@@ -1,0 +1,62 @@
+
+
+{% extends "FFFastBundle:Cuisinier:menu.html.twig" %}
+ {% block title %}Modification d'une commande  - {{ parent() }} {% endblock %}
+ {% block body %}
+
+  <h2>Editer une Commande </h2>
+
+          
+    {% for produits in commandeproduit %}
+ 
+      <br>
+      <div class="row">
+         <p> Produit : {{produits.produits.name}}
+             Etat :      
+     {% if produits.etat == '0' %}
+     Validée
+     {% endif %}
+      {% if produits.etat == '1' %}
+     En cours de Préparation
+     {% endif %}
+     {% if produits.etat == '2' %}
+     Préparé
+     {% endif %}
+     
+  {% if produits.etat == '3' %}
+     En cours de Livraison
+     {% endif %}
+     
+  {% if produits.etat == '4' %}
+      Livré
+     {% endif %}
+     
+      {% if produits.etat == '1' %}
+
+                 <a href="{{ path('ff_fast_editcp', {'idCommandeProduit': produits.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Pret
+    </a>
+               {% endif %}
+
+
+
+    </div>
+      <br>
+        {% endfor %}
+
+
+
+
+        
+        
+
+
+  <p>
+    <a href="{{ path('ff_fast_viewcu', {'id': commande.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+  </p>
+
+{% endblock %}
