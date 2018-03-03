@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}Fast Food{% endblock %}</title>
+
+{%stylesheets'@FFFastBundle/Resources/public/vendor/bootstrap/css/bootstrap.min.css' filter='cssrewrite' %}
+  <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets '@FFFastBundle/Resources/public/css/round-about.css' filter='cssrewrite' %}
+  <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+  {% block stylesheets %}
+    {# On charge le CSS de bootstrap depuis le site directement #}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  {% endblock %}
+  
+
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Fast Food</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+        <!-- /.container -->
+
+    
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    Connecté en tant que {{ app.user.username }}
+    -
+    <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+    <a href="{{ path('fos_user_profile_edit') }}">Profile</a>
+
+    {% else %}
+    <a href="{{ path('fos_user_security_login') }}">Connexion</a>
+    <a href="{{ path('fos_user_registration_register') }}">S'enregistrer</a>
+
+    {% endif %}
+
+        {% block menu %}
+        {% endblock %}
+   
+      <div id="content" class="col-md-9">
+      <div id="content" class="col-md-9">
+      
+        {% block body %}
+        {% endblock %}
+      </div>
+    </div>
+
+    <hr>
+
+
+  </div>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+       Pour votre santé, mangez au moins cinq fruits et légumes par jour.
+      <br> 
+      Pour votre santé, évitez de manger trop gras, trop sucré, trop salé.
+      <br> 
+      Pour votre santé, évitez de grignoter entre les repas.
+        </p>
+      </div>
+      <!-- /.container -->
+    </footer>
+    
+  {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+  
+  {%javascripts '@FFFastBundle/Resources/public/vendor/jquery/jquery.min.js' %}
+    <script src="{{asset_url}}"></script>
+{%endjavascripts%}
+
+{#{%javascripts '@FFFastBundle/Resources/public/vendor/boostrap/js/bootsrap.bundle.min.js' %}
+    <script src="{{asset_url}}"></script>
+{% endjavascripts%}#}
+
+</body>
+</html>

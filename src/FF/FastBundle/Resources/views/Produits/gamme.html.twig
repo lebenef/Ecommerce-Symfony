@@ -1,0 +1,35 @@
+{% extends "FFFastBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ffgammes_body %}
+
+  <h2>Mes Produits</h2>
+
+  <ul>
+    {% for produits in listProduits %}
+      <li>
+        <a href="{{ path('ff_fast_viewp', {'id': produits.id}) }}">
+          {{ produits.name }}
+        </a>
+      </li>
+    {% else %}
+      <li>Il n'y a pas encore de produits !</li>
+    {% endfor %}
+  </ul>
+    <ul class="pagination">
+  {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+  {% for p in range(1, nbPages) %}
+    <li{% if p == page %} class="active"{% endif %}>
+      <a href="{{ path('ff_fast_homei', {'page': p}) }}">{{ p }}</a>
+    </li>
+  {% endfor %}
+</ul>
+  <p>
+    <a href="{{ path('ff_fast_addp')}}" class="btn btn-success">
+Ajouter un produit    </a>
+  </p>
+  
+{% endblock %}

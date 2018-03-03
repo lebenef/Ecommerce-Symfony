@@ -38,24 +38,30 @@ class Produits
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
-    private $date;
+    private $date = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255,)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
-
+    private $description = null;
+  
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", scale=2, type="float")
+     */
+    private $price;
 
     /**
      * Get id
@@ -139,6 +145,11 @@ class Produits
         return $this->description;
     }
 
+  
+  
+  
+
+
     /**
      * Set gammes
      *
@@ -211,5 +222,36 @@ class Produits
     public function getImages()
     {
         return $this->images;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ingredient
+     *
+     * @param \FF\FastBundle\Entity\Ingredients $ingredient
+     *
+     * @return Produits
+     */
+    public function addIngredient(\FF\FastBundle\Entity\Ingredients $ingredient)
+    {
+        $this->ingredients[] = $ingredient;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingredient
+     *
+     * @param \FF\FastBundle\Entity\Ingredients $ingredient
+     */
+    public function removeIngredient(\FF\FastBundle\Entity\Ingredients $ingredient)
+    {
+        $this->ingredients->removeElement($ingredient);
     }
 }

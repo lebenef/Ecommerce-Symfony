@@ -1,0 +1,22 @@
+    {% extends "FFCoreBundle::layout.html.twig" %}
+    {% block menu %}
+         <div class="row">
+          
+
+        <div class="col-lg-3">
+
+          <h1 class="my-4">Fast Food</h1>
+          
+          <div class="list-group">
+          
+        <a href="{{ path('ff_fast_homes')}}" class="list-group-item"> Accueil </a>
+
+          {% for gammes in listGammes %}
+            <a href="{{ path('ff_fast_gammes', {'gamme': gammes.id})}}" class="list-group-item"> {{gammes.name}} </a>
+          {% endfor %}
+          
+          </div>
+
+        </div>
+        
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "FFCoreBundle::layout.html.twig" %}
+
+{% block menu %}
+         <div class="row">
+          
+
+        <div class="col-lg-3">
+
+          <h1 class="my-4">Cuisinier</h1>
+          
+          <div class="list-group">
+          
+          <a href="{{ path('ff_fast_homecu') }}" class="list-group-item">Accueil </a>
+          <a href="{{ path('ff_fast_etat' , {'etat': '0'} ) }}" class="list-group-item">Commandes non Traités</a>
+          <a href="{{ path('ff_fast_etat' ,{'etat': '1'}) }}" class="list-group-item">Commandes en Cours</a>
+
+
+          
+          </div>
+
+        </div>
+
+
+{% endblock %}

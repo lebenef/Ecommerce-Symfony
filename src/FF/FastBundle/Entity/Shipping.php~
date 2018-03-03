@@ -1,0 +1,29 @@
+<?php
+namespace FF\FastBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+#use AppBundle\Entity\User;
+#use AppBundle\Entity\Product;
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="shipping")
+ */
+class Shipping
+{
+    
+   /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
+    /** 
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="Produits") 
+     */
+    protected $product;
+    /** 
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="Cart", inversedBy="cartProducts") 
+     */
+    protected $cart;
+    
+}

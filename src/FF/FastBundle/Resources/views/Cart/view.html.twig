@@ -1,0 +1,56 @@
+
+{% extends "FFFastBundle:Cart:menu.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<h1>Récapitulatif</1>
+
+<br>
+<div>
+<p>
+{{user.user.nom}}
+{{user.user.prenom}}
+{{user.user.adresse}}
+{{user.user.codepostal}}
+{{user.user.ville}}
+{{user.user.pays}}
+{{user.user.telephone}}
+
+</p>
+
+</div>
+
+  <ul>
+          
+    {% for product in products %}
+      <li>
+      <br>
+      <div class="row">
+         <p> Produit : {{ product.produits.name }}  </p>   &nbsp;    Quantité : {{product.quantity }}</p>
+         
+
+
+
+    </div>
+      </li>
+      <br>
+    {% endfor %}
+  </ul>
+  
+  Prix total : {{ products[0].cart.totalprice }}
+  
+    <a href="{{ path('ff_fast_show') }}, " class="btn btn-outline-danger">
+      Retour 
+    </a>
+    
+     <a href="{{ path('ff_fast_commandec', {'idCart': products[0].cart.id}) }}," class= "btn btn-success">
+      Commander 
+    </a>
+  
+
+
+{% endblock %}

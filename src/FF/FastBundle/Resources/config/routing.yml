@@ -89,3 +89,165 @@ ff_fast_deletep:
     path:      /produit/delete/{id}
     defaults:
         _controller: FFFastBundle:Produits:delete
+        
+        
+        
+ff_fast_homepages:
+    path:     /shop
+    defaults: { _controller: FFFastBundle::index }
+    
+ff_fast_homes:
+    path:     /shop/home/{page}
+    defaults: { _controller: FFFastBundle:Shop:index, page :1 }
+    requirements:
+       id: \d+
+       
+ff_fast_gammes:
+    path:     /shop/home/gamme/{gamme}/{page}
+    defaults: { _controller: FFFastBundle:Shop:gamme, page :1 }
+    requirements:
+       gamme: \d+
+      
+       
+ff_fast_views:
+    path:     /shop/view/{id}
+    defaults: { _controller: FFFastBundle:Shop:view }
+    requirements:
+       id: \d+    
+    
+ff_fast_show:
+    path:     /cart/show
+    defaults: { _controller: FFFastBundle:Cart:show }
+    
+ff_fast_addc:
+    path:     /cart/add/{productId}
+    defaults: { _controller: FFFastBundle:Cart:add ,productId :1}
+    requirements:
+       id: \d+   
+       
+ff_fast_deletec:
+    path:     /cart/delete/{idProduits}/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:delete }
+    requirements:
+       id: \d+  
+       
+ff_fast_editc:
+    path:     /cart/edit/{idProduits}/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:edit ,idProduits :1, idCart :1 }
+    requirements:
+       id: \d+  
+
+ff_fast_clearc:
+    path:     /cart/clear/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:clear}
+    requirements:
+       id: \d+ 
+       
+ff_fast_viewc:
+    path:     /cart/view/
+    defaults: { _controller: FFFastBundle:Cart:view}
+    requirements:
+       id: \d+ 
+       
+ff_fast_commandec:
+    path:     /cart/commande/{idCart}
+    defaults: { _controller: FFFastBundle:Cart:commande}
+    requirements:
+       id: \d+ 
+       
+       
+ff_fast_homeco:
+    path:     /commande/home/{page}
+    defaults: { _controller: FFFastBundle:Commande:index, page :1}
+    requirements:
+       id: \d+ 
+       
+ff_fast_viewco:
+    path:     /commande/view/{id}
+    defaults: { _controller: FFFastBundle:Commande:view}
+    requirements:
+       id: \d+ 
+       
+ff_fast_editco:
+    path:     /commande/edit/{idCommande}
+    defaults: { _controller: FFFastBundle:Commande:edit, idCommande:1 }
+    requirements:
+       id: \d+  
+       
+ff_fast_list:
+    path:     /cart/list/{page}
+    defaults: { _controller: FFFastBundle:Cart:list, page :1}
+    
+ff_fast_viewcommande:
+    path:     /cart/viewcommande/{id}
+    defaults: { _controller: FFFastBundle:Cart:viewcommande}
+    requirements:
+       id: \d+ 
+       
+       
+ff_fast_homecu:
+    path:     /cuisinier/home/{page}
+    defaults: { _controller: FFFastBundle:Cuisinier:index, page :1}
+    requirements:
+       id: \d+
+       
+ff_fast_etat:
+    path:     /cusinier/home/etat/{etat}/{page}
+    defaults: { _controller: FFFastBundle:Cuisinier:etat, page :1 }
+    requirements:
+       gamme: \d+
+
+
+ff_fast_viewcu:
+    path:     /cuisinier/view/{id}
+    defaults: { _controller: FFFastBundle:Cuisinier:view}
+    requirements:
+       id: \d+ 
+       
+ff_fast_editcu:
+    path:     /cuisinier/edit/{idCommande}
+    defaults: { _controller: FFFastBundle:Cuisinier:edit, idCommande:1 }
+    requirements:
+       id: \d+  
+              
+ff_fast_editcu:
+    path:     /cuisinier/edit/{idCommande}
+    defaults: { _controller: FFFastBundle:Cuisinier:edit, idCommande:1 }
+    requirements:
+       id: \d+  
+              
+ff_fast_editcp:
+    path:     /cuisinier/cp/{idCommandeProduit}
+    defaults: { _controller: FFFastBundle:Cuisinier:cp, idCommandeProduit:1 }
+    requirements:
+       id: \d+  
+       
+ff_fast_homel:
+    path:     /livreur/home/{page}
+    defaults: { _controller: FFFastBundle:Livreur:index, page :1}
+    requirements:
+       id: \d+
+       
+ff_fast_etatl:
+    path:     /livreur/home/etat/{etat}/{page}
+    defaults: { _controller: FFFastBundle:Livreur:etat, page :1 }
+    requirements:
+       gamme: \d+
+       
+ff_fast_viewl:
+    path:     /livreur/view/{id}
+    defaults: { _controller: FFFastBundle:Livreur:view}
+    requirements:
+       id: \d+ 
+       
+ff_fast_editl:
+    path:     /livreur/edit/{idCommande}
+    defaults: { _controller: FFFastBundle:Livreur:edit, idCommande:1 }
+    requirements:
+       id: \d+
+       
+ff_fast_editcpl:
+    path:     /livreur/cp/{idCommande}
+    defaults: { _controller: FFFastBundle:Livreur:cp }
+    requirements:
+       id: \d+                

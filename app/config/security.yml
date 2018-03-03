@@ -6,7 +6,7 @@ security:
   role_hierarchy:
        ROLE_USER:       [ROLE_USER]
 
-       ROLE_ADMIN:       [ROLE_USER, ROLE_CUISINIER]
+       ROLE_ADMIN:       [ROLE_USER, ROLE_CUISINIER, ROLE_LIVREUR]
         # On garde ce rôle superadmin, il nous resservira par la suite
        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
