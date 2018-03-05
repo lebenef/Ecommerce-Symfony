@@ -41,10 +41,10 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="{{ path('ff_fast_views', {'id': produits.id})}}"><img src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="100"/></a>
+                <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}"><img src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="100"/></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                   <a href="{{ path('ff_fast_views', {'id': produits.id})}}">{{ produits.name}}</a>
+                   <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}">{{ produits.name}}</a>
                   </h4>
                   <h5>{{ produits.price}} €</h5>
                   <p class="card-text">Ingredients : 
@@ -58,11 +58,21 @@
                 </div>
                 <div class="card-footer">
                   <small class="text-muted">
-                     <a href="{{ path('ff_fast_addc', {'productId': produits.id})}}" class="btn btn-success">
+                  
+            {% if panier[produits.id] is not defined %}
+     
+                     <a href="{{ path('ff_fast_addc', {'idProduits': produits.id})}}" class="btn btn-success">
 
       <i class="glyphicon glyphicon-edit"></i>
       Ajouter au Panier
     </a>
+    
+                            {% else %}
+                            <div>
+                                <a href="{{ path('ff_fast_show') }}" class="btn btn-primary">Dans votre panier</a>
+                            </div>
+                        {% endif %}
+    
                   </small>
                 </div>
               </div>

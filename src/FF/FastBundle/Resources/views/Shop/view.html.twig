@@ -16,24 +16,36 @@
                         {% endfor %}
                   <br>
                     <div class="col-2">
-      {{ form_start(form, {'action': path('ff_fast_addc', {'productId': produits.id}), 'method': 'POST'}) }}
 
+              {% if panier[produits.id] is not defined %}
+                        <form action="{{ path('ff_fast_addc', { 'idProduits' : produits.id }) }}" method="get">
+                            <select name="qte" class="span1">
+                                {% for i in 1..10 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
 
-        {{ form_end(form) }}
+                            <div>
+                            <br>
+
+                                <button class="btn btn-success">Ajouter au panier</button>
+                            </div>
+                        </form>
+                        {% else %}
+                            <div>
+                                <a href="{{ path('ff_fast_show') }}" class="btn btn-primary">Le produit est déjà dans votre panier</a>
+                            </div>
+                        {% endif %}
 
                    </div>
             
                         {{produits.description}}
 </p>
-                     <a href="{{ path('ff_fast_addc', {'productId': produits.id})}}" class="btn btn-success">
                      
                      
                      
                      
 
-      <i class="glyphicon glyphicon-edit"></i>
-      Ajouter au Panier
-    </a>
             </div>
           </div>
           <!-- /.card -->
