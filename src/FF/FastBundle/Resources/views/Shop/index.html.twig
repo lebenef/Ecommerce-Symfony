@@ -2,8 +2,9 @@
 
 
     {% block body %}
+<main role="main" class="col-md- ml-sm-auto col-lg-10 pt-3 px-4">
 
-        <div class="col-lg-9">
+        <div class="col-lg-8">
 
           <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -32,16 +33,22 @@
             </a>
           </div>
 
-   
 
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('ff_fast_accueil') }}">Accueil</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Général</li>
+  </ol>
+</nav>
           <div class="row">
+
 
   {% for produits in listProduits %}
 
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-3 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}"><img src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="100"/></a>
+                <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}"><img class="card-img-top" src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="150" /></a>
                 <div class="card-body">
                   <h4 class="card-title">
                    <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}">{{ produits.name}}</a>
@@ -63,13 +70,16 @@
      
                      <a href="{{ path('ff_fast_addc', {'idProduits': produits.id})}}" class="btn btn-success">
 
-      <i class="glyphicon glyphicon-edit"></i>
-      Ajouter au Panier
+  <i class="fa fa-cart-plus" ></i>
+      Ajouter 
     </a>
     
                             {% else %}
                             <div>
-                                <a href="{{ path('ff_fast_show') }}" class="btn btn-primary">Dans votre panier</a>
+                                <a href="{{ path('ff_fast_show') }}" class="btn btn-primary">
+                                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> 
+                                 Dans votre panier
+                                </a>
                             </div>
                         {% endif %}
     
@@ -100,4 +110,5 @@
 
     </div>
     <!-- /.container -->
+  </main>
 {% endblock %}

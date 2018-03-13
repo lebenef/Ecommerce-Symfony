@@ -1,24 +1,43 @@
 {% extends "FFCoreBundle::layout.html.twig" %}
 
 {% block menu %}
-         <div class="row">
-          
-
-        <div class="col-lg-3">
-
-          <h1 class="my-4">Cuisinier</h1>
-          
-          <div class="list-group">
-          
-          <a href="{{ path('ff_fast_homecu') }}" class="list-group-item">Accueil </a>
-          <a href="{{ path('ff_fast_etat' , {'etat': '0'} ) }}" class="list-group-item">Commandes non Traités</a>
-          <a href="{{ path('ff_fast_etat' ,{'etat': '1'}) }}" class="list-group-item">Commandes en Cours</a>
 
 
-          
+<div class="container-fluid">
+
+    <div class="row d-flex d-md-block flex-nowrap wrapper">
+     
+
+        <div class="col-md-3 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
+        
+        <nav class="col-md-2  d-md-block bg-light sidebar">
+
+          <div class="sidebar-sticky bg-light">
+                            <h3 class="my-4">Cuisinier</h3>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="{{ path('ff_fast_homecu') }}">
+                  <span data-feather="home"></span>
+                  Accueil <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_etat' , {'etat': '0'} ) }}">
+                  <span data-feather="list"></span>
+                  Commandes non Traités
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_etat' ,{'etat': '1'}) }}">
+                  <span data-feather="list"></span>
+                  Commande en Cours
+                </a>             
+                
+            </ul>
+
+           
           </div>
-
-        </div>
-
+        </nav>
+          </div>
 
 {% endblock %}

@@ -59,5 +59,63 @@ class ProduitsRepository extends \Doctrine\ORM\EntityRepository
     // (n'oubliez pas le use correspondant en début de fichier)
     return new Paginator($query, true);
   }
+  
+  public function getSearch($search ,$page, $nbPerPage)
+  {
+    $query = $this->createQueryBuilder('a')
+      ->select('a')
+      ->join('a.ingredients', 'i')
+      ->orderBy('a.name')
+      ->where('a.name LIKE :search')
+      ->orwhere('a.description LIKE :search')
+      ->orwhere('a.price LIKE :search')
+      ->orwhere('i.name LIKE :search')
+      ->setParameter('search', '%'.addcslashes($search, '%_').'%')
+      ->getQuery()
+    ;
+
+    $query
+      // On définit l'annonce à partir de laquelle commencer la liste
+      ->setFirstResult(($page-1) * $nbPerPage)
+      // Ainsi que le nombre d'annonce à afficher sur une page
+      ->setMaxResults($nbPerPage)
+    ;
+
+    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+    // (n'oubliez pas le use correspondant en début de fichier)
+    return new Paginator($query, true);
+  }
+  
+   public function getNb()
+  {
+    $query = $this->createQueryBuilder('a')
+      ->select('COUNT(a) as nb , Identity(a.gammes) as id')
+      ->orderBy('a.gammes')
+      ->groupBy('a.gammes')
+      ->getQuery()
+
+    ;
+
+    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+    // (n'oubliez pas le use correspondant en début de fichier)
+    return($query->getResult());
+  } 
+  
+  public function getNbt()
+  {
+    $query = $this->createQueryBuilder('a')
+      ->select('COUNT(a)')
+      ->getQuery()
+      ->getSingleScalarResult();
+
+    ;
+
+    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+    // (n'oubliez pas le use correspondant en début de fichier)
+    return($query);
+  }
 }
+
+
+
 

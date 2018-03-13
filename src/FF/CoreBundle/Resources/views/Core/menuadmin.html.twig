@@ -1,0 +1,66 @@
+{% extends "FFCoreBundle::layout.html.twig" %}
+
+{% block menu %}
+<div class="container-fluid">
+
+ <div class="row">
+ 
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+
+          <div class="sidebar-sticky">
+                            <h3 class="my-4">Administrateur</h3>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="{{ path('ff_core_hometest') }}">
+                  <span data-feather="home"></span>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_homeco') }}">
+                  <span data-feather="file"></span>
+                  Commandes
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_homep') }}">
+                  <span data-feather="shopping-cart"></span>
+                  Produits
+                </a>             
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_home') }}">
+                  <span data-feather="list"></span>
+                  Gammes
+                </a>                
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_homei') }}">
+                  <span data-feather="list"></span>
+                  Ingredien
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{path('ff_user_home')}}">
+                  <span data-feather="users"></span>
+                  Utilisateurs
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="bar-chart-2"></span>
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="layers"></span>
+                  Integrations
+                </a>
+              </li>
+            </ul>
+
+           
+          </div>
+        </nav>
+
+
+{% endblock %}

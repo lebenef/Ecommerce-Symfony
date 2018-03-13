@@ -1,28 +1,75 @@
 {% extends "FFCoreBundle::layout.html.twig" %}
 
 {% block menu %}
-         <div class="row">
-          
+<div class="container-fluid">
 
-        <div class="col-lg-3">
+    <div class="row d-flex d-md-block flex-nowrap wrapper">
+     
 
-          <h1 class="my-4">Administrateur</h1>
-          
-          <div class="list-group">
-          
-          <a href="{{ path('ff_fast_homei') }}" class="list-group-item">Ingredients</a>
-          <a href="{{ path('ff_fast_addi') }}" class="list-group-item">Ajouter un Ingredient</a>
-          <a href="{{ path('ff_fast_home') }}" class="list-group-item">Gammes</a>
-          <a href="{{ path('ff_fast_add') }}" class="list-group-item">Ajouter une Gamme </a>
-          <a href="{{ path('ff_fast_homep') }}" class="list-group-item">Produits</a>
-          <a href="{{ path('ff_fast_addp') }}" class="list-group-item">Ajouter un Produit</a>
-          <a href="{{ path('ff_user_home') }}" class="list-group-item">Liste Utilisateurs</a>
-          <a href="{{ path('ff_fast_homeco') }}" class="list-group-item">Liste Commandes</a>
+        <div class="col-md-3 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar"> 
+        <nav class="col-md-2 d-md-block bg-light sidebar">
 
-          
+          <div class="sidebar-sticky bg-light">
+                            <h3 class="my-4">Administrateur</h3>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="{{ path('ff_core_home') }}">
+                  <span data-feather="home"></span>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_homeco') }}">
+                  <span data-feather="file"></span>
+                  Commandes
+                </a>
+              </li>              
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_core_commentaire') }}">
+                  <span data-feather="message-circle"></span>
+                  Commentaires
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_homep') }}">
+                  <span data-feather="shopping-cart"></span>
+                  Produits
+                </a>             
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_home') }}">
+                  <span data-feather="list"></span>
+                  Gammes
+                </a>                
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_homei') }}">
+                  <span data-feather="list"></span>
+                  Ingredients
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{path('ff_user_home')}}">
+                  <span data-feather="users"></span>
+                  Utilisateurs
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="bar-chart-2"></span>
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="layers"></span>
+                  Integrations
+                </a>
+              </li>
+            </ul>
+
+           
           </div>
+        </nav>
 
-        </div>
-
+          </div>
 
 {% endblock %}

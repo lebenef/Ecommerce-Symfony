@@ -2,15 +2,35 @@
 
 
     {% block body %}
-    
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+  <div id="content" class="col-md-8">
+  {% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>Succès!</strong> {{ message|trans({}, 'FFFastBundle') }}
+    </div>
+  {% endfor %}
+{% endfor %}
     
   <h2>Liste des Commmandes à Livrer</h2>
-
-  <ul>
-    {% for commande in listCommandes %}
-      <li>
-          N° {{ commande.id}}            {{ commande.date |date('d-m-Y')}} {{ commande.user.username }}  Etat :      
-    {% if commande.etat == '0' %}
+ <table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Numéro</th>
+      <th>Date </th>
+      <th>Etat</th>
+      <th>Livreur</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for commande in listCommandes %}
+    <tr>
+      <th scope="row"> {{ commande.id }}</th>
+      <td>{{ commande.date |date('d-m-Y')}}</td>
+      <td>     
+      {% if commande.etat == '0' %}
      Validée
      {% endif %}
       {% if commande.etat == '1' %}
@@ -27,24 +47,35 @@
   {% if commande.etat == '4' %}
       Livré
      {% endif %}
+     </td>
      
-     
+     <td>
+         {% if commande.livreur == null %}
+            Non attribuée 
+      {% else %}
+           {{commande.livreur.nom }}  {{commande.livreur.prenom }}
+        {% endif %}    
+      </td>
+      <td>
          {% if commande.etat == '2' %}
-         <a href="{{ path('ff_fast_editl', {'idCommande': commande.id}) }}">
-prendre en charge 
-        </a>     {% endif %}
+         <a href="{{ path('ff_fast_editl', {'idCommande': commande.id}) }}"  class="btn btn-success btn-sm">
+        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+            Livrer 
+        </a>  
+      {% endif %}
       {% if commande.etat == '3' %}
-         <a href="{{ path('ff_fast_editl', {'idCommande': commande.id}) }}">
-voir
+         <a href="{{ path('ff_fast_editl', {'idCommande': commande.id}) }}" class="btn btn-secondary btn-sm">
+         <i class="fa fa-eye" aria-hidden="true"></i>
 
-        </a>     {% endif %}
+        </a>     
+        {% endif %}    
+      </td>
+    </tr>
+   {% endfor %}
 
-
-        </a>
-      </li>
-    {% endfor %}
-
-  </ul>
+  </tbody>
+</table>
+ 
   
 <nav aria-label="Page navigation example">
 
@@ -64,4 +95,6 @@ voir
 
     </div>
     <!-- /.container -->
+    
+</main>
 {% endblock %}

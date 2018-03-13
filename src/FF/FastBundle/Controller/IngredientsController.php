@@ -65,7 +65,7 @@ class IngredientsController extends Controller
 					$em->persist($ingredients);
 					$em->flush();
 				
-        	$request->getSession()->getFlashBag()->add('notice', 'Ingredient bien enregistrée.');
+        	$request->getSession()->getFlashBag()->add('success', 'Ingredient bien enregistrée.');
 
         	return $this->redirectToRoute('ff_fast_viewi', array('id' => $ingredients->getId()));
       }
@@ -124,7 +124,7 @@ class IngredientsController extends Controller
 					$em->flush();
 
 
-					$request->getSession()->getFlashBag()->add('notice', 'Ingredient bien modifiée.');
+					$request->getSession()->getFlashBag()->add('success', 'Ingredient bien modifiée.');
 					return $this->redirectToRoute('ff_fast_viewi', array('id' => $ingredients->getId()));
 					
 			}

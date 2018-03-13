@@ -1,22 +1,49 @@
     {% extends "FFCoreBundle::layout.html.twig" %}
     {% block menu %}
-         <div class="row">
-          
 
-        <div class="col-lg-3">
+        <div class="container-fluid">
 
-          <h1 class="my-4">Fast Food</h1>
-          
-          <div class="list-group">
-          
-        <a href="{{ path('ff_fast_homes')}}" class="list-group-item"> Accueil </a>
+    <div class="row d-flex d-md-block flex-nowrap wrapper">
+     
 
-          {% for gammes in listGammes %}
-            <a href="{{ path('ff_fast_gammes', {'gamme': gammes.id})}}" class="list-group-item"> {{gammes.name}} </a>
-          {% endfor %}
-          
+        <div class="col-md-3 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
+
+        <nav class="col-md-2  d-md-block bg-light sidebar">
+
+          <div class="sidebar-sticky bg-light">
+
+                            <h3 class="my-2">Fast Food</h3>
+            <ul class="nav flex-column">
+              <li class="nav-item ">
+                <a class="nav-link active"  href="{{ path('ff_fast_homes') }}">
+                  <span data-feather="home"></span>
+                  Accueil <span class="sr-only">(current)</span>
+                </a>
+              </li>
+                 <a class="nav-link" href="{{ path('ff_fast_homes')}}">
+                  <span data-feather="list"></span>
+                  Voir tout  <span class="badge badge-pill badge-secondary"> {{nbt}}</span>
+                </a>
+               {% for gammes in listGammes %}
+               
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_gammes', {'gamme': gammes.id})}}">
+                  <span data-feather="list"></span>
+                  {{gammes.name}}
+                                 {% for nb in nbs %}
+{% if gammes.id == nb.id %}
+                  <span class="badge badge-pill badge-secondary"> {{nb.nb}}</span>
+               {% endif %}
+                              {% endfor %}
+
+                </a>
+              </li>
+               {% endfor %}
+            </ul>
+
+           
           </div>
+        </nav>
+                  </div>
 
-        </div>
-        
 {% endblock %}

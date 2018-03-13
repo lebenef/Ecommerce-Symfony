@@ -1,4 +1,4 @@
-{% extends "FFFastBundle:Cart:menu.html.twig" %}
+{% extends "FFCoreBundle::layout.html.twig" %}
 {% set total = 0 %}
 
 {% block title %}
@@ -6,6 +6,48 @@
 {% endblock %}
 
 {% block body %}
+<div id="content" class="col-md-8 my-4 center-block">
+<div>
+<div>
+ <div class="row">
+
+ <div class="progresss">
+ 
+<div class="circle done">
+<span class="label"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+</span>
+<span class="title">0%</span>
+</div>
+<span class="bar done"></span>
+
+<div class="circle done">
+<span class="label"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">25%</span>
+</div>
+<span class="bar done "></span>
+
+<div class="circle done ">
+<span class="label"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">50%</span>
+</div>
+<span class="bar active "></span>
+<div class="circle active">
+<span class="label"><i class="fa fa-paypal" aria-hidden="true"></i>
+</i>
+</span>
+<span class="title">75%</span>
+</div>
+<span class="bar"></span>
+<div class="circle">
+<span class="label"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+</i>
+
+<span class="title">100%</span>
+</div>
+</div>
+</div>
 <h2>Valider mon panier</h2>
             <table class="table table-striped table-hover">
                 <thead>
@@ -56,19 +98,25 @@
 
             
             <div class="clearfix"></div>
-            <a href="{{ path('ff_fast_precommandec') }}" class="btn btn-success pull-right">Payer</a>
-            <a href="{{ path('ff_fast_show') }}" class="btn btn-primary">Retour</a>
-<br>
+            <a href="{{ path('ff_fast_commandec') }}" class="btn btn-success pull-right">
+            <i class="fa fa-credit-card" aria-hidden="true"></i>
+             Payer
+            </a>
+            <a href="{{ path('ff_fast_show') }}" class="btn btn-primary">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Retour
+            </a>
   <div id="paypal-button"></div>
 
   <script>
     paypal.Button.render({
-        env: 'production', // Or 'sandbox'
+        env: 'sandbox', // Or 'sandbox'
 
         client: {
             sandbox:    'AfFVd4e-324ULFdh5xMR1Fq_w5uApNO9DYN6SunjFZFci_Pe_ZCkdj9496zKHnZWpV5uDhqcI0GASfK-',
             production: 'ATLIAcvS8sHzPLbU6ZY8fy3xVjuYxgPHqATzh689kmIYuNhKtuGbK3gd_orYlT24Iis2097eKWXV3eNd'
         },
+        
 
       commit: true, // Show a 'Pay Now' button
 
@@ -78,15 +126,22 @@
       },
 
       payment: function(data, actions) {
-        /* 
-         * Set up the payment here 
-         */
+      return actions.payment.create({
+                      payment: {
+                          transactions: [
+                              {
+                                  amount: { total: '{{ total }}', currency: 'EUR' }
+                              }
+                          ]
+                      }
+                  });
       },
 
       onAuthorize: function(data, actions) {
-        /* 
-         * Execute the payment here 
-         */
+                        return actions.payment.execute().then(function(payment) {
+                            window.location.href = '{{ path('ff_fast_commandec') }}';
+                        });
+      
       },
 
       onCancel: function(data, actions) {

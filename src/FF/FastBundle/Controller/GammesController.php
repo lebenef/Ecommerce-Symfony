@@ -66,7 +66,7 @@ class GammesController extends Controller
 				$em->flush();
 
 				
-        $request->getSession()->getFlashBag()->add('notice', 'Gamme bien enregistrée.');
+        $request->getSession()->getFlashBag()->add('success', 'Gamme bien enregistrée.');
 
         return $this->redirectToRoute('ff_fast_view', array('id' => $gammes->getId()));
       }
@@ -124,7 +124,7 @@ class GammesController extends Controller
 					$em = $this->getDoctrine()->getManager();
 					$em->flush();
 				
-					$request->getSession()->getFlashBag()->add('notice', 'Gamme bien modifiée.');
+					$request->getSession()->getFlashBag()->add('success', 'Gamme bien modifiée.');
 				
 		  		return $this->redirectToRoute('ff_fast_view', array('id' => $gammes->getId()));
 					

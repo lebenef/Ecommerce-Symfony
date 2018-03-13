@@ -1,0 +1,19 @@
+     <h3> Formulaire </h3>
+		 
+	<div class="well">
+
+<form method="post">
+    {{ form_start(form) }}
+		<div class="form-group">
+        {{ form_label(form.commentaire, 'Commentaire') }}
+        {{ form_errors(form.commentaire) }}
+        {{ form_widget(form.commentaire) }}
+    </div>
+
+		<div class="form-group">
+				{{ form_widget(form.save, {'attr': {'class': 'btn btn-sm btn-success'}, 'label': 'Valider'}) }}
+		 </div>
+
+    {{ form_end(form) }}
+</form>
+</div>

@@ -233,7 +233,10 @@ class CuisinierController extends Controller
 			dump($idCommande);
 			 
 			$em->flush();
+		 $request->getSession()->getFlashBag()->add('success', 'Commande bien modifiée.');
 			 
+			$em = $this->getDoctrine()->getManager();
+			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
 			$commandeproduit =$repository->findBy(array('id' => $idCommandeProduit));
 			$bool =true;
 
@@ -243,6 +246,7 @@ class CuisinierController extends Controller
 					{						
 							$bool = false;
 					}
+					
 			 }
 			 
 			 if($bool == true)

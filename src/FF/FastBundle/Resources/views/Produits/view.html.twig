@@ -1,10 +1,19 @@
-{% extends "FFFastBundle::layout.html.twig" %}
+{% extends "FFCoreBundle:Core:menu.html.twig" %}
 
 {% block title %}
   Lecture d'un Produit - {{ parent() }}
 {% endblock %}
 
-{% block ffgammes_body %}
+{% block body %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div id="content" class="col-md-8">
+{% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>Succès!</strong> {{ message|trans({}, 'FFFastBundle') }}
+    </div>
+  {% endfor %}
+{% endfor %}
 
   <h2>{{ produits.gammes.name}}</h2>
   <h3>{{ produits.name}}</h3>
@@ -30,18 +39,18 @@
 {% endif %}
 
   <p>
-    <a href="{{ path('ff_fast_homep') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la liste
+    <a href="{{ path('ff_fast_homep') }}"  class="btn btn-primary ">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      Retour
     </a>
     <a href="{{ path('ff_fast_editp', {'id': produits.id}) }}" class="btn btn-warning">
-      <i class="glyphicon glyphicon-edit"></i>
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       Modifier
     </a>
     <a href="{{ path('ff_fast_deletep', {'id': produits.id}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
+    <i class="fa fa-trash" aria-hidden="true"></i>
       Supprimer
     </a>
   </p>
-
+</main>
 {% endblock %}

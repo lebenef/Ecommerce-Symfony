@@ -1,17 +1,20 @@
 
 
-{% extends "FFFastBundle::layout.html.twig" %}
- {% block title %} Ajouter une ingédient - {{ parent() }}{% endblock %}
- {% block body %}
+{% extends "FFCoreBundle:Core:menu.html.twig" %}
 
+ {% block title %} Ajouter une ingédient - {{ parent() }}{% endblock %}
+{% block body %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div id="content" class="col-md-8">
   <h2>Ajouter un ingredient </h2>
 
   {{ include("FFFastBundle:Ingredients:form.html.twig") }}
 
   <p>
-    <a href="{{ path('ff_fast_homei') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
+    <a href="{{ path('ff_fast_homei') }}"  class="btn btn-primary ">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
       Retour
     </a>
   </p>
+</main>
 {% endblock %}

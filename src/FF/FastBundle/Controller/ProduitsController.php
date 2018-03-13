@@ -64,7 +64,7 @@ class ProduitsController extends Controller
 				$em->persist($produits);
 				$em->flush();
 				
-        $request->getSession()->getFlashBag()->add('notice', 'Produit bien enregistrée.');
+        $request->getSession()->getFlashBag()->add('success', 'Produit bien enregistrée.');
 
         return $this->redirectToRoute('ff_fast_viewp', array('id' => $produits->getId()));
       }
@@ -120,7 +120,7 @@ class ProduitsController extends Controller
 									$em->flush();
 
 				
-			$request->getSession()->getFlashBag()->add('notice', 'Produit bien modifiée.');
+			$request->getSession()->getFlashBag()->add('success', 'Produit bien modifiée.');
 		  return $this->redirectToRoute('ff_fast_viewp', array('id' => $produits->getId()));
 					
 				}

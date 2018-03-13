@@ -1,15 +1,19 @@
 
 {# On étend notre layout #}
-{% extends "FFCoreBundle:Core:menu.html.twig" %}
+{% extends "FFCoreBundle::layout.html.twig" %}
+{% block title %}
+  Page d'accueil - {{ parent() }}
+{% endblock %}
 
 {# Dans notre layout, il faut définir le block body #}
 {% block body %}
+<div id="content" class="col-md-8 my-4 center-block ">
 
   {# On affiche les messages flash que définissent les contrôleurs du bundle #}
   {% for key, messages in app.session.flashbag.all() %}
     {% for message in messages %}
-      <div class="alert alert">
-        {{ message|trans({}, 'FOSUserBundle') }}
+      <div class="alert alert-{{key}}>
+       <strong>succès!</strong> {{ message|trans({}, 'FOSUserBundle') }}
       </div>
     {% endfor %}
   {% endfor %}
@@ -17,5 +21,6 @@
   {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
   {% block fos_user_content %}
   {% endblock fos_user_content %}
+</div>
 
 {% endblock %}

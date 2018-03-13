@@ -96,8 +96,14 @@ ff_fast_homepages:
     path:     /shop
     defaults: { _controller: FFFastBundle::index }
     
+ff_fast_accueil :
+   path:     /
+   defaults: { _controller: FFFastBundle:Shop:accueil }
+   requirements:
+      id: \d+
+    
 ff_fast_homes:
-    path:     /shop/home/{page}
+    path:     /shop/home{page}
     defaults: { _controller: FFFastBundle:Shop:index, page :1 }
     requirements:
        id: \d+
@@ -142,9 +148,9 @@ ff_fast_viewc:
     defaults: { _controller: FFFastBundle:Cart:view}
 
        
-ff_fast_precommandec:
+ff_fast_commandec:
     path:     /cart/commande/
-    defaults: { _controller: FFFastBundle:Cart:precommande}
+    defaults: { _controller: FFFastBundle:Cart:commande}
     requirements:
        id: \d+ 
        
@@ -243,4 +249,20 @@ ff_fast_editcpl:
     path:     /livreur/cp/{idCommande}
     defaults: { _controller: FFFastBundle:Livreur:cp }
     requirements:
-       id: \d+                
+       id: \d+      
+       
+ff_fast_search:
+    path:     /shop/search/{page}
+    defaults: { _controller: FFFastBundle:Shop:search, page :1 }
+    
+ff_fast_login:
+    path:     /cart/login/
+    defaults: { _controller: FFFastBundle:Cart:login}
+    
+ff_fast_valide:
+    path:     /cart/valide/
+    defaults: { _controller: FFFastBundle:Cart:valide}
+
+ff_fast_addcom:
+    path:     /shop/commentaire/{idProduits}
+    defaults: { _controller: FFFastBundle:Commentaire:add}

@@ -89,7 +89,7 @@ class UserController extends Controller
 					$em = $this->getDoctrine()->getManager();
 					$em->flush();
 				
-					$request->getSession()->getFlashBag()->add('notice', 'Utilisateur mis à jour.');
+					$request->getSession()->getFlashBag()->add('success', 'Utilisateur mis à jour.');
 				
 		  return $this->redirectToRoute('ff_user_view', array('id' => $user->getId()));
 					
@@ -126,7 +126,7 @@ class UserController extends Controller
 				$em->remove($user);
 				$em->flush();
 
-				$request->getSession()->getFlashBag()->add('info', "L'Utilisateur a bien été supprimée.");
+				$request->getSession()->getFlashBag()->add('success', "L'Utilisateur a bien été supprimée.");
 
 				return $this->redirectToRoute('ff_user_home');
 			}

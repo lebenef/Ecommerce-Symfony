@@ -2,6 +2,7 @@
 
 
     {% block body %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
         <div class="col-lg-9">
 
@@ -13,13 +14,13 @@
             </ol>
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
-                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+                <img class="d-block img-fluid" src="http://www.pizzaregal.fr/wp-content/uploads/2015/09/pizza-aix-les-bains.jpg" alt="First slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+                <img class="d-block img-fluid" src="http://piccadilly-market.co.uk/wp-content/uploads/2010/09/Adi-Best-Burgers-1.jpg" alt="Second slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+                <img class="d-block img-fluid" src="http://www.phillysteakmesa.com/wp-content/uploads/2016/04/A9REE9-900x350.png" alt="Third slide">
               </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -32,15 +33,20 @@
             </a>
           </div>
    
-
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('ff_fast_accueil') }}">Accueil</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ gammes.name }}</li>
+  </ol>
+</nav>
           <div class="row">
 
   {% for produits in listProduits %}
 
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-3 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}"><img src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="100"/></a>
+                <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}"><img class="card-img-top" src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="150"/></a>
                 <div class="card-body">
                   <h4 class="card-title">
                    <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}">{{ produits.name}}</a>
@@ -81,17 +87,21 @@
 
         </div>
         <!-- /.col-lg-9 -->
+        <nav aria-label="Page navigation example">
+
     <ul class="pagination">
   {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
   {% for p in range(1, nbPages) %}
-    <li{% if p == page %} class="active"{% endif %}>
-      <a href="{{ path('ff_fast_homes', {'page': p}) }}">{{ p }}</a>
+    <li class="page-item" {% if p == page %} class="page-item active" {% endif %}>
+      <a class="page-link" href="{{ path('ff_fast_homes', {'page': p}) }}">{{ p }}</a>
     </li>
   {% endfor %}
 </ul>
+</nav>
       </div>
       <!-- /.row -->
 
     </div>
     <!-- /.container -->
+</main>
 {% endblock %}

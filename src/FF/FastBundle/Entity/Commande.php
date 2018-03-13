@@ -19,6 +19,13 @@ class Commande
    * @ORM\JoinColumn(nullable=false)
    */
    private $user;
+  
+   /**
+   * @ORM\ManyToOne(targetEntity="FF\UserBundle\Entity\User")
+   * @ORM\JoinColumn(nullable=true)
+   */
+   private $livreur = null;
+  
    /**
    * @ORM\OneToMany(targetEntity="FF\FastBundle\Entity\CommandeProduit", mappedBy="commande", cascade={"all"})
    */
@@ -46,7 +53,12 @@ class Commande
      * @ORM\Column(name="date", type="datetime")
      */
     private $date = null;
-
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", scale=2, type="float")
+     */
+    private $price;
     /**
    
     /**
@@ -57,6 +69,7 @@ class Commande
         $this->commandeproduit = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \Datetime();
         $this->etat = 0;  
+        $this->pfice = null;  
           
     }
  
@@ -174,5 +187,53 @@ class Commande
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     *
+     * @return Commande
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set livreur
+     *
+     * @param \FF\UserBundle\Entity\User $livreur
+     *
+     * @return Commande
+     */
+    public function setLivreur(\FF\UserBundle\Entity\User $livreur = null)
+    {
+        $this->livreur = $livreur;
+
+        return $this;
+    }
+
+    /**
+     * Get livreur
+     *
+     * @return \FF\UserBundle\Entity\User
+     */
+    public function getLivreur()
+    {
+        return $this->livreur;
     }
 }

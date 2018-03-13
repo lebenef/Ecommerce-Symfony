@@ -75,4 +75,36 @@ class CommandeRepository extends \Doctrine\ORM\EntityRepository
     // (n'oubliez pas le use correspondant en début de fichier)
     return new Paginator($query, true);
   }
+  
+  public function getbyDate($date)
+  {
+      
+       $query = $this->createQueryBuilder('a')
+      ->select('COUNT(a)')
+      ->Where('a.date > :date_start')
+      ->andWhere('a.date < :date_end')
+      ->setParameter('date_start', $date->format('Y-m-d 00:00:00'))
+      ->setParameter('date_end',   $date->format('Y-m-d 23:59:59'))     
+      ->getQuery()
+      ->getSingleScalarResult();
+    ;
+
+
+    return($query);
+  }
+  public function getbyDatea($date)
+  {
+      
+       $query = $this->createQueryBuilder('a')
+      ->Where('a.date > :date_start')
+      ->andWhere('a.date < :date_end')
+      ->setParameter('date_start', $date->format('Y-m-d 00:00:00'))
+      ->setParameter('date_end',   $date->format('Y-m-d 23:59:59'))     
+      ->getQuery()
+    ;
+
+
+    return($query->getResult());
+  }  
+  
 }

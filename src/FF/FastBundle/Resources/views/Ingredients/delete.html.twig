@@ -1,10 +1,12 @@
-{% extends "FFFastBundle::layout.html.twig" %}
+{% extends "FFCoreBundle:Core:menu.html.twig" %}
 
 {% block title %}
   Supprimer un ingrédient - {{ parent() }}
 {% endblock %}
 
-{% block  ffgammes_body %}
+{% block  body %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div id="content" class="col-md-8">
 
   <h2>Supprimer un ingrédient </h2>
 
@@ -14,14 +16,17 @@
 
   {# On met l'id de l'annonce dans la route de l'action du formulaire #}
   <form action="{{ path('ff_fast_deletei', {'id': ingredients.id}) }}" method="post">
-    <a href="{{ path('ff_fast_viewi', {'id': ingredients.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à l'ingredient
+    <a href="{{ path('ff_fast_viewi', {'id': ingredients.id}) }}"  class="btn btn-primary ">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      Retour
     </a>
     {# Ici j'ai écrit le bouton de soumission à la main #}
-    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    <button  type="submit" value="Supprimer" class="btn btn-danger">       
+<i class="fa fa-trash" aria-hidden="true"></i>
+Supprimer
+</button >
     {# Ceci va générer le champ CSRF #}
     {{ form_rest(form) }}
   </form>
-
+</main>
 {% endblock %}

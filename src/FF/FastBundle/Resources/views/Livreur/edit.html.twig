@@ -3,63 +3,158 @@
 {% extends "FFFastBundle:Livreur:menu.html.twig" %}
  {% block title %}Modification d'une commande  - {{ parent() }} {% endblock %}
  {% block body %}
+ <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
+<div id="content" class="col-md-8">
+{% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>Succès!</strong> {{ message|trans({}, 'FFFastBundle') }}
+    </div>
+  {% endfor %}
+{% endfor %}
   <h2>Editer une Commande </h2>
-
-          
-    {% for produits in commandeproduit %}
- 
-      <br>
-      <div class="row">
-         <p> Produit : {{produits.produits.name}}
-         
-            Etat :      
-     {% if produits.etat == '0' %}
+ <h2>Commande N° {{commande.id}}</h2>
+  <h3> Etat :  
+  
+     {% if commande.etat == '0' %}
      Validée
      {% endif %}
-      {% if produits.etat == '1' %}
+      {% if commande.etat == '1' %}
      En cours de Préparation
      {% endif %}
-     {% if produits.etat == '2' %}
+     {% if commande.etat == '2' %}
      Préparé
      {% endif %}
      
-  {% if produits.etat == '3' %}
+  {% if commande.etat == '3' %}
      En cours de Livraison
      {% endif %}
      
-  {% if produits.etat == '4' %}
+  {% if commande.etat == '4' %}
       Livré
      {% endif %}
-     
 
-
-
-
-
-    </div>
-      <br>
-        {% endfor %}
-
-
-
-
-        
-        
-
-
-  <p>
+  </h3>
   
-    <a href="{{ path('ff_fast_homel') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour
-    </a>
-    
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Etat</th>
+                    </tr>
+                </thead>
+                <tbody>
+     
+                    
+                      {% for comprod in commandeproduit %}
+                    <tr>
+                            <td>{{ comprod.produits.name }}</td>
+                            <td>
+                                {% if comprod.etat == '0' %}
+                                 Validée
+                                 {% endif %}
+                                  {% if comprod.etat == '1' %}
+                                 En cours de Préparation
+                                 {% endif %}
+                                 {% if comprod.etat == '2' %}
+                                 Préparé
+                                 {% endif %}
 
-                 <a href="{{ path('ff_fast_editcpl', {'idCommande': commandeproduit[0].commande.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Livré
-    </a>
-  </p>
+                                 {% if comprod.etat == '3' %}
+                                 En cours de Livraison
+                                 {% endif %}
 
+                                  {% if comprod.etat == '4' %}
+                                  Livré
+                                 {% endif %}
+
+                            </td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+                
+
+
+            <div class="span3 pull-left">
+                <dl class="pull-left">
+                    <dt><h4>Adresse de livraison</h4></dt>
+                    <dt>{{commande.user.prenom }} {{ commande.user.nom }}</dt>
+                    <dt>{{ commande.user.adresse }}</dt>
+                    <dt>{{ commande.user.codepostal }} {{ commande.user.ville }} - {{ commande.user.pays }}</dt>
+                </dl>
+                <script type="text/javascript">
+  var geocoder;
+  var map;
+  var address ="{{ commande.user.codepostal }}, {{ commande.user.pays }} ";
+  function initMap() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var myOptions = {
+      zoom: 8,
+      center: latlng,
+    mapTypeControl: true,
+    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+    navigationControl: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+    if (geocoder) {
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+          map.setCenter(results[0].geometry.location);
+
+            var infowindow = new google.maps.InfoWindow(
+                { content: '<b>'+address+'</b>',
+                  size: new google.maps.Size(150,50)
+                });
+
+            var marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map, 
+                title:address
+            }); 
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+            });
+
+          } else {
+            alert("No results found");
+          }
+        } else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      });
+    }
+  }
+</script>
+
+                <h3>Carte </h3>
+    <div id="map" style="height:400px;"></div>
+   
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlSXR3qvj7G_YFJpPq6xzAlfIdV5b_jEQ&callback=initMap">
+    </script>
+                 <div>
+                    <a href="{{ path('ff_fast_homel') }} "  class="btn btn-primary ">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                      Retour 
+                    </a>
+                    
+     
+                    {% if commande.livreur.id == app.user.id%}
+                         <a href="{{ path('ff_fast_editcpl', {'idCommande': commandeproduit[0].commande.id}) }}" class="btn btn-outline-success">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Livré
+                     </a>
+                      {% endif %}
+                  </div>
+               </div>
+
+</main>
+  
 {% endblock %}

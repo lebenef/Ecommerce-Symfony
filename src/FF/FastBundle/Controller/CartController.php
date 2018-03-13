@@ -95,11 +95,16 @@ class CartController extends Controller
 				return $this->redirect($this->generateUrl('ff_fast_show'));
 			}
 
-			public function PreCommandeAction(Request $request)
+			public function CommandeAction(Request $request)
 			{
 					$session = $request->getSession();
-					$panier = $session->get('panier');
+					$panier = $session->get('panier');  
+				if($panier == [])
+				{ 
+			$this->get('session')->getFlashBag()->add('danger','Votre panier est vide ');
 
+					return $this->redirect($this->generateUrl('ff_fast_show'));
+				}
 					$em = $this->getDoctrine()->getManager();
 					$user = $this->container->get('security.token_storage')->getToken()->getUser();
 				 	dump($panier);
@@ -113,7 +118,7 @@ class CartController extends Controller
 					$commande = new Commande();
 					$commande->setUser($user);
 					dump($commande);
-
+          $price = 0;
 					foreach($produits as $produit)
 					{
 							dump($produit);
@@ -128,24 +133,46 @@ class CartController extends Controller
 										$commande->addCommandeproduit($commandeproduit);
 										$commandeproduit->setCommande($commande);
 										$commandeproduit->setProduits($produit);
-										$commandeproduit->setEtat('10');
+										$commandeproduit->setEtat('0');
 										dump($commandeproduit);
+									$priceproduit=$produit->getPrice();
+									$price = $price + $priceproduit;
 								}
 					}
+				$commande->setPrice($price);
 					$em->persist($commande);
 					$em->flush();
 
 					$session->set('panier', array());
-				
-					return $this->redirect($this->generateUrl(''));
+					$this->get('session')->getFlashBag()->add('success','Commande validée');
+
+					return $this->redirect($this->generateUrl('ff_fast_valide'));
 			}
 		
+			  public function loginAction(Request $request)
+ 			 {
+					if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) 
+					{
+									return $this->redirect($this->generateUrl('ff_fast_viewc'));
+					}
+    return $this->get('templating')->renderResponse('FFFastBundle:Cart:login.html.twig');
+				}		
+	
+	
+	
+	
+		public function valideAction(Request $request)
+ 			 {
+	
+    return $this->get('templating')->renderResponse('FFFastBundle:Cart:valide.html.twig');
+				}	
+	
 	
 			public function viewAction(Request $request)
 			{
 					if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) 
 					{
-									return $this->redirect($this->generateUrl('fos_user_security_login'));
+									return $this->redirect($this->generateUrl('ff_fast_login'));
 					}
 
 					$session = $request->getSession();
