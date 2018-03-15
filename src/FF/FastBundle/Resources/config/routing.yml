@@ -266,3 +266,9 @@ ff_fast_valide:
 ff_fast_addcom:
     path:     /shop/commentaire/{idProduits}
     defaults: { _controller: FFFastBundle:Commentaire:add}
+    
+ff_fast_mll:
+    path:     /livreur/ml/{page}
+    defaults: { _controller: FFFastBundle:Livreur:ml, page :1 }
+    requirements:
+       gamme: \d+

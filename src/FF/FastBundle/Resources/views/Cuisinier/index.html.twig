@@ -3,7 +3,14 @@
 
     {% block body %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
+{% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>Succès!</strong> {{ message|trans({}, 'FFFastBundle') }}
+    </div>
+  {% endfor %}
+  {% endfor %}
+  
 <div id="content" class="col-md-8">
   <h2>Liste des Commmandes</h2>
   <table class="table">

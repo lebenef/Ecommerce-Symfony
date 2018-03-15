@@ -17,6 +17,7 @@ class Commande
    /**
    * @ORM\ManyToOne(targetEntity="FF\UserBundle\Entity\User")
    * @ORM\JoinColumn(nullable=false)
+   * @ORM\OrderBy({"date" = "DESC"})
    */
    private $user;
   

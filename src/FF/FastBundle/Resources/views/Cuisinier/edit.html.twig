@@ -43,7 +43,10 @@
                     <tr>
                         <th>Produit</th>
                         <th>Etat</th>
+                        <th>Cuisinier</th>
+
                         <th>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -72,7 +75,26 @@
                                  {% endif %}
 
                             </td>
-                            <td>      
+                            <td>  
+                              {% if comprod.cuisinier  %}
+
+                                  {{comprod.cuisinier.nom}}
+                                  {{comprod.cuisinier.prenom}}
+                            {% else %}
+                              Non Attribué
+                           {% endif %}
+
+  
+                           </td>      
+                           
+                           <td>  
+                              {% if comprod.etat == '0' %}
+
+                                <a href="{{ path('ff_fast_editcp', {'idCommandeProduit': comprod.id}) }}" class="btn btn-default">
+                                    <i class="glyphicon glyphicon-chevron-left"></i>
+                                     Cuisiner
+                                </a>
+                           {% endif %}
                             {% if comprod.etat == '1' %}
 
                                 <a href="{{ path('ff_fast_editcp', {'idCommandeProduit': comprod.id}) }}" class="btn btn-default">

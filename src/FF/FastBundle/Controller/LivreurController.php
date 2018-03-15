@@ -35,7 +35,7 @@ class LivreurController extends Controller
 			$listCommandes = $this->getDoctrine()
 				->getManager()
 				->getRepository('FFFastBundle:Commande')
-				->getCommande($page, $nbPerPage);
+				->getCommande($page, $nbPerPage,2,3);
 
 			$nbPages = ceil(count($listCommandes) / $nbPerPage);
 
@@ -241,10 +241,46 @@ class LivreurController extends Controller
 										$em->flush();
 						 }
 						$em->flush();
-						$request->getSession()->getFlashBag()->add('success', 'Commande bien modifiée.');
+						$request->getSession()->getFlashBag()->add('success', 'Commande livrée.');
 
 						return $this->redirectToRoute('ff_fast_homel');
 					}
+	
+	  public function mlAction($page)
+    {
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_LIVREUR')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}    	
+			
+			if ($page < 1) 
+			{
+      		throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+    	}			
+			
+							$user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+			
+			$nbPerPage = 10;
+
+			$listCommandes = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Commande')
+				->getCommandeu($page, $nbPerPage,3,$user);
+
+			$nbPages = ceil(count($listCommandes) / $nbPerPage);
+
+			if ($page > $nbPages)
+			{
+					throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+		 	}
+			 
+			return $this->render('FFFastBundle:Livreur:ml.html.twig', array(
+				'listCommandes' => $listCommandes,
+				'nbPages'         => $nbPages,
+				'page'            => $page,				));
+				
+    }
  
    }
 

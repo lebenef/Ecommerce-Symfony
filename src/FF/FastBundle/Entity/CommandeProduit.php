@@ -23,7 +23,13 @@ class CommandeProduit
    * @ORM\JoinColumn(nullable=false)
    */
   private $produits;
- 
+   
+  /**
+   * @ORM\ManyToOne(targetEntity="FF\UserBundle\Entity\User")
+   * @ORM\JoinColumn(nullable=true)
+   */
+   private $cuisinier = null;
+     
     /**
      * @var int
      *
@@ -147,5 +153,29 @@ class CommandeProduit
     public function getView()
     {
         return $this->view;
+    }
+
+    /**
+     * Set cuisinier
+     *
+     * @param \FF\UserBundle\Entity\User $cuisinier
+     *
+     * @return CommandeProduit
+     */
+    public function setCuisinier(\FF\UserBundle\Entity\User $cuisinier = null)
+    {
+        $this->cuisinier = $cuisinier;
+
+        return $this;
+    }
+
+    /**
+     * Get cuisinier
+     *
+     * @return \FF\UserBundle\Entity\User
+     */
+    public function getCuisinier()
+    {
+        return $this->cuisinier;
     }
 }

@@ -94,7 +94,7 @@
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
     var myOptions = {
-      zoom: 8,
+      zoom: 15,
       center: latlng,
     mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
@@ -111,6 +111,7 @@
             var infowindow = new google.maps.InfoWindow(
                 { content: '<b>'+address+'</b>',
                   size: new google.maps.Size(150,50)
+           
                 });
 
             var marker = new google.maps.Marker({
@@ -147,9 +148,9 @@
                     
      
                     {% if commande.livreur.id == app.user.id%}
-                         <a href="{{ path('ff_fast_editcpl', {'idCommande': commandeproduit[0].commande.id}) }}" class="btn btn-outline-success">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
-                        Livré
+                         <a href="{{ path('ff_fast_editcpl', {'idCommande': commandeproduit[0].commande.id}) }}" class="btn btn-success">
+<i class="fa fa-truck" aria-hidden="true"></i>                        
+Livrer
                      </a>
                       {% endif %}
                   </div>

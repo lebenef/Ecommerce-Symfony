@@ -44,7 +44,7 @@
   {% for produits in listProduits %}
 
 
-            <div class="col-lg-3 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
                 <a href="{{ path('ff_fast_views', {'idProduits': produits.id})}}"><img class="card-img-top" src="{{ produits.images.url}}"alt="{{ produits.images.alt }}"height="150"/></a>
                 <div class="card-body">

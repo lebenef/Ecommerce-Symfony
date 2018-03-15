@@ -70,20 +70,20 @@
             </button>
           </form>
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item ">
               <a class="nav-link" href="{{ path('ff_fast_accueil')}}">
               <i class="fa fa-shopping-basket" aria-hidden="true"></i>
               Shop
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
               <a class="nav-link" href="{{ path('ff_fast_show')}}"> 
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 Panier <span class="badge badge-light"> {{nb}}</span>
               </a>
             </li>
              {% if is_granted('ROLE_USER') %}
-            <li class="nav-item">
+            <li class="nav-item ">
               <a class="nav-link" href="{{ path('ff_fast_list')}}">
               <i class="fa fa-archive" aria-hidden="true"></i>
                 Commandes
@@ -91,7 +91,7 @@
             </li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
+            <li class="nav-item ">
               <a class="nav-link" href="{{ path('ff_core_home')}}">
               <i class="fa fa-cogs" aria-hidden="true"></i>
                Admin
@@ -99,7 +99,7 @@
             </li>
             {% endif %}
             {% if is_granted('ROLE_CUISINIER') %}
-            <li class="nav-item">
+            <li class="nav-item ">
               <a class="nav-link" href="{{ path('ff_fast_homecu')}}">
               <i class="fa fa-cutlery" aria-hidden="true"></i>
               Cuisinier
@@ -107,7 +107,7 @@
             </li>
             {% endif %}
             {% if is_granted('ROLE_LIVREUR') %}
-            <li class="nav-item">
+            <li class="nav-item ">
               <a class="nav-link" href="{{ path('ff_fast_homel')}}">
               <i class="fa fa-truck" aria-hidden="true"></i>
               Livreur
@@ -162,7 +162,7 @@
                               </button >
                       </div>
                       <div class="form-group text-xs-center">
-                          <small><a href="{{ path('fos_user_registration_register') }}">S'enregistrer</a></small>
+                          <small><a href="{{ path('ff_user_registration') }}">S'enregistrer</a></small>
                           <br>
                           <small><a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a></small>
 

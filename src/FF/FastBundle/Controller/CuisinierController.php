@@ -35,7 +35,7 @@ class CuisinierController extends Controller
 			$listCommandes = $this->getDoctrine()
 				->getManager()
 				->getRepository('FFFastBundle:Commande')
-				->getCommande($page, $nbPerPage);
+				->getCommande($page, $nbPerPage,0,1);
 
 			 $nbPages = ceil(count($listCommandes) / $nbPerPage);
 			
@@ -165,17 +165,17 @@ class CuisinierController extends Controller
 					$commandeproduit = $repository->findBy( array('commande' => $idCommande) );				
 					dump($commandeproduit);		
 
-					 foreach($commandeproduit as $produits)
-					 {
-							dump($produits);
+// 					 foreach($commandeproduit as $produits)
+// 					 {
+// 							dump($produits);
 
-							 if($produits->getEtat() == '0')
-						 	{
-									$produits->setEtat('1');
-									$em = $this->getDoctrine()->getManager();
-									$em->flush();
-							}
-					 }
+// 							 if($produits->getEtat() == '0')
+// 						 	{
+// 									$produits->setEtat('1');
+// 									$em = $this->getDoctrine()->getManager();
+// 									$em->flush();
+// 							}
+// 					 }
 			}
 
 
@@ -222,12 +222,27 @@ class CuisinierController extends Controller
 			}
 			 
       dump($idCommandeProduit);
+			$cuisinier = $this->container->get('security.token_storage')->getToken()->getUser();
 
 			$em = $this->getDoctrine()->getManager();
 			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
 			$cp = $repository->findOneBy(array('id' => $idCommandeProduit));
 			$etat = $request->request->get('form')['etat'];
 			dump($etat);
+			 $etatcp = $cp->getEtat();
+			 if($etatcp == 0)
+			 {
+				 $cp->setEtat('1');
+				 $cp->setCuisinier($cuisinier);
+				$idCommande=$cp->getCommande()->getId();
+				$em->flush();
+			 $request->getSession()->getFlashBag()->add('success', 'Produit pris en charge .');
+    		return $this->redirectToRoute('ff_fast_editcu',['idCommande' => $idCommande,]);
+
+			 }
+			$em = $this->getDoctrine()->getManager();
+			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
+			$cp = $repository->findOneBy(array('id' => $idCommandeProduit));
 			$cp->setEtat('2');
 			$idCommande=$cp->getCommande()->getId();
 			dump($idCommande);
@@ -237,21 +252,32 @@ class CuisinierController extends Controller
 			 
 			$em = $this->getDoctrine()->getManager();
 			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
-			$commandeproduit =$repository->findBy(array('id' => $idCommandeProduit));
+			$commandeproduit =$repository->findBy(array('commande' => $idCommande));
 			$bool =true;
+			 dump($commandeproduit);
 
 			 foreach($commandeproduit as $produits)
 			 {
-					if($produits->getEtat() == '1' )
+				 dump('test');
+					if($produits->getEtat() == '1')
 					{						
 							$bool = false;
+										 dump('test');
+
+					}					
+				 if($produits->getEtat() == '0')
+					{						
+							$bool = false;
+					 				 dump('test');
+
 					}
 					
 			 }
 			 
 			 if($bool == true)
 			 {
-				 
+				 $request->getSession()->getFlashBag()->add('success', 'Commande préparée.');
+
           $em = $this->getDoctrine()->getManager();
           $repository = $em->getRepository('FFFastBundle:Commande');
           # select wanted item from shipping table to edit it

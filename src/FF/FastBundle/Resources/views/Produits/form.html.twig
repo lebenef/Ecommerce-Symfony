@@ -1,9 +1,10 @@
      <h3> Formulaire </h3>
 		 
 	<div class="well">
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 <form method="post">
     {{ form_start(form) }}
+
 		<div class="form-group">
         {{ form_label(form.name, 'Nom') }}
         {{ form_errors(form.name) }}
@@ -27,7 +28,7 @@
         {{ form_errors(form.ingredients) }}
         {{ form_widget(form.ingredients) }}
     </div>
-		<div class="form-group">
+		<div>
         {{ form_label(form.price, 'Prix') }}
         {{ form_errors(form.price) }}
         {{ form_widget(form.price) }}

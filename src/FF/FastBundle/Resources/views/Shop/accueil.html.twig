@@ -29,9 +29,14 @@
   </ol>
 </nav>
       <div class="row text-center">
-            <div class="col-lg-3 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4">
           <div class="card">
-          <a href="{{ path('ff_fast_homes') }} "> <img class="card-img-top"src=""alt=""height="150"/></a>
+          <a href="{{ path('ff_fast_homes') }} "> 
+          {% image '@FFFastBundle/Resources/public/img/icon.png'   %}
+              <img src="{{ asset_url }}" alt="icon" height="150"/>
+          {% endimage %}
+          
+          </a>
             <div class="card-body">
               <h4 class="card-title">Voir Tout</h4>
             </div>
@@ -47,7 +52,7 @@
   {% for gamme in listGammes %}
 
 
-        <div class="col-lg-3 col-md-6 mb-4">
+        <div class="col-lg-4 col-md-6 mb-4">
           <div class="card">
           <a href="{{ path('ff_fast_gammes', {'gamme': gamme.id}) }} "> <img class="card-img-top"src="{{ gamme.images.url}}"alt="{{ gamme.images.alt }}"height="150"/></a>
             <div class="card-body">

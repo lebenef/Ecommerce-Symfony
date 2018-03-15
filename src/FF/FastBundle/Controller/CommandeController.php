@@ -29,7 +29,7 @@ class CommandeController extends Controller
 			$listCommandes = $this->getDoctrine()
 				->getManager()
 				->getRepository('FFFastBundle:Commande')
-				->getCommande($page, $nbPerPage);
+				->getCommandea($page, $nbPerPage);
 
 			$nbPages = ceil(count($listCommandes) / $nbPerPage);
 
