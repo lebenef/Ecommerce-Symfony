@@ -1,56 +1,166 @@
-
-{% extends "FFFastBundle:Cart:menu.html.twig" %}
+{% extends "FFCoreBundle::layout.html.twig" %}
+{% set total = 0 %}
 
 {% block title %}
-  Accueil - {{ parent() }}
+  Validation - {{ parent() }}
 {% endblock %}
 
 {% block body %}
-
-<h1>Récapitulatif</1>
-
-<br>
+<div id="content" class="col-md-8 my-4 center-block">
 <div>
-<p>
-{{user.user.nom}}
-{{user.user.prenom}}
-{{user.user.adresse}}
-{{user.user.codepostal}}
-{{user.user.ville}}
-{{user.user.pays}}
-{{user.user.telephone}}
+<div>
+ <div class="row">
 
-</p>
-
+ <div class="progresss">
+ 
+<div class="circle done">
+<span class="label"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+</span>
+<span class="title">0%</span>
 </div>
+<span class="bar done"></span>
 
-  <ul>
-          
-    {% for product in products %}
-      <li>
-      <br>
-      <div class="row">
-         <p> Produit : {{ product.produits.name }}  </p>   &nbsp;    Quantité : {{product.quantity }}</p>
-         
+<div class="circle done">
+<span class="label"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">25%</span>
+</div>
+<span class="bar done "></span>
 
+<div class="circle done ">
+<span class="label"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">50%</span>
+</div>
+<span class="bar active "></span>
+<div class="circle active">
+<span class="label"><i class="fa fa-paypal" aria-hidden="true"></i>
+</i>
+</span>
+<span class="title">75%</span>
+</div>
+<span class="bar"></span>
+<div class="circle">
+<span class="label"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+</i>
 
+<span class="title">100%</span>
+</div>
+</div>
+</div>
+<h2>Valider mon panier</h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if produits|length == 0 %}
+                        <tr>
+                            <td colspan="4"><center>Panier vide </center></td>
+                        </tr>
+                    {% endif %}
+                    
+                    {% for produit in produits %}
+                    <tr>
+                            <td>{{ produit.name }}</td>
+                            <td>
+                                {{ panier[produit.id] }}
+                            </td>
+                            <td>{{ produit.price }} €</td>
+                            <td>{{ produit.price * panier[produit.id] }} €</td>
+                        </form>
+                    </tr>
+                    {% set total = total + (produit.price * panier[produit.id]) %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <dl class="dl-horizontal pull-right">
+                <dt>Total  :</dt><dd>{{ total }} €</dd>
+                
+
+            </dl>
+            
+            <div class="span3 pull-left">
+                <dl class="pull-left">
+                    <dt><h4>Adresse de livraison</h4></dt>
+                    <dt>{{user.user.prenom }} {{ user.user.nom }}</dt>
+                    <dt>{{ user.user.adresse }}</dt>
+                    <dt>{{ user.user.codepostal }} {{ user.user.ville }} - {{ user.user.pays }}</dt>
+                </dl>
+            </div>
+            
+
+            
+            <div class="clearfix"></div>
+            <a href="{{ path('ff_fast_commandec') }}" class="btn btn-success pull-right">
+            <i class="fa fa-credit-card" aria-hidden="true"></i>
+             Payer
+            </a>
+            <a href="{{ path('ff_fast_show') }}" class="btn btn-primary">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Retour
+            </a>
+  <div id="paypal-button"></div>
+
+  <script>
+    paypal.Button.render({
+        env: 'sandbox', // Or 'sandbox'
+
+        client: {
+            sandbox:    'AfFVd4e-324ULFdh5xMR1Fq_w5uApNO9DYN6SunjFZFci_Pe_ZCkdj9496zKHnZWpV5uDhqcI0GASfK-',
+            production: 'ATLIAcvS8sHzPLbU6ZY8fy3xVjuYxgPHqATzh689kmIYuNhKtuGbK3gd_orYlT24Iis2097eKWXV3eNd'
+        },
+        
+
+      commit: true, // Show a 'Pay Now' button
+
+      style: {
+        color: 'gold',
+        size: 'small'
+      },
+
+      payment: function(data, actions) {
+      return actions.payment.create({
+                      payment: {
+                          transactions: [
+                              {
+                                  amount: { total: '{{ total }}', currency: 'EUR' }
+                              }
+                          ]
+                      }
+                  });
+      },
+
+      onAuthorize: function(data, actions) {
+                        return actions.payment.execute().then(function(payment) {
+                            window.location.href = '{{ path('ff_fast_commandec') }}';
+                        });
+      
+      },
+
+      onCancel: function(data, actions) {
+        /* 
+         * Buyer cancelled the payment 
+         */
+      },
+
+      onError: function(err) {
+        /* 
+         * An error occurred during the transaction 
+         */
+      }
+    }, '#paypal-button');
+  </script>
+  
+        </div>
 
     </div>
-      </li>
-      <br>
-    {% endfor %}
-  </ul>
-  
-  Prix total : {{ products[0].cart.totalprice }}
-  
-    <a href="{{ path('ff_fast_show') }}, " class="btn btn-outline-danger">
-      Retour 
-    </a>
-    
-     <a href="{{ path('ff_fast_commandec', {'idCart': products[0].cart.id}) }}," class= "btn btn-success">
-      Commander 
-    </a>
-  
-
+</div>
 
 {% endblock %}

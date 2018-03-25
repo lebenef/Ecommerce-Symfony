@@ -1,17 +1,29 @@
-{% extends "FFFastBundle::layout.html.twig" %}
+{% extends "FFCoreBundle:Core:menu.html.twig" %}
 
 {% block title %}
   Utilisateur - {{ parent() }}
 {% endblock %}
 
-{% block ffgammes_body %}
+{% block body %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div id="content" class="col-md-5 my-4">
 
-  <h4>Nom : {{ user.username}}</h4>
+  {% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>Succès!</strong> {{ message|trans({}, 'FFFastBundle') }}
+    </div>
+  {% endfor %}
+{% endfor %}
+<div class="card">
+  <div class="card-header">Login: {{ user.username}}</div>
+  <div class="card-body"> 
+  Nom: {{user.nom}}
   <br>
-  <h4>Email: {{ user.email}}</h4>
+  Prenom: {{user.prenom}}
   <br>
-  <h4>Roles:
-  {% for role in user.roles %}
+  Email : {{ user.email}}</div> 
+  <div class="card-footer">  Roles : {% for role in user.roles %}
        {% if role == 'ROLE_ADMIN' %}
      Administrateur
      {% endif %}
@@ -25,22 +37,23 @@
   {% if role == 'ROLE_LIVREUR' %}
      Livreur 
      {% endif %}
-{% endfor %}
-</h4>
-
+{% endfor %}</div>
+</div
+<br>
   <p>
-    <a href="{{ path('ff_user_home') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la liste
+    <a href="{{ path('ff_user_home') }}" class="btn btn-primary"">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      Retour 
+      
     </a>
     <a href="{{ path('ff_user_edit', {'id': user.id}) }}" class="btn btn-warning">
-      <i class="glyphicon glyphicon-edit"></i>
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       Modifier
     </a>
     <a href="{{ path('ff_user_delete', {'id': user.id}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
+    <i class="fa fa-trash" aria-hidden="true"></i>
       Supprimer
     </a>
   </p>
-
+</main>
 {% endblock %}

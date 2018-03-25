@@ -20,23 +20,29 @@ class CuisinierController extends Controller
 {
     public function indexAction($page)
     {
-								
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_CUISINIER')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
+		
 		 
-    	if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }					 			$nbPerPage = 10;
+    	if ($page < 1) 
+			{
+     		 throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+    	}					 			
+			$nbPerPage = 10;
 
-					$listCommandes = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Commande')
-						->getCommande($page, $nbPerPage)
-           ;
+			$listCommandes = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Commande')
+				->getCommande($page, $nbPerPage,0,1);
 
-			   $nbPages = ceil(count($listCommandes) / $nbPerPage);
+			 $nbPages = ceil(count($listCommandes) / $nbPerPage);
+			
  			 if ($page > $nbPages)
 			 {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-				}
+      		throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+       } 
 			 
         return $this->render('FFFastBundle:Cuisinier:index.html.twig', array(
 					'listCommandes' => $listCommandes,
@@ -47,27 +53,33 @@ class CuisinierController extends Controller
 	
 	
 	
-	    public function etatAction($etat, $page)
+	  public function etatAction($etat, $page)
     {
-				dump($etat);
-				dump($page);
+				if (!$this->get('security.authorization_checker')->isGranted('ROLE_CUISINIER')) 
+				{
+					throw new AccessDeniedException('Accès limité.');
+				}
+
 									
 		 
-    	if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }					 			$nbPerPage = 10;
+    		if ($page < 1) 
+				{
+      		throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+    		}	
+			
+			
+				$nbPerPage = 10;
 
-					$listCommandes = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Commande')
-						-> getCommandeEtat($page, $nbPerPage, $etat)
-           ;
+				$listCommandes = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Commande')
+					-> getCommandeEtat($page, $nbPerPage, $etat);
 
-			   $nbPages = ceil(count($listCommandes) / $nbPerPage);
+			  $nbPages = ceil(count($listCommandes) / $nbPerPage);
  			 if ($page > $nbPages)
 			 {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-				}
+     			 throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+			 }
 			 
         return $this->render('FFFastBundle:Cuisinier:etat.html.twig', array(
 					'listCommandes' => $listCommandes,
@@ -84,96 +96,92 @@ class CuisinierController extends Controller
 	
 	    public function viewAction(Request $request, $id)
       {			
-
+					if (!$this->get('security.authorization_checker')->isGranted('ROLE_CUISINIER')) 
+					{
+						throw new AccessDeniedException('Accès limité.');
+					}
+		
 					$repository = $this->getDoctrine()
 						->getManager()
-						->getRepository('FFFastBundle:Commande')
-						;
-				
-				
+						->getRepository('FFFastBundle:Commande');
+			
 					$commande = $repository->find($id);
 				
-				if (null === $commande) {
-      throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
+					if (null === $commande)
+					{
+      				throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
 					}
 				
-							$test= $commande->getEtat();
-             dump($test);
+					$test= $commande->getEtat();
+					$commande->setEtat('1');
 
-							$commande->setEtat('1');
-						
 				  $em = $this->getDoctrine()->getManager();
           $em->flush();
-						dump($commande);
-      return $this->render('FFFastBundle:Cuisinier:view.html.twig', array(
-          'commande' => $commande,
-
-        ));
-    }
+				
+				
+     			 return $this->render('FFFastBundle:Cuisinier:view.html.twig', array(
+        		  'commande' => $commande,));
+  	  }
 	
 	
-	    public function editAction($idCommande,Request $request )
+	  public function editAction($idCommande,Request $request )
     {
-         dump($idCommande);
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_CUISINIER')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
 				
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Commande');
+				
+				
+			$commande = $repository->find($idCommande);
+				
+			if (null === $commande)
+			{
+					throw new NotFoundHttpException("La commande  d'id ".$idCommande." n'existe pas.");
+			}
+
+			if ($commande->getEtat() == '0')
+			{
+					$test= $commande->getEtat();
+
+					$commande->setEtat('1');
+
+					$em = $this->getDoctrine()->getManager();
+					$em->flush();
+
 					$repository = $this->getDoctrine()
 						->getManager()
-						->getRepository('FFFastBundle:Commande')
-						;
-				
-				
-					$commande = $repository->find($idCommande);
-				
-				if (null === $commande) {
-      throw new NotFoundHttpException("La commande  d'id ".$idCommande." n'existe pas.");
-					}
-								if ($commande->getEtat() == '0')
-								{
+						->getRepository('FFFastBundle:CommandeProduit');
 
-							$test= $commande->getEtat();
-             dump($test);
-
-							$commande->setEtat('1');
-						
-				  $em = $this->getDoctrine()->getManager();
-          $em->flush();
-									
-					$repository = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:CommandeProduit')
-						;
-				
-				dump($repository);
 					$commandeproduit = $repository->findBy( array('commande' => $idCommande) );				
-							dump($commandeproduit);		
-									
-						 foreach($commandeproduit as $produits)
-						 {
-																dump($produits);
- 
-							 if($produits->getEtat() == '0')
-							 {
-								 $produits->setEtat('1');
-								 	$em = $this->getDoctrine()->getManager();
-      				    $em->flush();
-									
-							 }
-							 
-						 }
-									
-								}
 
-				
-    $em = $this->getDoctrine()->getManager();		
-    $commande = $em->getRepository('FFFastBundle:Commande')->find($idCommande);
-				
-		$repository2 = $this->getDoctrine()
-		->getManager()
-		->getRepository('FFFastBundle:CommandeProduit')
-		;
-					$commandeproduit = $repository2->findBy( array('commande' => $idCommande) );
-				dump($commandeproduit);
+// 					 foreach($commandeproduit as $produits)
+// 					 {
+// 							dump($produits);
+
+// 							 if($produits->getEtat() == '0')
+// 						 	{
+// 									$produits->setEtat('1');
+// 									$em = $this->getDoctrine()->getManager();
+// 									$em->flush();
+// 							}
+// 					 }
+			}
+
+
+			$em = $this->getDoctrine()->getManager();		
+			$commande = $em->getRepository('FFFastBundle:Commande')->find($idCommande);
+
+			$repository2 = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:CommandeProduit');
+			
+			$commandeproduit = $repository2->findBy( array('commande' => $idCommande) );
 			$etat = $commandeproduit;
+			
 			if (null === $commande) 
 			{
 				throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
@@ -181,74 +189,93 @@ class CuisinierController extends Controller
 				
 
 
-				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-dump($request);
-									$em = $this->getDoctrine()->getManager();
-									$em->flush();
-
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+					$em = $this->getDoctrine()->getManager();
+					$em->flush();
 				
-			$request->getSession()->getFlashBag()->add('notice', 'Commande bien modifiée.');
-				}	
-      return $this->render('FFFastBundle:Cuisinier:edit.html.twig', array(
+					$request->getSession()->getFlashBag()->add('notice', 'Commande bien modifiée.');
+			}	
+			return $this->render('FFFastBundle:Cuisinier:edit.html.twig', array(
 				'commande' => $commande,
 				'commandeproduit'  => $commandeproduit,
-			
 			));
 					
-				}
+		}
 	
 	
 	   public function cpAction(Request $request, $idCommandeProduit)
    {
 		 
-
-                   dump($idCommandeProduit);
-      # in the start check if user edit field and click on button
-
-          $em = $this->getDoctrine()->getManager();
-          $repository = $em->getRepository('FFFastBundle:CommandeProduit');
-          # select wanted item from shipping table to edit it
-          $cp = $repository->findOneBy(array('id' => $idCommandeProduit));
-				
-
-				
-          $etat = $request->request->get('form')['etat'];
-				  dump($etat);
-				
-            $cp->setEtat('2');
-          $idCommande=$cp->getCommande()->getId();
-				dump($idCommande);
-          $em->flush();
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_CUISINIER')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
 			 
-			 $commandeproduit =$repository->findBy(array('id' => $idCommandeProduit));
-				 $bool =true;
-				 foreach($commandeproduit as $produits)
-				 {
-					 if($produits->getEtat() == '1' )
-						  $bool = false;
-					 
-				 }
+			$cuisinier = $this->container->get('security.token_storage')->getToken()->getUser();
+
+			$em = $this->getDoctrine()->getManager();
+			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
+			$cp = $repository->findOneBy(array('id' => $idCommandeProduit));
+			$etat = $request->request->get('form')['etat'];
+			 $etatcp = $cp->getEtat();
+			 if($etatcp == 0)
+			 {
+				 $cp->setEtat('1');
+				 $cp->setCuisinier($cuisinier);
+				$idCommande=$cp->getCommande()->getId();
+				$em->flush();
+			 $request->getSession()->getFlashBag()->add('success', 'Produit pris en charge .');
+    		return $this->redirectToRoute('ff_fast_editcu',['idCommande' => $idCommande,]);
+
+			 }
+			$em = $this->getDoctrine()->getManager();
+			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
+			$cp = $repository->findOneBy(array('id' => $idCommandeProduit));
+			$cp->setEtat('2');
+			$idCommande=$cp->getCommande()->getId();
+			 
+			$em->flush();
+		 $request->getSession()->getFlashBag()->add('success', 'Commande bien modifiée.');
+			 
+			$em = $this->getDoctrine()->getManager();
+			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
+			$commandeproduit =$repository->findBy(array('commande' => $idCommande));
+			$bool =true;
+
+			 foreach($commandeproduit as $produits)
+			 {
+					if($produits->getEtat() == '1')
+					{						
+							$bool = false;
+
+					}					
+				 if($produits->getEtat() == '0')
+					{						
+							$bool = false;
+
+					}
+					
+			 }
 			 
 			 if($bool == true)
 			 {
-				 
+				 $request->getSession()->getFlashBag()->add('success', 'Commande préparée.');
+
           $em = $this->getDoctrine()->getManager();
           $repository = $em->getRepository('FFFastBundle:Commande');
           # select wanted item from shipping table to edit it
           $commande = $repository->find($idCommande);
 				  $commande->setEtat('2');
+				 
 				  $em->flush();
-				 return $this->redirectToRoute('ff_fast_homecu');
+				 
+				 	return $this->redirectToRoute('ff_fast_homecu');
 
 			 }
       
-      //return new Response(''. $new_quantity );
-    		return $this->redirectToRoute('ff_fast_editcu',[
-        'idCommande' => $idCommande,
-    ]);
-   }
-
-	
+    		return $this->redirectToRoute('ff_fast_editcu',['idCommande' => $idCommande,]);
+   }	
 }
 	
 

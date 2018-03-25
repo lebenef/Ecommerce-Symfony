@@ -1,20 +1,38 @@
-{% extends "FFFastBundle::layout.html.twig" %}
+{% extends "FFUserBundle:User:menu.html.twig" %}
 
 {% block title %}
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ffgammes_body %}
+{% block body %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div id="content" class="col-md-8 my-4">
 
   <h2>Mes Commmandes</h2>
-
-  <ul>
-    {% for commande in listCommandes %}
-      <li>
-         Commande numéro : {{ commande.id }} Le : 
-          {{ commande.date |date('d-m-Y')}}
-       Etat : 
-     {% if commande.etat == '0' %}
+  {% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>Succès!</strong> {{ message|trans({}, 'FFFastBundle') }}
+    </div>
+  {% endfor %}
+{% endfor %}
+  
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Numéro</th>
+      <th>Date </th>
+      <th>Etat</th>
+      <th>Voir</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for commande in listCommandes %}
+    <tr>
+      <th scope="row"> {{ commande.id }}</th>
+      <td>{{ commande.date |date('d-m-Y')}}</td>
+      <td>     
+      {% if commande.etat == '0' %}
      Validée
      {% endif %}
       {% if commande.etat == '1' %}
@@ -31,15 +49,18 @@
   {% if commande.etat == '4' %}
       Livré
      {% endif %}
+     </td>
+      <td>
+      <a href="{{ path('ff_fast_viewcommande', {'id' : commande.id} ) }}" class="btn btn-secondary btn-sm">
+         <i class="fa fa-eye" aria-hidden="true"></i>
+      </a>        
+      </td>
+    </tr>
+   {% endfor %}
 
-    <a href="{{ path('ff_fast_viewcommande', {'id' : commande.id} ) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-Voir    </a>        
-      </li>
-    {% endfor %}
+  </tbody>
+</table>
 
-  </ul>
-  
 <nav aria-label="Page navigation example">
 
     <ul class="pagination">
@@ -51,5 +72,5 @@ Voir    </a>
   {% endfor %}
 </ul>
 </nav>
-
+</main>
 {% endblock %}

@@ -96,8 +96,14 @@ ff_fast_homepages:
     path:     /shop
     defaults: { _controller: FFFastBundle::index }
     
+ff_fast_accueil :
+   path:     /
+   defaults: { _controller: FFFastBundle:Shop:accueil }
+   requirements:
+      id: \d+
+    
 ff_fast_homes:
-    path:     /shop/home/{page}
+    path:     /shop/home{page}
     defaults: { _controller: FFFastBundle:Shop:index, page :1 }
     requirements:
        id: \d+
@@ -110,7 +116,7 @@ ff_fast_gammes:
       
        
 ff_fast_views:
-    path:     /shop/view/{id}
+    path:     /shop/view/{idProduits}
     defaults: { _controller: FFFastBundle:Shop:view }
     requirements:
        id: \d+    
@@ -120,25 +126,19 @@ ff_fast_show:
     defaults: { _controller: FFFastBundle:Cart:show }
     
 ff_fast_addc:
-    path:     /cart/add/{productId}
-    defaults: { _controller: FFFastBundle:Cart:add ,productId :1}
+    path:     /cart/add/{idProduits}
+    defaults: { _controller: FFFastBundle:Cart:add}
     requirements:
        id: \d+   
        
 ff_fast_deletec:
-    path:     /cart/delete/{idProduits}/{idCart}
+    path:     /cart/delete/{idProduits}
     defaults: { _controller: FFFastBundle:Cart:delete }
     requirements:
        id: \d+  
        
-ff_fast_editc:
-    path:     /cart/edit/{idProduits}/{idCart}
-    defaults: { _controller: FFFastBundle:Cart:edit ,idProduits :1, idCart :1 }
-    requirements:
-       id: \d+  
-
 ff_fast_clearc:
-    path:     /cart/clear/{idCart}
+    path:     /cart/clear/
     defaults: { _controller: FFFastBundle:Cart:clear}
     requirements:
        id: \d+ 
@@ -146,11 +146,10 @@ ff_fast_clearc:
 ff_fast_viewc:
     path:     /cart/view/
     defaults: { _controller: FFFastBundle:Cart:view}
-    requirements:
-       id: \d+ 
+
        
 ff_fast_commandec:
-    path:     /cart/commande/{idCart}
+    path:     /cart/commande/
     defaults: { _controller: FFFastBundle:Cart:commande}
     requirements:
        id: \d+ 
@@ -250,4 +249,26 @@ ff_fast_editcpl:
     path:     /livreur/cp/{idCommande}
     defaults: { _controller: FFFastBundle:Livreur:cp }
     requirements:
-       id: \d+                
+       id: \d+      
+       
+ff_fast_search:
+    path:     /shop/search/{page}
+    defaults: { _controller: FFFastBundle:Shop:search, page :1 }
+    
+ff_fast_login:
+    path:     /cart/login/
+    defaults: { _controller: FFFastBundle:Cart:login}
+    
+ff_fast_valide:
+    path:     /cart/valide/
+    defaults: { _controller: FFFastBundle:Cart:valide}
+
+ff_fast_addcom:
+    path:     /shop/commentaire/{idProduits}
+    defaults: { _controller: FFFastBundle:Commentaire:add}
+    
+ff_fast_mll:
+    path:     /livreur/ml/{page}
+    defaults: { _controller: FFFastBundle:Livreur:ml, page :1 }
+    requirements:
+       gamme: \d+

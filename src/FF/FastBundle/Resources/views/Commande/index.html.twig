@@ -1,24 +1,72 @@
-{% extends "FFFastBundle::layout.html.twig" %}
+{% extends "FFCoreBundle:Core:menu.html.twig" %}
 
 {% block title %}
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ffgammes_body %}
+{% block body %}       
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-  <h2>Liste des Commmandes</h2>
 
-  <ul>
-    {% for commande in listCommandes %}
-      <li>
-        <a href="{{ path('ff_fast_viewco', {'id': commande.id}) }}">
-          {{ commande.user.username }}
-        </a>
-      </li>
+<div id="content" class="col-md-8">
+<br>
+  {% for key, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+      <div class="alert alert-{{key}}>
+       <strong>succès!</strong> {{ message|trans({}, 'FOSUserBundle') }}
+      </div>
     {% endfor %}
-
-  </ul>
+  {% endfor %}
   
+  <h2>Liste des Commmandes</h2>
+  
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Numéro</th>
+      <th>Date </th>
+      <th>Etat</th>
+      <th>Client</th>
+      <th>Voir</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for commande in listCommandes %}
+    <tr>
+      <th scope="row"> {{ commande.id }}</th>
+      <td>{{ commande.date |date('d-m-Y')}}</td>
+      <td>     
+      {% if commande.etat == '0' %}
+     Validée
+     {% endif %}
+      {% if commande.etat == '1' %}
+     En cours de Préparation
+     {% endif %}
+     {% if commande.etat == '2' %}
+     Préparé
+     {% endif %}
+     
+  {% if commande.etat == '3' %}
+     En cours de Livraison
+     {% endif %}
+     
+  {% if commande.etat == '4' %}
+      Livré
+     {% endif %}
+     </td>
+      <td>
+          {{ commande.user.username }}
+      </td>
+       <td>
+      <a href="{{ path('ff_fast_viewco', {'id': commande.id}) }}" class="btn btn-secondary btn-sm">
+<i class="fa fa-eye" aria-hidden="true"></i>
+       </a>
+      </td>
+    </tr>
+   {% endfor %}
+
+  </tbody>
+</table>
 <nav aria-label="Page navigation example">
 
     <ul class="pagination">
@@ -30,5 +78,5 @@
   {% endfor %}
 </ul>
 </nav>
-
+</main>
 {% endblock %}

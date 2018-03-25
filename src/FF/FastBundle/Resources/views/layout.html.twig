@@ -6,12 +6,18 @@
 
 
 {% block body %}
-  <h1>Administrateur</h1>
-  <hr>
+<br>
+  {% for key, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+      <div class="alert alert-{{key}}>
+       <strong>succès!</strong> {{ message|trans({}, 'FOSUserBundle') }}
+      </div>
+    {% endfor %}
+  {% endfor %}
 
 
 
-  {% block ffgammes_body %}
+  {% block ffadmin_body %}
 
   {% endblock %}
 

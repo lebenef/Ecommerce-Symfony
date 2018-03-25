@@ -5,6 +5,7 @@ use FF\FastBundle\Entity\Produits;
 use FF\FastBundle\Form\ProduitsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FF\FastBundle\Entity\Gammes;
+use FF\FastBundle\Entity\Commentaire;
 use FF\FastBundle\Form\GammesType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,127 +15,237 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ShopController extends Controller
 {
-    public function indexAction($page)
-    {
-								
+	  public function accueilAction(Request $request)
+    {         
+				$session = $request->getSession();
+		    if (!$session->has('panier')) $session->set('panier',array());
+        		$panier = $session->get('panier');						
+		
+				$listGammes = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Gammes')
+					->findAll();
+
+
+        return $this->render('FFFastBundle:Shop:accueil.html.twig', array(
+						'listGammes' => $listGammes,
+
+				));
+    }
+    public function indexAction(Request $request, $page)
+    {         
+				$session = $request->getSession();
+		    if (!$session->has('panier')) $session->set('panier',array());
+        		$panier = $session->get('panier');						
 		 
-    	if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }					 			$nbPerPage = 10;
+    		if ($page < 1) 
+				{
+					throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+    		}					 			
+				$nbPerPage = 10;
 
-					$listProduits = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Produits')
-						->getProduits($page, $nbPerPage)
-           ;
-            $listGammes = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Gammes')
-						->findAll()
-						;
+				$listProduits = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getProduits($page, $nbPerPage);
+				$listGammes = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Gammes')
+					->findAll();
 
-			   $nbPages = ceil(count($listProduits) / $nbPerPage);
- 			 if ($page > $nbPages)
-			 {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+			 $nbs = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNb();
+
+			 $nbt = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNbt();
+
+			  $nbPages = ceil(count($listProduits) / $nbPerPage);
+			
+				if ($page > $nbPages)
+				{
+					 throw $this->createNotFoundException("La page ".$page." n'existe pas.");
 				}
 			 
         return $this->render('FFFastBundle:Shop:index.html.twig', array(
-					'listProduits' => $listProduits,
-          'listGammes' => $listGammes,
-					'nbPages'         => $nbPages,
-					'page'            => $page,				));
-				
+						'listProduits' => $listProduits,
+						'nbs'          => $nbs,
+						'nbt'          => $nbt,
+						'listGammes' => $listGammes,
+						'nbPages'         => $nbPages,
+						'page'            => $page,			
+						'panier' => $session->get('panier')
+				));
     }
   
-	    public function gammeAction($page, $gamme)
+	  public function gammeAction(Request $request, $page, $gamme)
     {
-				dump($gamme);
-				dump($page);
-								
-		 
-    	if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }					 			$nbPerPage = 10;
+	
+			
 
-					$listProduits = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Produits')
-						->getProduitsByGamme($gamme,$page, $nbPerPage)
-           ;
-            $listGammes = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Gammes')
-						->findAll()
-						;
-				dump($listProduits);
-				dump($nbPerPage);
-			   $nbPages = ceil(count($listProduits) / $nbPerPage);
- 			 if ($page > $nbPages)
-			 {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-				}
+			$session = $request->getSession();
+
+			if (!$session->has('panier')) $session->set('panier',array());
+				$panier = $session->get('panier');	
+			if ($page < 1)
+			{
+					throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+			}					 			
+			$nbPerPage = 10;
+
+			$listProduits = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Produits')
+				->getProduitsByGamme($gamme,$page, $nbPerPage);
+			$listGammes = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Gammes')
+				->findAll();
+			
+				 $gammes = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Gammes')
+				->findOneById($gamme);
+			
+		
+			$nbs = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNb();
+
+			 $nbt = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNbt();
+			$nbPages = ceil(count($listProduits) / $nbPerPage);
+			
+			if ($page > $nbPages)
+			{
+				throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+			}
 			 
-        return $this->render('FFFastBundle:Shop:gamme.html.twig', array(
-					'listProduits' => $listProduits,
-          'listGammes' => $listGammes,
-					'nbPages'         => $nbPages,
-					'page'            => $page,				));
+			return $this->render('FFFastBundle:Shop:gamme.html.twig', array(
+				'listProduits' => $listProduits,
+				'nbs'          => $nbs,
+				'nbt'          => $nbt,
+				'listGammes' => $listGammes,
+				'nbPages'         => $nbPages,
+				'page'            => $page,	
+				'gammes'            => $gammes,	
+				'panier' => $session->get('panier')
+			));
 				
     }
   
   
 	
-    public function viewAction(Request $request, $id)
-      {			
-		$nb = array('nb' => 'nb');
-    // On ajoute les champs de l'entité que l'on veut à notre formulaire
-    $form = $this->createFormBuilder($nb)
-            ->setAction($this->generateUrl('ff_fast_addc'))
-            ->setMethod('POST')
-         	 ->add('nb',     ChoiceType::class , array(
-            'choices' => array(
-            '1'     => 1,
-            '2'     => 2,
-            '3'     => 3,
-            '4'     => 4,
-            '5'     => 5,
-            '6'     => 6,
-            '7'     => 7,
-            '8'     => 8,
-            '9'     => 9,
-           '10'     => 10,
+	public function viewAction(Request $request, $idProduits)
+	{		
 
-          ), 
-						))
-				 ->add('save',      SubmitType::class)
-         ->getForm();
-		     $form->handleRequest($request);
 
-					$repository = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Produits')
-						;
-					$produits = $repository->find($id);
+		$session = $request->getSession();
+		if (!$session->has('panier')) $session->set('panier', array());  
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Produits');
+		
+			$produits = $repository->find($idProduits);
+			$nbPerPage = 10;
+
+			$listGammes = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Gammes')
+				->findAll()
+				;
+				$commentaires = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Commentaire')
+				->findByProduits($idProduits)
+				;
+		$nbs = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNb();
+
+			 $nbt = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNbt();
+			if (null === $produits) 
+			{
+				throw new NotFoundHttpException("Le Produit d'id ".$idProduits." n'existe pas.");
+			}
+		
+			return $this->render('FFFastBundle:Shop:view.html.twig', array(
+				'produits' => $produits,
+				'listGammes' => $listGammes,
+				'nbs'          => $nbs,
+				'nbt'          => $nbt,
+				'panier' => $session->get('panier'),
+				'commentaires' => $commentaires,
+			));
+	}
+	
+	public function searchAction(Request $request,$page)
+	{		
+			$session = $request->getSession();
+						$nbPerPage = 10;
+
+			if (!$session->has('panier')) $session->set('panier',array());
+				$panier = $session->get('panier');	
+      if ($request->getMethod() == 'POST')
+			{
+				$search = $request->get('search');
+				
+				$em = $this->getDoctrine()->getManager();
+        $listProduits = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getSearch($search,$page,$nbPerPage);
+				$listGammes = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Gammes')
+					->findAll();
+							$nbs = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNb();
+
+			 $nbt = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Produits')
+					->getNbt();
+
+	$gammes = array (
+    'name' => 'Recherche',
+);
+				
+				$nbPages = ceil(count($listProduits) / $nbPerPage);
 			
-			     $listGammes = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Gammes')
-						->findAll()
-						;
-				if (null === $produits) {
-      throw new NotFoundHttpException("Le Produit d'id ".$id." n'existe pas.");
-					}
-						dump($produits);
-      return $this->render('FFFastBundle:Shop:view.html.twig', array(
-          'produits' => $produits,
-				  'listGammes' => $listGammes,
-				  'form' => $form->createView(),
+				if ($page > $nbPages)
+				{
+					throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+				}
 
-        ));
-    }
-	
-	
+			} 
+			else 
+			{
+				throw $this->createNotFoundException('La page n\'existe pas.');
+			}
+			return $this->render('FFFastBundle:Shop:gamme.html.twig', array(
+				'listProduits' => $listProduits,
+				'gammes'          => $gammes,
+				'nbs'          => $nbs,
+				'nbt'          => $nbt,				
+				'listGammes' => $listGammes,
+				'nbPages'         => $nbPages,
+				'page'            => $page,	
+				'panier' => $session->get('panier')
+			));
+	}
 }
 		
 

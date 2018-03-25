@@ -15,7 +15,7 @@ use FF\FastBundle\Entity\Commande;
 class CommandeProduit
 {
    /**
-   * @ORM\ManyToOne(targetEntity="FF\FastBundle\Entity\Commande" ,inversedBy="commande")
+   * @ORM\ManyToOne(targetEntity="FF\FastBundle\Entity\Commande" ,inversedBy="commandeproduit")
    */
    private $commande;
    /**
@@ -23,7 +23,13 @@ class CommandeProduit
    * @ORM\JoinColumn(nullable=false)
    */
   private $produits;
- 
+   
+  /**
+   * @ORM\ManyToOne(targetEntity="FF\UserBundle\Entity\User")
+   * @ORM\JoinColumn(nullable=true)
+   */
+   private $cuisinier = null;
+     
     /**
      * @var int
      *
@@ -39,6 +45,16 @@ class CommandeProduit
      * @ORM\Column(name="etat", type="string", length=1)
      */
     private $etat;
+  
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->date = new \Datetime();
+        $this->etat = 0;  
+          
+    }
  
     /**
      * Get id
@@ -96,5 +112,46 @@ class CommandeProduit
     public function getProduits()
     {
         return $this->produits;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param string $etat
+     *
+     * @return CommandeProduit
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return string
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+  
+        public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Get view
+     *
+     * @return FormView
+     */
+    public function getView()
+    {
+        return $this->view;
     }
 }

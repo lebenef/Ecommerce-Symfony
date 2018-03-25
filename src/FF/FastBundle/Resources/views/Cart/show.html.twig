@@ -1,5 +1,6 @@
 
-{% extends "FFFastBundle:Cart:menu.html.twig" %}
+{% extends "FFCoreBundle::layout.html.twig" %}
+{% set total = 0 %}
 
 {% block title %}
   Accueil - {{ parent() }}
@@ -7,53 +8,144 @@
 
 {% block body %}
 
-  <h2>Panier</h2>
-      {% if vide == true %}
 
-          <p> Panier vide </p>
-      
-      {% else %}
-
-<di>
-  <ul>
-          
-
-      <a href="{{ path('ff_fast_clearc', {'idCart': products[0].cart.id}) }}," class="btn btn-outline-warning">
-
-      <i class="glyphicon glyphicon-chevron-left"></i>
-Vider le panier
-</a>
-    {% for product in products %}
-      <li>
-      <br>
-      <div class="row">
-         <p> Produit : {{ product.produits.name }}  </p>   &nbsp;    Quantité : </p>
-         
-              {{ form_start(product.view, {'action': path('ff_fast_editc', {'idProduits': product.produits.id, 'idCart': product.cart.id }), 'method': 'POST'}) }}
-{{ form_widget(product.view.nb, {value : product.quantity }) }}
-
-
-{{ form_widget(product.view.Modifier, {'attr': { 'class': 'btn btn-outline-success' } } ) }}
-
-
-      <a href="{{ path('ff_fast_deletec', {'idProduits': product.produits.id, 'idCart': product.cart.id}) }}," class="btn btn-outline-danger">
-      Supprimer 
-    </a>
-        {{ form_end(product.view) }}
+<div id="content" class="col-md-8 center-block my-4">
+<br>
+{% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>
+     {% if key =="success"%}
+     Succès !
+     {% endif %}     
+     {% if key =="danger"%}
+     Erreur !
+     {% endif %}
+     </strong> {{ message|trans({}, 'FFFastBundle') }}
     </div>
-      </li>
-      <br>
-    {% endfor %}
-  </ul>
-  
-  Prix total : {{ products[0].cart.totalprice }}
-  
-     <a href="{{ path('ff_fast_viewc') }}" class= "btn btn-success">
-      Commander 
-    </a>
-    
-  </div>
-     {% endif  %}
+  {% endfor %}
+{% endfor %}
+<div>
+<div>
+ <div class="row">
 
+ <div class="progresss ">
+ 
+{% if produits|length == 0 %}
+<div class="circle">
+<span class="label"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+<span class="title"<span class="bar"></span>
+0%</span>
+</div>
+<span class="bar"></span>
+{% else %}
+
+<div class="circle active">
+<span class="label"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+</span>
+<span class="title">0%</span>
+
+</div>
+<span class="bar done"></span>
+
+
+{% endif %}
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
+<div class="circle done">
+<span class="label"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">25%</span>
+</div>
+<span class="bar"></span>
+{% else %}
+
+<div class="circle">
+<span class="label"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">25%</span>
+</div>
+<span class="bar"></span>
+{% endif %}
+
+<div class="circle ">
+<span class="label"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">50%</span>
+</div>
+<span class="bar"></span>
+<div class="circle">
+<span class="label"><i class="fa fa-paypal" aria-hidden="true"></i>
+</span>
+<span class="title">75%</span>
+</div>
+<span class="bar"></span>
+<div class="circle">
+<span class="label"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+</i>
+<span class="title">100%</span>
+</div>
+</div>
+</div>
+
+</div>
+  <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if produits|length == 0 %}
+                        <tr>
+                            <td colspan="4"><center>Aucun articles dans votre panier</center></td>
+                        </tr>
+                    {% endif %}
+                    
+                    {% for produit in produits %}
+                    <tr>
+                        <form action="{{ path('ff_fast_addc', { 'idProduits' : produit.id }) }}" method="get">
+                            <td>{{ produit.name }}</td>
+                            <td>
+                                <select name="qte" class="span1" onChange="this.form.submit()">
+                                    {% for i in 1..10 %}
+                                        <option value="{{ i }}" {% if i == panier[produit.id] %} selected="selected" {% endif %}>{{ i }}</option>
+                                    {% endfor %}
+                                </select>&nbsp;
+                                <a href="{{ path('ff_fast_deletec', { 'idProduits' : produit.id }) }}"> <i class="fa fa-trash"></i> </a>
+                            </td>
+                            <td>{{ produit.price }} €</td>
+                            <td>{{ produit.price * panier[produit.id] }} €</td>
+                        </form>
+
+                    {% set total = total + (produit.price * panier[produit.id]) %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if produits|length != 0 %}
+            <dl class="dl-horizontal pull-right">
+                
+        
+
+                <dt>Total TTC :</dt><dd>{{ total}} €</dd>
+            </dl>
+            <div class="clearfix"></div>
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  <a href="{{ path('ff_fast_viewc') }}" class="btn btn-success pull-right"><i class="fa fa-check"></i> Valider panier</a>
+                  {% else %}
+                  <a href="{{ path('ff_fast_viewc') }}" class="btn btn-success pull-right"><i class="fa fa-check"></i> Connexion</a>
+                  {% endif %}
+
+                  <a href="{{ path('ff_fast_clearc') }}" class="btn btn-danger"><i class="fa fa-trash" ></i> Vider panier </a>
+
+                  {% endif %}
+                  <a href="{{ path('ff_fast_homes') }}" class="btn btn-primary"><i class="fa fa-reply"></i> Continuer achats</a>
+
+    </div>
 
 {% endblock %}

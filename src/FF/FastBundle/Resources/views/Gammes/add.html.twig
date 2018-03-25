@@ -1,17 +1,19 @@
 
 
-{% extends "FFFastBundle::layout.html.twig" %}
+{% extends "FFCoreBundle:Core:menu.html.twig" %}
  {% block title %} Ajouter une gamme - {{ parent() }}{% endblock %}
- {% block body %}
-
+{% block body %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div id="content" class="col-md-8">
   <h2>Ajouter une Gamme de Produit </h2>
 
   {{ include("FFFastBundle:Gammes:form.html.twig") }}
 
-  <p>
-    <a href="{{ path('ff_fast_home') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
+  <p class='my-1'>
+    <a href="{{ path('ff_fast_home') }}"  class="btn btn-primary ">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
       Retour
     </a>
   </p>
+</main>
 {% endblock %}

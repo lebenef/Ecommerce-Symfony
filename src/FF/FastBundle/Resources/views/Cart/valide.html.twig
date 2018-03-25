@@ -1,0 +1,69 @@
+{% extends "FFCoreBundle::layout.html.twig" %}
+{% set total = 0 %}
+
+{% block title %}
+  Validation - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div id="content" class="col-md-8 my-4 center-block">
+<div>
+<div>
+
+{% for key, messages in app.session.flashbag.all() %}
+  {% for message in messages %}
+    <div class="alert alert-{{key}}">
+     <strong>Succès!</strong> {{ message|trans({}, 'FFFastBundle') }}
+    </div>
+  {% endfor %}
+  {% endfor %}
+ <div class="row">
+ <div class="progresss center">
+ 
+<div class="circle done">
+<span class="label"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+</span>
+<span class="title">0%</span>
+</div>
+<span class="bar done"></span>
+
+<div class="circle done">
+<span class="label"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">25%</span>
+</div>
+<span class="bar done "></span>
+
+<div class="circle done ">
+<span class="label"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+</span>
+<span class="title">50%</span>
+</div>
+<span class="bar done "></span>
+<div class="circle done">
+<span class="label"><i class="fa fa-paypal" aria-hidden="true"></i>
+</i>
+</span>
+<span class="title">75%</span>
+</div>
+<span class="bar done"></span>
+<div class="circle done">
+<span class="label"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+</i>
+
+<span class="title">100%</span>
+</div>
+</div>
+</div>
+
+
+      <!-- Jumbotron Header -->
+      <div class="jumbotron my-4 center-block">
+        <h3 class="display-3">Merci de votre confiance !</h3>
+
+      </div>
+
+
+
+
+{% endblock %}

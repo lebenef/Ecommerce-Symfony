@@ -12,52 +12,59 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GammesController extends Controller
 {
-    public function indexAction($page)
-    {
-	
-		 {
-    	if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }		
+		public function indexAction($page)
+		{
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
+
+			if ($page < 1) 
+			{
+				throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+			}		
 			$nbPerPage = 10;
-					
+
 			$repository = $this->getDoctrine()
 						->getManager()
 						->getRepository('FFFastBundle:Gammes')
-						->getGammes($page, $nbPerPage)
+						->getGammes($page, $nbPerPage);
 
-						;
-					$listGammes = $repository;
-			 			dump($listGammes);
+			$listGammes = $repository;
 
-			   $nbPages = ceil(count($listGammes) / $nbPerPage);
- 			 if ($page > $nbPages)
+			$nbPages = ceil(count($listGammes) / $nbPerPage);
+
+			 if ($page > $nbPages)
 			 {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-				}
-			
+				 throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+			 }
 
-        return $this->render('FFFastBundle:Gammes:index.html.twig', array(
+
+				return $this->render('FFFastBundle:Gammes:index.html.twig', array(
 					'listGammes' => $listGammes,
 					'nbPages'         => $nbPages,
 					'page'            => $page,				));
-    }
-	}
+
+		}
 
     public function addAction(Request $request)
     {
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
 
    	 	$gammes = new Gammes();					
    		$form = $this->get('form.factory')->create(GammesType::class, $gammes);
 
-				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-									$em = $this->getDoctrine()->getManager();
-									$em->persist($gammes);
-					dump($gammes);
-									$em->flush();
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($gammes);
+				$em->flush();
 
 				
-        $request->getSession()->getFlashBag()->add('notice', 'Gamme bien enregistrée.');
+        $request->getSession()->getFlashBag()->add('success', 'Gamme bien enregistrée.');
 
         return $this->redirectToRoute('ff_fast_view', array('id' => $gammes->getId()));
       }
@@ -70,16 +77,22 @@ class GammesController extends Controller
 	
 
     public function viewAction($id)
-      {			
-					$repository = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Gammes')
-						;
-					$gammes = $repository->find($id);
+    {		
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
+	
+				$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Gammes')
+					;
+				$gammes = $repository->find($id);
 			
-			    if (null === $gammes) {
-      throw new NotFoundHttpException("La gamme d'id ".$id." n'existe pas.");
-					}
+			if (null === $gammes) 
+			{
+     			 throw new NotFoundHttpException("La gamme d'id ".$id." n'existe pas.");
+			}
 						
       return $this->render('FFFastBundle:Gammes:view.html.twig', array(
           'gammes' => $gammes
@@ -89,9 +102,13 @@ class GammesController extends Controller
 
     public function editAction($id,Request $request )
     {
-
-    $em = $this->getDoctrine()->getManager();		
-    $gammes = $em->getRepository('FFFastBundle:Gammes')->find($id);
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
+			
+			$em = $this->getDoctrine()->getManager();		
+			$gammes = $em->getRepository('FFFastBundle:Gammes')->find($id);
 			
 			if (null === $gammes) 
 			{
@@ -100,57 +117,59 @@ class GammesController extends Controller
 
    		$form = $this->get('form.factory')->create(GammesType::class, $gammes);
 
-				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-									$em = $this->getDoctrine()->getManager();
-									$em->flush();
-
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+					$em = $this->getDoctrine()->getManager();
+					$em->flush();
 				
-			$request->getSession()->getFlashBag()->add('notice', 'Gamme bien modifiée.');
-		  return $this->redirectToRoute('ff_fast_view', array('id' => $gammes->getId()));
+					$request->getSession()->getFlashBag()->add('success', 'Gamme bien modifiée.');
+				
+		  		return $this->redirectToRoute('ff_fast_view', array('id' => $gammes->getId()));
 					
+			}
+			
+			
+			
+
+			 return $this->render('FFFastBundle:Gammes:edit.html.twig', array(
+				'gammes'=> $gammes,			
+				'form' => $form->createView(),
+				));
+
+    }
+
+
+		public function deleteAction(Request $request, $id)
+		{
+				if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+				{
+					throw new AccessDeniedException('Accès limité.');
+				}
+
+				$em = $this->getDoctrine()->getManager();
+
+				$gammes = $em->getRepository('FFFastBundle:Gammes')->find($id);
+
+				if (null === $gammes) 
+				{
+					throw new NotFoundHttpException("La Gamme d'id ".$id." n'existe pas.");
 				}
 			
-			
-			
-			
-			        return $this->render('FFFastBundle:Gammes:edit.html.twig', array(
-					'gammes'=> $gammes,			
-        	'form' => $form->createView(),
-        	));
+				$form = $this->get('form.factory')->create();
 
-      dump($gammes);
-				
-            
-    }
+				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) 
+				{
+					$em->remove($gammes);
+					$em->flush();
 
-	
-	public function deleteAction(Request $request, $id)
-  {
+					$request->getSession()->getFlashBag()->add('info', "La Gamme a bien été supprimée.");
 
-    $em = $this->getDoctrine()->getManager();
+					return $this->redirectToRoute('ff_fast_home');
+				}
 
-    $gammes = $em->getRepository('FFFastBundle:Gammes')->find($id);
-
-    if (null === $gammes) {
-      throw new NotFoundHttpException("La Gamme d'id ".$id." n'existe pas.");
-    }
-
-    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-    // Cela permet de protéger la suppression d'annonce contre cette faille
-    $form = $this->get('form.factory')->create();
-
-    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-      $em->remove($gammes);
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('info', "La Gamme a bien été supprimée.");
-
-      return $this->redirectToRoute('ff_fast_home');
-    }
-    
-    return $this->render('FFFastBundle:Gammes:delete.html.twig', array(
-      'gammes' => $gammes,
-      'form'   => $form->createView(),
-    ));
-  }
+				return $this->render('FFFastBundle:Gammes:delete.html.twig', array(
+					'gammes' => $gammes,
+					'form'   => $form->createView(),
+				));
+		}
 }

@@ -13,9 +13,62 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class CommandeRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getCommande($page, $nbPerPage)
+    public function getCommande($page, $nbPerPage,$date1,$date2)
   {
     $query = $this->createQueryBuilder('a')
+             ->orderBy('a.date ', 'desc')
+             ->where('a.etat = :date1')
+             ->orwhere('a.etat = :date2')
+            ->setParameters(array(
+                      'date1' => $date1,
+                       'date2' =>$date2
+            ))
+
+      ->getQuery()
+    ;
+
+    $query
+      // On définit l'annonce à partir de laquelle commencer la liste
+      ->setFirstResult(($page-1) * $nbPerPage)
+      // Ainsi que le nombre d'annonce à afficher sur une page
+      ->setMaxResults($nbPerPage)
+    ;
+
+    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+    // (n'oubliez pas le use correspondant en début de fichier)
+    return new Paginator($query, true);
+  }      
+  public function getCommandeu($page, $nbPerPage,$etat,$livreur)
+  {
+    $query = $this->createQueryBuilder('a')
+             ->orderBy('a.date ', 'desc')
+             ->where('a.etat = :etat')
+             ->andwhere('a.livreur = :livreur')
+            ->setParameters(array(
+                      'etat' => $etat,
+                       'livreur' =>$livreur
+            ))
+
+      ->getQuery()
+    ;
+
+    $query
+      // On définit l'annonce à partir de laquelle commencer la liste
+      ->setFirstResult(($page-1) * $nbPerPage)
+      // Ainsi que le nombre d'annonce à afficher sur une page
+      ->setMaxResults($nbPerPage)
+    ;
+
+    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+    // (n'oubliez pas le use correspondant en début de fichier)
+    return new Paginator($query, true);
+  }    
+  public function getCommandea($page, $nbPerPage)
+  {
+    $query = $this->createQueryBuilder('a')
+             ->orderBy('a.date ', 'desc')
+
+
       ->getQuery()
     ;
 
@@ -35,7 +88,7 @@ class CommandeRepository extends \Doctrine\ORM\EntityRepository
   {
       
        $query = $this->createQueryBuilder('a')
-      ->orderBy('a.date')
+      ->orderBy('a.date ', 'desc')
       ->where('a.user = :user')
       ->setParameter('user', $user)
       ->getQuery()
@@ -75,4 +128,36 @@ class CommandeRepository extends \Doctrine\ORM\EntityRepository
     // (n'oubliez pas le use correspondant en début de fichier)
     return new Paginator($query, true);
   }
+  
+  public function getbyDate($date)
+  {
+      
+       $query = $this->createQueryBuilder('a')
+      ->select('COUNT(a)')
+      ->Where('a.date > :date_start')
+      ->andWhere('a.date < :date_end')
+      ->setParameter('date_start', $date->format('Y-m-d 00:00:00'))
+      ->setParameter('date_end',   $date->format('Y-m-d 23:59:59'))     
+      ->getQuery()
+      ->getSingleScalarResult();
+    ;
+
+
+    return($query);
+  }
+  public function getbyDatea($date)
+  {
+      
+       $query = $this->createQueryBuilder('a')
+      ->Where('a.date > :date_start')
+      ->andWhere('a.date < :date_end')
+      ->setParameter('date_start', $date->format('Y-m-d 00:00:00'))
+      ->setParameter('date_end',   $date->format('Y-m-d 23:59:59'))     
+      ->getQuery()
+    ;
+
+
+    return($query->getResult());
+  }  
+  
 }

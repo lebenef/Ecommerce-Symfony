@@ -28,9 +28,9 @@ class UserType extends AbstractType
                 'choices' =>
                     array
                     (
-                            'ROLE_ADMIN' => 'ROLE_ADMIN',
-                            'ROLE_CUISINIER' => 'ROLE_CUISINIER',
-                            'ROLE_LIVREUR' => 'ROLE_LIVREUR',
+                            'Administrateur' => 'ROLE_ADMIN',
+                            'Cuisinier' => 'ROLE_CUISINIER',
+                            'Livreur' => 'ROLE_LIVREUR',
 
                     ) ,
                 'multiple' => true,

@@ -1,0 +1,36 @@
+    {% extends "FFCoreBundle::layout.html.twig" %}
+    {% block menu %}
+
+        
+        
+<div class="container-fluid">
+
+ <div class="row">
+ 
+        <div class="col-md-3 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
+        
+        <nav class="col-md-2  d-md-block bg-light sidebar">
+        
+          <div class="sidebar-sticky bg-light">
+                            <h3 class="my-4">Fast Food</h3>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link " href="{{ path('fos_user_profile_edit') }}">
+                  <span data-feather="home"></span>
+                  Profile <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('ff_fast_list') }}">
+                  <span data-feather="file"></span>
+                  Mes Commandes
+                </a>
+              </li>
+            </ul>
+
+           
+          </div>
+        </nav>
+          </div>
+
+{% endblock %}

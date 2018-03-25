@@ -14,129 +14,149 @@ class IngredientsController extends Controller
 {
     public function indexAction($page)
     {
-			  {
-    if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }	
+		  if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+      throw new AccessDeniedException('Accès limité.');
+      }
+			
+    	if ($page < 1) 
+			{
+    	  throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+  	  }	
 					
-					$nbPerPage = 10;
+			$nbPerPage = 10;
 					
 			$repository = $this->getDoctrine()
 						->getManager()
 						->getRepository('FFFastBundle:Ingredients')
 			      ->getIngredients($page, $nbPerPage)
 						;
-					$listIngredients = $repository;
+			$listIngredients = $repository;
 			
-         $nbPages = ceil(count($listIngredients) / $nbPerPage);
-  if ($page > $nbPages) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-		
-	}
-        return $this->render('FFFastBundle:Ingredients:index.html.twig', array(
-					'listIngredients' => $listIngredients,
-					'nbPages'         => $nbPages,
-					'page'            => $page,
-				) );
+      $nbPages = ceil(count($listIngredients) / $nbPerPage);
+			
+ 		  if ($page > $nbPages)
+			{
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");	
+	    }
+			
+			return $this->render('FFFastBundle:Ingredients:index.html.twig', array(
+				'listIngredients' => $listIngredients,
+				'nbPages'         => $nbPages,
+				'page'            => $page,
+			));
     }
-		}
+		
 
+	
     public function addAction(Request $request)
     {
+		  if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+      throw new AccessDeniedException('Accès limité.');
+      }			
 
    	 	$ingredients = new Ingredients();					
    		$form = $this->get('form.factory')->create(IngredientsType::class, $ingredients);
 
-				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-									$em = $this->getDoctrine()->getManager();
-									$em->persist($ingredients);
-									$em->flush();
-
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+					$em = $this->getDoctrine()->getManager();
+					$em->persist($ingredients);
+					$em->flush();
 				
-        $request->getSession()->getFlashBag()->add('notice', 'Ingredient bien enregistrée.');
+        	$request->getSession()->getFlashBag()->add('success', 'Ingredient bien enregistrée.');
 
-        return $this->redirectToRoute('ff_fast_viewi', array('id' => $ingredients->getId()));
+        	return $this->redirectToRoute('ff_fast_viewi', array('id' => $ingredients->getId()));
       }
     
 
-        return $this->render('FFFastBundle:Ingredients:add.html.twig', array(
-        	'form' => $form->createView(),
-        	));
+			return $this->render('FFFastBundle:Ingredients:add.html.twig', array(
+				'form' => $form->createView(),
+				));
     }
+	
 	
 
     public function viewAction($id)
-      {			
-					$repository = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Ingredients')
-						;
-					$ingredients = $repository->find($id);
+      {		
+				if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+				{
+				throw new AccessDeniedException('Accès limité.');
+				}
+				$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('FFFastBundle:Ingredients')
+					;
+				$ingredients = $repository->find($id);
 			
-			    if (null === $ingredients) {
-      throw new NotFoundHttpException("L'ingredient d'id ".$id." n'existe pas.");
-					}
+			  if (null === $ingredients)
+				{
+    		  throw new NotFoundHttpException("L'ingredient d'id ".$id." n'existe pas.");
+				}
 						
-      return $this->render('FFFastBundle:Ingredients:view.html.twig', array(
-          'ingredients' => $ingredients
-        ));
-    }
+				return $this->render('FFFastBundle:Ingredients:view.html.twig', array(
+						'ingredients' => $ingredients
+					));
+  	  }
 
 
     public function editAction($id,Request $request )
     {
 
-			
-    $em = $this->getDoctrine()->getManager();		
-    $ingredients = $em->getRepository('FFFastBundle:Ingredients')->find($id);
-			
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+      throw new AccessDeniedException('Accès limité.');
+      }
+			$em = $this->getDoctrine()->getManager();		
+			$ingredients = $em->getRepository('FFFastBundle:Ingredients')->find($id);
+
 			if (null === $ingredients) 
 			{
 				throw new NotFoundHttpException("L'Ingredient d'id ".$id." n'existe pas.");
 			}
 
-   		$form = $this->get('form.factory')->create(IngredientsType::class, $ingredients);
+			$form = $this->get('form.factory')->create(IngredientsType::class, $ingredients);
 
-				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-									$em = $this->getDoctrine()->getManager();
-									$em->flush();
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+					$em = $this->getDoctrine()->getManager();
+					$em->flush();
 
-				
-			$request->getSession()->getFlashBag()->add('notice', 'Ingredient bien modifiée.');
-		  return $this->redirectToRoute('ff_fast_viewi', array('id' => $ingredients->getId()));
+
+					$request->getSession()->getFlashBag()->add('success', 'Ingredient bien modifiée.');
+					return $this->redirectToRoute('ff_fast_viewi', array('id' => $ingredients->getId()));
 					
-				}
+			}
 			
-			
-			
-			
-			        return $this->render('FFFastBundle:Ingredients:edit.html.twig', array(
-					'ingredients'=> $ingredients,			
-        	'form' => $form->createView(),
-        	));
+			return $this->render('FFFastBundle:Ingredients:edit.html.twig', array(
+			'ingredients'=> $ingredients,			
+			'form' => $form->createView(),
+			));
 
-      dump($ingredients);
-				
-            
+				            
     }
 
 	
 	public function deleteAction(Request $request, $id)
-  {
-
+	{
+		if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+		{
+			throw new AccessDeniedException('Accès limité.');
+		}
     $em = $this->getDoctrine()->getManager();
 
     $ingredients = $em->getRepository('FFFastBundle:Ingredients')->find($id);
 
-    if (null === $ingredients) {
+    if (null === $ingredients) 
+		{
       throw new NotFoundHttpException("La Ingredients d'id ".$id." n'existe pas.");
     }
 
-    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-    // Cela permet de protéger la suppression d'annonce contre cette faille
     $form = $this->get('form.factory')->create();
 
-    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) 
+		{
       $em->remove($ingredients);
       $em->flush();
 
@@ -145,9 +165,9 @@ class IngredientsController extends Controller
       return $this->redirectToRoute('ff_fast_homei');
     }
     
-    return $this->render('FFFastBundle:Ingredients:delete.html.twig', array(
-      'ingredients' => $ingredients,
-      'form'   => $form->createView(),
-    ));
-  }
+			return $this->render('FFFastBundle:Ingredients:delete.html.twig', array(
+				'ingredients' => $ingredients,
+				'form'   => $form->createView(),
+			));
+  	}
 }

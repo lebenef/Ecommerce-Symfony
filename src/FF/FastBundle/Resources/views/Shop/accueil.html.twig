@@ -1,0 +1,74 @@
+{% extends "FFCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Page d'accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<div id="content" class="col-md-8 center-block ">
+
+
+<div class="container">
+
+      <!-- Jumbotron Header -->
+      
+      <header class="jumbotron my-4">
+        <h1 class="display-3 " >Bienvenue</h1>
+        
+
+      </header>
+
+      <!-- Page Features -->
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Accueil</li>
+  </ol>
+</nav>
+      <div class="row text-center">
+            <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+          <a href="{{ path('ff_fast_homes') }} "> 
+          {% image '@FFFastBundle/Resources/public/img/icon.png'   %}
+              <img src="{{ asset_url }}" alt="icon" height="150"/>
+          {% endimage %}
+          
+          </a>
+            <div class="card-body">
+              <h4 class="card-title">Voir Tout</h4>
+            </div>
+            <div class="card-footer">
+              <a href="{{ path('ff_fast_homes') }}" class="btn btn-secondary">
+              <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                Voir plus
+              </a>
+            </div>
+          </div>
+        </div>
+      
+  {% for gamme in listGammes %}
+
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+          <a href="{{ path('ff_fast_gammes', {'gamme': gamme.id}) }} "> <img class="card-img-top"src="{{ gamme.images.url}}"alt="{{ gamme.images.alt }}"height="150"/></a>
+            <div class="card-body">
+              <h4 class="card-title">{{gamme.name}}</h4>
+              <p class="card-text">{{gamme.description}}</p>
+            </div>
+            <div class="card-footer">
+              <a href="{{ path('ff_fast_gammes', {'gamme': gamme.id}) }}" class="btn btn-secondary">
+              <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                Voir plus
+              </a>
+            </div>
+          </div>
+        </div>
+
+    {% endfor %}
+
+</div>
+</div>
+
+
+{% endblock %}

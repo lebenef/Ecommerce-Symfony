@@ -25,3 +25,8 @@ ff_user_delete:
     path:      /user/delete/{id}
     defaults:
         _controller: FFUserBundle:User:delete
+
+ff_user_registration:
+    path:      /registration
+    defaults:
+        _controller: FFUserBundle:User:registration

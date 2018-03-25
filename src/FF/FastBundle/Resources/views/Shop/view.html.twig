@@ -1,10 +1,30 @@
 {% extends "FFFastBundle:Shop:menu.html.twig" %}
 
     {% block body %}
-<br>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 <div class="col-lg-9">
 <br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+     <li class="dropdown open breadcrumb-item">
+    <a class="dropdown-toggle" id="branches" role="button" data-toggle="dropdown" href="{{ path('ff_fast_accueil') }}">Accueil <b class="caret"></b></a>
+        <ul id="branches-dropdown" class="dropdown-menu">
+               <a class="nav-link" href="{{ path('ff_fast_accueil')}}">       Accueil         </a>
+               <a class="nav-link" href="{{ path('ff_fast_homes')}}">       Voir Tout         </a>
 
+
+               {% for gammes in listGammes %}
+                <a class="nav-link" href="{{ path('ff_fast_gammes', {'gamme': gammes.id})}}">
+                  {{gammes.name}}
+                </a>
+                                        {% endfor %}
+
+    </ul>
+    </li>
+    <li class="breadcrumb-item"><a href="{{ path('ff_fast_gammes', {'gamme': produits.gammes.id})}}">{{produits.gammes.name}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{produits.name}}</li>
+  </ol>
+</nav>
           <div class="col-lg-9">
             <img class= "img-responsive"   src="{{ produits.images.url}}"alt="{{ produits.images.alt }} "height="200">
             <div class="card-body">
@@ -16,43 +36,65 @@
                         {% endfor %}
                   <br>
                     <div class="col-2">
-      {{ form_start(form, {'action': path('ff_fast_addc', {'productId': produits.id}), 'method': 'POST'}) }}
 
+              {% if panier[produits.id] is not defined %}
+                        <form action="{{ path('ff_fast_addc', { 'idProduits' : produits.id }) }}" method="get">
+                            <select name="qte" class="span1">
+                                {% for i in 1..10 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
 
-        {{ form_end(form) }}
+                            <div>
+                            <br>
+
+                                <button class="btn btn-success"><i class="fa fa-cart-plus" aria-hidden="true"></i> Ajouter</button>
+                            </div>
+                        </form>
+                        {% else %}
+                            <div>
+                                <a href="{{ path('ff_fast_show') }}" class="btn btn-primary"> <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> Dans votre panier</a>
+                            </div>
+                        {% endif %}
 
                    </div>
             
                         {{produits.description}}
 </p>
-                     <a href="{{ path('ff_fast_addc', {'productId': produits.id})}}" class="btn btn-success">
                      
                      
                      
                      
 
-      <i class="glyphicon glyphicon-edit"></i>
-      Ajouter au Panier
-    </a>
             </div>
           </div>
           <!-- /.card -->
 
           <div class="card card-outline-secondary my-4">
             <div class="card-header">
-              Product Reviews
+              Commentaires
             </div>
             <div class="card-body">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+            {% if commentaires == null%}
+             <p>Soyez le premier a donner votre avis. Il nous interessent.</p>
               <hr>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+             {% endif %}
+            {% for commentaire in commentaires %}
+              <p>{{commentaire.commentaire}}</p>
+              <small class="text-muted">Poster par 
+              {% if commentaire.user  %}
+              
+              {{commentaire.user.username}} 
+              {% else %}
+              Anonyme
+               {% endif %}
+              
+              le {{commentaire.date |date('d-m-Y')}}</small>
               <hr>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-              <hr>
-              <a href="#" class="btn btn-success">Leave a Review</a>
+              {% endfor%}
+              
+
+              <a href="{{ path('ff_fast_addcom', { 'idProduits' : produits.id }) }}" class="btn btn-success">Laisser un comentaire </a>
             </div>
           </div>
           <!-- /.card -->
@@ -64,5 +106,5 @@
 
     </div>
 <!-- /.container -->
-
+</main>
 {% endblock %}

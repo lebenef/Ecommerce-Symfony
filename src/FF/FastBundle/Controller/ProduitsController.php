@@ -15,71 +15,83 @@ class ProduitsController extends Controller
 
     public function indexAction($page)
     {
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
 								
-		 {
-    	if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }		
+		
+    	if ($page < 1) 
+			{
+     		 throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+   	  }		
 			 			$nbPerPage = 10;
 
-					$repository = $this->getDoctrine()
-						->getManager()
-						->getRepository('FFFastBundle:Produits')
-						->getProduits($page, $nbPerPage)
-
-						;
-					$listProduits = $repository;
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('FFFastBundle:Produits')
+				->getProduits($page, $nbPerPage);
 			
-			   $nbPages = ceil(count($listProduits) / $nbPerPage);
- 			 if ($page > $nbPages)
-			 {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-				}
+			$listProduits = $repository;
+			
+			$nbPages = ceil(count($listProduits) / $nbPerPage);
+		 if ($page > $nbPages)
+		 {
+				throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+		 }
 			 
-        return $this->render('FFFastBundle:Produits:index.html.twig', array(
-					'listProduits' => $listProduits,
-					'nbPages'         => $nbPages,
-					'page'            => $page,				));
+		return $this->render('FFFastBundle:Produits:index.html.twig', array(
+			'listProduits' => $listProduits,
+			'nbPages'         => $nbPages,
+			'page'            => $page,				));
 				
-    }
 		}
+	
     public function addAction(Request $request)
     {
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
 
 	    $produits = new Produits();					
    		$form = $this->get('form.factory')->create(ProduitsType::class, $produits);
-						dump($form);
 
-				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-									$em = $this->getDoctrine()->getManager();
-									$em->persist($produits);
-									$em->flush();
-
+			
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($produits);
+				$em->flush();
 				
-        $request->getSession()->getFlashBag()->add('notice', 'Produit bien enregistrée.');
+        $request->getSession()->getFlashBag()->add('success', 'Produit bien enregistrée.');
 
         return $this->redirectToRoute('ff_fast_viewp', array('id' => $produits->getId()));
       }
-
-    
-
-        return $this->render('FFFastBundle:Produits:add.html.twig', array(
-        	'form' => $form->createView(),
-        	));
+			
+			return $this->render('FFFastBundle:Produits:add.html.twig', array(
+				'form' => $form->createView(),
+				));
     }
 	
 
     public function viewAction($id)
-      {			
-					$repository = $this->getDoctrine()
+    {		
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
+
+			$repository = $this->getDoctrine()
 						->getManager()
-						->getRepository('FFFastBundle:Produits')
-						;
-					$produits = $repository->find($id);
+						->getRepository('FFFastBundle:Produits');
 			
-				if (null === $produits) {
-      throw new NotFoundHttpException("Le Produit d'id ".$id." n'existe pas.");
-					}
+			$produits = $repository->find($id);
+			
+		 if (null === $produits) 
+		 {
+      	throw new NotFoundHttpException("Le Produit d'id ".$id." n'existe pas.");
+		 }
 						
       return $this->render('FFFastBundle:Produits:view.html.twig', array(
           'produits' => $produits
@@ -89,9 +101,12 @@ class ProduitsController extends Controller
 
     public function editAction($id,Request $request )
     {
-
-    $em = $this->getDoctrine()->getManager();		
-    $produits = $em->getRepository('FFFastBundle:Produits')->find($id);
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
+			$em = $this->getDoctrine()->getManager();		
+			$produits = $em->getRepository('FFFastBundle:Produits')->find($id);
 			
 			if (null === $produits) 
 			{
@@ -105,7 +120,7 @@ class ProduitsController extends Controller
 									$em->flush();
 
 				
-			$request->getSession()->getFlashBag()->add('notice', 'Produit bien modifiée.');
+			$request->getSession()->getFlashBag()->add('success', 'Produit bien modifiée.');
 		  return $this->redirectToRoute('ff_fast_viewp', array('id' => $produits->getId()));
 					
 				}
@@ -125,31 +140,35 @@ class ProduitsController extends Controller
 	
 	public function deleteAction(Request $request, $id)
   {
+			if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+			{
+				throw new AccessDeniedException('Accès limité.');
+			}
 
-    $em = $this->getDoctrine()->getManager();
+			$em = $this->getDoctrine()->getManager();
 
-    $produits = $em->getRepository('FFFastBundle:Produits')->find($id);
+			$produits = $em->getRepository('FFFastBundle:Produits')->find($id);
 
-    if (null === $produits) {
-      throw new NotFoundHttpException("Le Produit d'id ".$id." n'existe pas.");
-    }
+			if (null === $produits) 
+			{
+				throw new NotFoundHttpException("Le Produit d'id ".$id." n'existe pas.");
+			}
+		
+			$form = $this->get('form.factory')->create();
 
-    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-    // Cela permet de protéger la suppression d'annonce contre cette faille
-    $form = $this->get('form.factory')->create();
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) 
+			{
+				$em->remove($produits);
+				$em->flush();
 
-    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-      $em->remove($produits);
-      $em->flush();
+				$request->getSession()->getFlashBag()->add('info', "Le produits a bien été supprimée.");
 
-      $request->getSession()->getFlashBag()->add('info', "Le produits a bien été supprimée.");
+				return $this->redirectToRoute('ff_fast_homep');
+			}
 
-      return $this->redirectToRoute('ff_fast_homep');
-    }
-    
-    return $this->render('FFFastBundle:Produits:delete.html.twig', array(
-      'produits' => $produits,
-      'form'   => $form->createView(),
-    ));
+			return $this->render('FFFastBundle:Produits:delete.html.twig', array(
+				'produits' => $produits,
+				'form'   => $form->createView(),
+			));
   }
 }

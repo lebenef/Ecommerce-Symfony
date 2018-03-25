@@ -1,3 +1,12 @@
 ff_core_home:
-    path:      /
+    path:      /admin/home
     defaults:  { _controller: FFCoreBundle:Core:index }
+
+ff_core_hometest:
+    path:      /admin/home/test/
+    defaults:  { _controller: FFCoreBundle:Core:indexadmin }
+    
+    
+ff_core_commentaire:
+    path:      /admin/commentaire
+    defaults:  { _controller: FFCoreBundle:Core:commentaire }
