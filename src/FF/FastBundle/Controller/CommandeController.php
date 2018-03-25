@@ -59,7 +59,6 @@ class CommandeController extends Controller
       		throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
 			}
 			
-			dump($commande);
 			
       return $this->render('FFFastBundle:Commande:view.html.twig', array('commande' => $commande,));
     }
@@ -67,7 +66,6 @@ class CommandeController extends Controller
 	
 	  public function editAction($idCommande,Request $request )
     {
-		dump($idCommande);
 			
     $em = $this->getDoctrine()->getManager();		
     $commande = $em->getRepository('FFFastBundle:Commande')->find($idCommande);
@@ -94,12 +92,10 @@ class CommandeController extends Controller
 							->add('save',      SubmitType::class)
 							->getForm();
 				
-		dump($form);
-		dump($commande);
+
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
-				dump($request);
 				$em = $this->getDoctrine()->getManager();
 				$em->flush();
 				$request->getSession()->getFlashBag()->add('notice', 'Commande bien modifiée.');

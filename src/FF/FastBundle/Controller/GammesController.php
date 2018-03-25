@@ -31,7 +31,6 @@ class GammesController extends Controller
 						->getGammes($page, $nbPerPage);
 
 			$listGammes = $repository;
-			dump($listGammes);
 
 			$nbPages = ceil(count($listGammes) / $nbPerPage);
 
@@ -62,7 +61,6 @@ class GammesController extends Controller
 			{
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($gammes);
-				dump($gammes);
 				$em->flush();
 
 				
@@ -138,7 +136,6 @@ class GammesController extends Controller
 				'form' => $form->createView(),
 				));
 
-				dump($gammes);            
     }
 
 

@@ -56,8 +56,8 @@ class ProduitsController extends Controller
 
 	    $produits = new Produits();					
    		$form = $this->get('form.factory')->create(ProduitsType::class, $produits);
-			dump($form);
 
+			
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 			{
 				$em = $this->getDoctrine()->getManager();

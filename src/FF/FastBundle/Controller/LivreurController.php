@@ -60,8 +60,7 @@ class LivreurController extends Controller
 					throw new AccessDeniedException('Accès limité.');
 				} 	
 
-				dump($etat);
-				dump($page);
+	
 
 				if ($page < 1) 
 				{
@@ -113,7 +112,6 @@ class LivreurController extends Controller
       			throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
 				}
 				
-				dump($commande);
 				
       	return $this->render('FFFastBundle:Livreur:view.html.twig', array(
           'commande' => $commande,));
@@ -146,7 +144,6 @@ class LivreurController extends Controller
 										$em->flush();
 					
 						$test= $commande->getEtat();
-            dump($test);
 
 						$commande->setEtat('3');
 						
@@ -158,13 +155,10 @@ class LivreurController extends Controller
 							->getRepository('FFFastBundle:CommandeProduit');
 					
 				
-						dump($repository);
 						$commandeproduit = $repository->findBy( array('commande' => $idCommande) );				
-						dump($commandeproduit);		
 									
 						foreach($commandeproduit as $produits)
 						{
-								dump($produits);
  
 							 	if($produits->getEtat() == '2')
 							 	{
@@ -176,7 +170,6 @@ class LivreurController extends Controller
 									
 						}
 				
-						dump($idCommande);
 
     				$em = $this->getDoctrine()->getManager();		
     				$commande = $em->getRepository('FFFastBundle:Commande')->find($idCommande);
@@ -185,7 +178,6 @@ class LivreurController extends Controller
 							->getManager()
 							->getRepository('FFFastBundle:CommandeProduit');
 						$commandeproduit = $repository2->findBy( array('commande' => $idCommande) );
-						dump($commandeproduit);
 						$etat = $commandeproduit;
 				
 
@@ -194,11 +186,9 @@ class LivreurController extends Controller
 							throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
 						}
 				
-						dump($commandeproduit);
 				
 						if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 						{
-								dump($request);
 								$em = $this->getDoctrine()->getManager();
 								$em->flush();
 
@@ -218,7 +208,6 @@ class LivreurController extends Controller
 						{
 							throw new AccessDeniedException('Accès limité.');
 						} 					
-				 		dump($idCommande);
 
 						$em = $this->getDoctrine()->getManager();
 						$repository = $em->getRepository('FFFastBundle:Commande');
@@ -234,7 +223,6 @@ class LivreurController extends Controller
 				 
 				 		foreach($commandeproduit as $produits)
 						{
-								dump($produits);
  
 										$produits->setEtat('4');
 										$em = $this->getDoctrine()->getManager();

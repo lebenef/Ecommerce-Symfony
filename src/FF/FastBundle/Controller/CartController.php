@@ -46,7 +46,6 @@ class CartController extends Controller
 					if (array_key_exists($idProduits, $panier)) 
 					{
 							if ($request->query->get('qte') != null) $panier[$idProduits] = $request->query->get('qte');
-							dump($request);
 							$request->getSession()->getFlashBag()->add('success','Quantité modifié avec succès');
 					}
 					else 	
@@ -107,25 +106,19 @@ class CartController extends Controller
 				}
 					$em = $this->getDoctrine()->getManager();
 					$user = $this->container->get('security.token_storage')->getToken()->getUser();
-				 	dump($panier);
-					dump($user);
+	
 					$produits = $this->getDoctrine()
 							->getRepository('FFFastBundle:Produits')
 							->findArray(array_keys($session->get('panier')));
-					dump($produits);
 
 
 					$commande = new Commande();
 					$commande->setUser($user);
-					dump($commande);
           $price = 0;
 					foreach($produits as $produit)
 					{
-							dump($produit);
 							$idProduits= $produit->getId();
-							dump($idProduits);
 							$nb = $panier[$idProduits];
-							dump($nb);
 
 								for ($i=0;$i<$nb;$i++)
 								{            
@@ -134,7 +127,6 @@ class CartController extends Controller
 										$commandeproduit->setCommande($commande);
 										$commandeproduit->setProduits($produit);
 										$commandeproduit->setEtat('0');
-										dump($commandeproduit);
 									$priceproduit=$produit->getPrice();
 									$price = $price + $priceproduit;
 								}
@@ -180,7 +172,6 @@ class CartController extends Controller
 
 					$em = $this->getDoctrine()->getManager();
 					$user = $this->container->get('security.token_storage')->getToken();
-					dump($user);
 					$produits = $this->getDoctrine()
 							->getRepository('FFFastBundle:Produits')
 							->findArray(array_keys($session->get('panier')));
@@ -197,7 +188,6 @@ class CartController extends Controller
 			public function ListAction($page)
 			{
 					$user = $this->container->get('security.token_storage')->getToken()->getUser();
-					dump($user);		 
 				if ($page < 1) 
 				{
 						throw $this->createNotFoundException("La page ".$page." n'existe pas.");
@@ -210,7 +200,6 @@ class CartController extends Controller
 					->getCommandeUser($page, $nbPerPage,$user);
 				
 				$listCommandes = $repository;
-				dump($listCommandes);
 
 				$nbPages = ceil(count($listCommandes) / $nbPerPage);
 				if ($page > $nbPages)
@@ -228,7 +217,6 @@ class CartController extends Controller
 	
 			public function viewcommandeAction(Request $request, $id)
 			{			
-					dump($id);
 					$repository = $this->getDoctrine()
 						->getManager()
 						->getRepository('FFFastBundle:Commande');
@@ -244,7 +232,6 @@ class CartController extends Controller
 				{
 						throw new NotFoundHttpException("La commande  d'id ".$id." n'existe pas.");
 				}
-				dump($commandeproduit);
 				
 			return $this->render('FFFastBundle:Cart:viewcommande.html.twig', array(
 					'commande' => $commande,

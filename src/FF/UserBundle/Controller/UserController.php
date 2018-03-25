@@ -61,7 +61,6 @@ class UserController extends Controller
 					->getRepository('FFUserBundle:User');
 
 				$user = $repository->find($id);
-				dump($user);
 
 				return $this->render('FFUserBundle:User:view.html.twig', array(
 				 'user' => $user,

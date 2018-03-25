@@ -134,7 +134,6 @@ class IngredientsController extends Controller
 			'form' => $form->createView(),
 			));
 
-      dump($ingredients);
 				            
     }
 

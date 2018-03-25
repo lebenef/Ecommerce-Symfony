@@ -59,8 +59,7 @@ class CuisinierController extends Controller
 				{
 					throw new AccessDeniedException('Accès limité.');
 				}
-				dump($etat);
-				dump($page);
+
 									
 		 
     		if ($page < 1) 
@@ -114,13 +113,11 @@ class CuisinierController extends Controller
 					}
 				
 					$test= $commande->getEtat();
-				 	dump($test);
 					$commande->setEtat('1');
 
 				  $em = $this->getDoctrine()->getManager();
           $em->flush();
 				
-					dump($commande);
 				
      			 return $this->render('FFFastBundle:Cuisinier:view.html.twig', array(
         		  'commande' => $commande,));
@@ -133,7 +130,6 @@ class CuisinierController extends Controller
 			{
 				throw new AccessDeniedException('Accès limité.');
 			}
-		  dump($idCommande);
 				
 			$repository = $this->getDoctrine()
 				->getManager()
@@ -150,7 +146,6 @@ class CuisinierController extends Controller
 			if ($commande->getEtat() == '0')
 			{
 					$test= $commande->getEtat();
-					dump($test);
 
 					$commande->setEtat('1');
 
@@ -161,9 +156,7 @@ class CuisinierController extends Controller
 						->getManager()
 						->getRepository('FFFastBundle:CommandeProduit');
 
-					dump($repository);
 					$commandeproduit = $repository->findBy( array('commande' => $idCommande) );				
-					dump($commandeproduit);		
 
 // 					 foreach($commandeproduit as $produits)
 // 					 {
@@ -187,7 +180,6 @@ class CuisinierController extends Controller
 					->getRepository('FFFastBundle:CommandeProduit');
 			
 			$commandeproduit = $repository2->findBy( array('commande' => $idCommande) );
-			dump($commandeproduit);
 			$etat = $commandeproduit;
 			
 			if (null === $commande) 
@@ -199,7 +191,6 @@ class CuisinierController extends Controller
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 			{
-					dump($request);
 					$em = $this->getDoctrine()->getManager();
 					$em->flush();
 				
@@ -221,14 +212,12 @@ class CuisinierController extends Controller
 				throw new AccessDeniedException('Accès limité.');
 			}
 			 
-      dump($idCommandeProduit);
 			$cuisinier = $this->container->get('security.token_storage')->getToken()->getUser();
 
 			$em = $this->getDoctrine()->getManager();
 			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
 			$cp = $repository->findOneBy(array('id' => $idCommandeProduit));
 			$etat = $request->request->get('form')['etat'];
-			dump($etat);
 			 $etatcp = $cp->getEtat();
 			 if($etatcp == 0)
 			 {
@@ -245,7 +234,6 @@ class CuisinierController extends Controller
 			$cp = $repository->findOneBy(array('id' => $idCommandeProduit));
 			$cp->setEtat('2');
 			$idCommande=$cp->getCommande()->getId();
-			dump($idCommande);
 			 
 			$em->flush();
 		 $request->getSession()->getFlashBag()->add('success', 'Commande bien modifiée.');
@@ -254,21 +242,17 @@ class CuisinierController extends Controller
 			$repository = $em->getRepository('FFFastBundle:CommandeProduit');
 			$commandeproduit =$repository->findBy(array('commande' => $idCommande));
 			$bool =true;
-			 dump($commandeproduit);
 
 			 foreach($commandeproduit as $produits)
 			 {
-				 dump('test');
 					if($produits->getEtat() == '1')
 					{						
 							$bool = false;
-										 dump('test');
 
 					}					
 				 if($produits->getEtat() == '0')
 					{						
 							$bool = false;
-					 				 dump('test');
 
 					}
 					

@@ -101,21 +101,17 @@ class CoreController extends Controller
 				->getRepository('FFFastBundle:Commande') 
         ->getbyDatea($date)
         ; 
-			dump($commande2);
 				$price = 0;
 			
 			foreach($commande2 as $com)
 			{
-				dump($com);
 				$price = $price + $com->getPrice($com);
 			}
-			dump($price);
 			$listCommentaires = $this->getDoctrine()
 				->getManager()
 				->getRepository('FFFastBundle:Commentaire') 
         ->getbyDate($date);
 				
-      dump($listCommentaires);
 			return $this->render('FFCoreBundle:Core:index.html.twig', array(
 				'listCommandes' => $listCommandes,
 				'listCommentaires' => $listCommentaires,
@@ -155,7 +151,6 @@ class CoreController extends Controller
 				->getRepository('FFFastBundle:Commentaire')
         ->getbyDatenc($date);
 				
-      dump($commentaires);
 			return $this->render('FFCoreBundle:Core:commentaire.html.twig', array(
 
 				'commentaires' => $commentaires,

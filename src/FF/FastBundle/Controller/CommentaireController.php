@@ -21,7 +21,6 @@ class CommentaireController extends Controller
 {
     public function addAction(Request $request, $idProduits)
     {
- dump($idProduits);
 
    	 	$commentaire = new Commentaire();					
    		$form = $this->get('form.factory')->create(CommentaireType::class, $commentaire);

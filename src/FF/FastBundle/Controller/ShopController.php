@@ -57,13 +57,11 @@ class ShopController extends Controller
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNb();
-			dump($nbs);
-			dump($listGammes);
+
 			 $nbt = $this->getDoctrine()
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNbt();
-						dump($nbt);
 
 			  $nbPages = ceil(count($listProduits) / $nbPerPage);
 			
@@ -85,8 +83,7 @@ class ShopController extends Controller
   
 	  public function gammeAction(Request $request, $page, $gamme)
     {
-			dump($gamme);
-			dump($page);
+	
 			
 
 			$session = $request->getSession();
@@ -103,7 +100,6 @@ class ShopController extends Controller
 				->getManager()
 				->getRepository('FFFastBundle:Produits')
 				->getProduitsByGamme($gamme,$page, $nbPerPage);
-			dump($listProduits);
 			$listGammes = $this->getDoctrine()
 				->getManager()
 				->getRepository('FFFastBundle:Gammes')
@@ -114,19 +110,16 @@ class ShopController extends Controller
 				->getRepository('FFFastBundle:Gammes')
 				->findOneById($gamme);
 			
-			dump($gammes);
-			dump($nbPerPage);
+		
 			$nbs = $this->getDoctrine()
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNb();
-			dump($nbs);
-			dump($listGammes);
+
 			 $nbt = $this->getDoctrine()
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNbt();
-						dump($nbt);
 			$nbPages = ceil(count($listProduits) / $nbPerPage);
 			
 			if ($page > $nbPages)
@@ -176,18 +169,15 @@ class ShopController extends Controller
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNb();
-			dump($nbs);
-			dump($listGammes);
+
 			 $nbt = $this->getDoctrine()
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNbt();
-						dump($nbt);
 			if (null === $produits) 
 			{
 				throw new NotFoundHttpException("Le Produit d'id ".$idProduits." n'existe pas.");
 			}
-			dump($produits);
 		
 			return $this->render('FFFastBundle:Shop:view.html.twig', array(
 				'produits' => $produits,
@@ -208,16 +198,13 @@ class ShopController extends Controller
 				$panier = $session->get('panier');	
       if ($request->getMethod() == 'POST')
 			{
-				dump($request);
 				$search = $request->get('search');
-				dump($search);
 				
 				$em = $this->getDoctrine()->getManager();
         $listProduits = $this->getDoctrine()
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getSearch($search,$page,$nbPerPage);
-				dump($listProduits);
 				$listGammes = $this->getDoctrine()
 					->getManager()
 					->getRepository('FFFastBundle:Gammes')
@@ -226,13 +213,12 @@ class ShopController extends Controller
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNb();
-			dump($nbs);
-			dump($listGammes);
+
 			 $nbt = $this->getDoctrine()
 					->getManager()
 					->getRepository('FFFastBundle:Produits')
 					->getNbt();
-						dump($nbt);
+
 	$gammes = array (
     'name' => 'Recherche',
 );
